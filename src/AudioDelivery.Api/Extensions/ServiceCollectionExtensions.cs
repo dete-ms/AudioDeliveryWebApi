@@ -2,7 +2,6 @@ using AudioDelivery.Application.Albums;
 using AudioDelivery.Application.Artists;
 using AudioDelivery.Application.Categories;
 using AudioDelivery.Application.Genres;
-using AudioDelivery.Application.Markets;
 using AudioDelivery.Application.Playlists;
 using AudioDelivery.Application.Search;
 using AudioDelivery.Application.Tracks;
@@ -39,7 +38,6 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ISearchService, SearchService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IGenreService, GenreService>();
-        services.AddScoped<IMarketService, MarketService>();
         services.AddScoped<ICategoryService, CategoryService>();
 
         return services;

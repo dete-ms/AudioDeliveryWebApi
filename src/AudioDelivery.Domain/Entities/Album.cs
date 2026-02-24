@@ -68,17 +68,7 @@ public class Album : BaseEntity
     public ICollection<Track> Tracks { get; set; } = new List<Track>();
 
     /// <summary>
-    /// Copyright statements (one-to-many).
-    /// </summary>
-    public ICollection<Copyright> Copyrights { get; set; } = new List<Copyright>();
-
-    /// <summary>
     /// Cover art images in various sizes (one-to-many).
     /// </summary>
     public ICollection<Image> Images { get; set; } = new List<Image>();
-
-    /// <summary>
-    /// Markets where this album is available (many-to-many).
-    /// </summary>
-    public ICollection<Market> AvailableMarkets { get; set; } = new List<Market>();
 }

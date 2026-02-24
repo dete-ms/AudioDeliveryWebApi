@@ -9,7 +9,6 @@ namespace AudioDelivery.Application.Albums.DTOs;
 ///   - Popularity, Label, Uri, ExternalUrl
 ///   - Artists (list of ArtistSummaryDto)
 ///   - Images (list of ImageDto)
-///   - Copyrights, AvailableMarkets
 ///   - Tracks (PaginatedResult of TrackDto — optional, may come from a sub-endpoint)
 ///
 /// See: https://developer.spotify.com/documentation/web-api/reference/get-an-album
@@ -27,5 +26,5 @@ public class AlbumDto
     public string Uri { get; set; } = string.Empty;
     public string? ExternalUrl { get; set; }
 
-    // TODO: Add nested DTOs for Artists, Images, Copyrights, AvailableMarkets
+    // TODO: Add nested DTOs for Artists, Images,
 }

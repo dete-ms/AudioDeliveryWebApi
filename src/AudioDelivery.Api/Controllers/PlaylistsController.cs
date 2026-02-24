@@ -57,7 +57,7 @@ public class PlaylistsController : ControllerBase
     /// <summary>
     /// Get full details of the items of a playlist.
     /// </summary>
-    [HttpGet("playlists/{id:guid}/tracks")]
+    [HttpGet("playlists/{id:guid}/items")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetPlaylistTracks(Guid id, [FromQuery] int offset = 0, [FromQuery] int limit = 100, [FromQuery] string? market = null)
     {
@@ -68,7 +68,7 @@ public class PlaylistsController : ControllerBase
     /// <summary>
     /// Add one or more items to a user's playlist.
     /// </summary>
-    [HttpPost("playlists/{id:guid}/tracks")]
+    [HttpPost("playlists/{id:guid}/items")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> AddItemsToPlaylist(Guid id, [FromBody] AddItemsRequest request)
     {

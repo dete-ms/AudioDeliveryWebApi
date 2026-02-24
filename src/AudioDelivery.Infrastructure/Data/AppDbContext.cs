@@ -35,11 +35,8 @@ public class AppDbContext : DbContext
     public DbSet<PlaylistTrack> PlaylistTracks => Set<PlaylistTrack>();
     public DbSet<User> Users => Set<User>();
     public DbSet<Genre> Genres => Set<Genre>();
-    public DbSet<Market> Markets => Set<Market>();
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<Image> Images => Set<Image>();
-    public DbSet<Copyright> Copyrights => Set<Copyright>();
-    public DbSet<AudioFeatures> AudioFeatures => Set<AudioFeatures>();
 
     // ── Model Configuration ─────────────────────────────────────────────────
 

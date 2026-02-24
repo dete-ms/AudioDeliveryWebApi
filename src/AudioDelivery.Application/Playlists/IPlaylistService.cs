@@ -20,12 +20,12 @@ public interface IPlaylistService
     Task<bool> UpdatePlaylistAsync(Guid id, UpdatePlaylistRequest request, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// GET /playlists/{id}/tracks
+    /// GET /playlists/{id}/items
     /// </summary>
     Task<PaginatedResult<TrackDto>> GetPlaylistTracksAsync(Guid playlistId, int offset = 0, int limit = 100, string? market = null, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// POST /playlists/{id}/tracks
+    /// POST /playlists/{id}/items
     /// </summary>
     Task<string?> AddItemsToPlaylistAsync(Guid playlistId, AddItemsRequest request, CancellationToken cancellationToken = default);
 

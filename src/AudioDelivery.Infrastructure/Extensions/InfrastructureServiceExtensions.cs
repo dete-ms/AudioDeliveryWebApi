@@ -55,7 +55,6 @@ public static class InfrastructureServiceExtensions
         services.AddScoped<IPlaylistRepository, PlaylistRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IGenreRepository, GenreRepository>();
-        services.AddScoped<IMarketRepository, MarketRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
 
         return services;

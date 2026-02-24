@@ -13,7 +13,6 @@ namespace AudioDelivery.Infrastructure.Data.Configurations;
 ///   - Many-to-many with Artist (join table "ArtistTrack")
 ///   - Many-to-many with Market (join table "TrackMarket")
 ///   - One-to-many with PlaylistTrack
-///   - One-to-one with AudioFeatures
 ///   - Index on Name, AlbumId for query performance
 /// </summary>
 public class TrackConfiguration : IEntityTypeConfiguration<Track>

@@ -88,8 +88,4 @@ public class Track : BaseEntity
     /// </summary>
     public ICollection<PlaylistTrack> PlaylistTracks { get; set; } = new List<PlaylistTrack>();
 
-    /// <summary>
-    /// Audio analysis features for this track (one-to-one, nullable).
-    /// </summary>
-    public AudioFeatures? AudioFeatures { get; set; }
 }

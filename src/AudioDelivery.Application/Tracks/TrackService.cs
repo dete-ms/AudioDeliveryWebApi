@@ -26,14 +26,4 @@ public class TrackService : ITrackService
     {
         throw new NotImplementedException("Implement in Phase 6");
     }
-
-    public async Task<AudioFeaturesDto?> GetAudioFeaturesAsync(Guid trackId, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException("Implement in Phase 6");
-    }
-
-    public async Task<IReadOnlyList<AudioFeaturesDto>> GetSeveralAudioFeaturesAsync(IEnumerable<Guid> trackIds, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException("Implement in Phase 6");
-    }
 }
