@@ -21,7 +21,7 @@ public class Album : BaseEntity
     /// <summary>
     /// The total number of tracks on the album.
     /// </summary>
-    public int TotalTracks { get; set; }
+    public int TotalTracks => this.Tracks.Count;
 
     /// <summary>
     /// The release date as a string (e.g., "1981", "1981-12", "1981-12-15").
@@ -30,9 +30,9 @@ public class Album : BaseEntity
     public string ReleaseDate { get; set; } = string.Empty;
 
     /// <summary>
-    /// How precise the release date is: Year, Month, or Day.
+    /// How precise the release date is: Year, Month, or Day. Default is Year if not specified.
     /// </summary>
-    public ReleaseDatePrecision ReleaseDatePrecision { get; set; }
+    public ReleaseDatePrecision ReleaseDatePrecision { get; set; } = ReleaseDatePrecision.Year;
 
     /// <summary>
     /// Popularity score (0–100). Higher = more popular.

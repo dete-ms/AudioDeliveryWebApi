@@ -37,16 +37,9 @@ public static class DataSeeder
         //     "rock", "soul", "techno", "world-music"
         //   - context.Genres.AddRange(genres);
         //
-        // Step 2: Seed Markets (if Markets table is empty)
-        //   - Create Market entities for major markets like:
-        //     ("US", "United States"), ("GB", "United Kingdom"),
-        //     ("CA", "Canada"), ("AU", "Australia"), ("DE", "Germany"),
-        //     ("FR", "France"), ("JP", "Japan"), ("BR", "Brazil"), etc.
-        //   - context.Markets.AddRange(markets);
+        // Step 2: (Optional) Seed sample artists, albums, tracks for dev
         //
-        // Step 3: (Optional) Seed sample artists, albums, tracks for dev
-        //
-        // Step 4: Save all changes
+        // Step 3: Save all changes
         //   await context.SaveChangesAsync();
 
         await Task.CompletedTask; // Remove this once implemented
