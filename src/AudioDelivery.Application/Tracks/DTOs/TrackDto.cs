@@ -19,7 +19,6 @@ public class TrackDto
     public bool IsLocal { get; set; }
     public string Uri { get; set; } = string.Empty;
     public string? ExternalUrl { get; set; }
-    public string? Isrc { get; set; }
 
     // TODO: Add Album (AlbumSummaryDto) and Artists (List<ArtistSummaryDto>)
 }

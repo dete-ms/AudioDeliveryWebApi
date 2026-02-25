@@ -6,13 +6,6 @@ namespace AudioDelivery.Infrastructure.Data.Configurations;
 
 /// <summary>
 /// EF Core configuration for the Category entity.
-///
-/// TODO: Complete the configuration by defining:
-///   - Table name, primary key
-///   - Name (required, max 256)
-///   - Slug (required, max 100, unique index)
-///   - One-to-many with Image (filtered to CategoryId)
-///   - Many-to-many with Playlist (join table "CategoryPlaylist")
 /// </summary>
 public class CategoryConfiguration : IEntityTypeConfiguration<Category>
 {
@@ -21,6 +14,20 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
         builder.ToTable("Categories");
         builder.HasKey(c => c.Id);
 
-        // TODO: Configure properties and relationships
+        builder.Property(c => c.Name)
+            .IsRequired()
+            .HasMaxLength(150);
+
+        builder.HasMany(c => c.Images)
+            .WithOne(i => i.Category)
+            .HasForeignKey(i => i.CategoryId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(c => c.Playlists)
+            .WithMany()
+            .UsingEntity(j => j.ToTable("CategoryPlaylist"));
+
+        builder.HasIndex(c => c.Name);
+
     }
 }

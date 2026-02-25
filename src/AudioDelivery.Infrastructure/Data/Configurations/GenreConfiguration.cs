@@ -6,12 +6,6 @@ namespace AudioDelivery.Infrastructure.Data.Configurations;
 
 /// <summary>
 /// EF Core configuration for the Genre entity.
-///
-/// TODO: Complete the configuration by defining:
-///   - Table name, primary key
-///   - Name property (required, max 100)
-///   - Unique index on Name (genre names should not duplicate)
-///   - Many-to-many with Artist is configured in ArtistConfiguration
 /// </summary>
 public class GenreConfiguration : IEntityTypeConfiguration<Genre>
 {
@@ -20,6 +14,11 @@ public class GenreConfiguration : IEntityTypeConfiguration<Genre>
         builder.ToTable("Genres");
         builder.HasKey(g => g.Id);
 
-        // TODO: Configure Name property and unique index
+        builder.Property(g => g.Name)
+            .IsRequired()
+            .HasMaxLength(100);
+
+        builder.HasIndex(g => g.Name)
+            .IsUnique();
     }
 }

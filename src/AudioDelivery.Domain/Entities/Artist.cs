@@ -41,7 +41,7 @@ public class Artist : BaseEntity
     public ICollection<Album> Albums { get; set; } = new List<Album>();
 
     /// <summary>
-    /// Tracks this artist performed (many-to-many).
+    /// Tracks this artist performs (many-to-many).
     /// </summary>
     public ICollection<Track> Tracks { get; set; } = new List<Track>();
 
@@ -54,4 +54,9 @@ public class Artist : BaseEntity
     /// Profile/promo images for the artist (one-to-many).
     /// </summary>
     public ICollection<Image> Images { get; set; } = new List<Image>();
+
+    /// <summary>
+    /// Gets or sets the collection of users who follow this artist (many-to-many).
+    /// </summary>
+    public ICollection<User> Followers { get; set; } = new List<User>();
 }
