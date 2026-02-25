@@ -6,13 +6,6 @@ namespace AudioDelivery.Infrastructure.Data.Configurations;
 
 /// <summary>
 /// EF Core configuration for the Playlist entity.
-///
-/// TODO: Complete the configuration by defining:
-///   - Table name, primary key, property constraints
-///   - Many-to-one with User (Playlist.OwnerId → User.Id)
-///   - One-to-many with PlaylistTrack
-///   - One-to-many with Image (filtered to PlaylistId)
-///   - Index on Name, OwnerId
 /// </summary>
 public class PlaylistConfiguration : IEntityTypeConfiguration<Playlist>
 {
@@ -21,9 +14,39 @@ public class PlaylistConfiguration : IEntityTypeConfiguration<Playlist>
         builder.ToTable("Playlists");
         builder.HasKey(p => p.Id);
 
-        // TODO: Configure properties – Name (required, max 256), Description, IsPublic, Collaborative
-        // TODO: Configure Owner relationship (required FK)
-        // TODO: Configure PlaylistTracks and Images relationships
-        // TODO: Add indexes
+        builder.Property(p => p.Name)
+            .IsRequired()
+            .HasMaxLength(150);
+
+        builder.Property(p => p.Description)
+            .HasMaxLength(300);
+
+        builder.Property(p => p.IsPublic)
+            .HasDefaultValue(false);
+
+        builder.Property(p => p.Collaborative)
+            .HasDefaultValue(false);
+
+        builder.Property(p => p.SnapshotId)
+            .HasMaxLength(100);
+
+        builder.Property(p => p.Uri)
+            .HasMaxLength(200);
+
+        builder.Property(p => p.ExternalUrl)
+            .HasMaxLength(500);
+
+        builder.HasMany(p => p.PlaylistTracks)
+            .WithOne(pt => pt.Playlist)
+            .HasForeignKey(pt => pt.PlaylistId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(p => p.Images)
+            .WithOne(i => i.Playlist)
+            .HasForeignKey(i => i.PlaylistId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasIndex(p => p.Name);
+        builder.HasIndex(p => p.OwnerId);
     }
 }

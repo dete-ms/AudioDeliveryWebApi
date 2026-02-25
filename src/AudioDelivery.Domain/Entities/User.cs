@@ -15,9 +15,9 @@ public class User : BaseEntity
     public string? DisplayName { get; set; }
 
     /// <summary>
-    /// The user's email address (unverified per Spotify docs).
+    /// The user's email address.
     /// </summary>
-    public string? Email { get; set; }
+    public string Email { get; set; } = string.Empty;
 
     /// <summary>
     /// ISO 3166-1 alpha-2 country code of the user's account.
@@ -37,7 +37,7 @@ public class User : BaseEntity
     /// <summary>
     /// Total number of followers this user has.
     /// </summary>
-    public int FollowerCount { get; set; }
+    public int FollowerCount => this.Followers.Count;
 
     // ── Navigation Properties ──
 
@@ -51,6 +51,28 @@ public class User : BaseEntity
     /// </summary>
     public ICollection<Image> Images { get; set; } = new List<Image>();
 
-    // TODO: Phase 2 – Add saved albums, saved tracks, and followed artists
-    //       as many-to-many navigation properties with dedicated join entities.
+    /// <summary>
+    /// Gets or sets the collection of artists that the user is currently following (many-to-many).
+    /// </summary>
+    public ICollection<Artist> FollowedArtists { get; set; } = new List<Artist>();
+
+    /// <summary>
+    /// Gets or sets the collection of albums that have been saved by the user (many-to-many).
+    /// </summary>
+    public ICollection<Album> SavedAlbums { get; set; } = new List<Album>();
+
+    /// <summary>
+    /// Gets or sets the collection of tracks that have been saved by the user (many-to-many).
+    /// </summary>
+    public ICollection<Track> SavedTracks { get; set; } = new List<Track>();
+
+    /// <summary>
+    /// Gets or sets the collection of users who follow this user (many-to-many).
+    /// </summary>
+    public ICollection<User> Followers { get; set; } = new List<User>();
+
+    /// <summary>
+    /// Gets or sets the collection of users that are currently followed by this user (many-to-many).
+    /// </summary>
+    public ICollection<User> FollowedUsers { get; set; } = new List<User>();
 }

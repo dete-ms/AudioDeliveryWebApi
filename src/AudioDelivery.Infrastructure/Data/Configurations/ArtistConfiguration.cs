@@ -6,14 +6,6 @@ namespace AudioDelivery.Infrastructure.Data.Configurations;
 
 /// <summary>
 /// EF Core configuration for the Artist entity.
-///
-/// TODO: Complete the configuration by defining:
-///   - Table name, primary key, property constraints
-///   - Many-to-many with Album (shared join table "ArtistAlbum")
-///   - Many-to-many with Track (join table "ArtistTrack")
-///   - Many-to-many with Genre (join table "ArtistGenre")
-///   - One-to-many with Image (filtered to ArtistId)
-///   - Index on Name for search performance
 /// </summary>
 public class ArtistConfiguration : IEntityTypeConfiguration<Artist>
 {
@@ -22,8 +14,43 @@ public class ArtistConfiguration : IEntityTypeConfiguration<Artist>
         builder.ToTable("Artists");
         builder.HasKey(a => a.Id);
 
-        // TODO: Configure properties – Name (required, max length 256), Popularity, FollowerCount, Uri
-        // TODO: Configure many-to-many relationships
-        // TODO: Add indexes
+        builder.Property(a => a.Name)
+            .IsRequired()
+            .HasMaxLength(50);
+
+        builder.Property(a => a.Popularity)
+            .HasDefaultValue(0);
+
+        builder.Property(a => a.FollowerCount)
+            .HasDefaultValue(0);
+
+        builder.Property(a => a.Uri)
+            .HasMaxLength(200);
+
+        builder.Property(a => a.ExternalUrl)
+            .HasMaxLength(500);
+
+        builder.HasMany(a => a.Albums)
+            .WithMany(al => al.Artists)
+            .UsingEntity(j => j.ToTable("ArtistAlbum"));
+
+        builder.HasMany(a => a.Tracks)
+            .WithMany(t => t.Artists)
+            .UsingEntity(j => j.ToTable("ArtistTrack"));
+
+        builder.HasMany(a => a.Genres)
+            .WithMany(g => g.Artists)
+            .UsingEntity(j => j.ToTable("ArtistGenre"));
+
+        builder.HasMany(a => a.Followers)
+            .WithMany(u => u.FollowedArtists)
+            .UsingEntity(j => j.ToTable("ArtistFollower"));
+
+        builder.HasMany(a => a.Images)
+            .WithOne(i => i.Artist)
+            .HasForeignKey(i => i.ArtistId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasIndex(a => a.Name);
     }
 }

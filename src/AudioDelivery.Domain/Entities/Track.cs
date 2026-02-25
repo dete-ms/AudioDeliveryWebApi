@@ -57,12 +57,6 @@ public class Track : BaseEntity
     /// </summary>
     public string? ExternalUrl { get; set; }
 
-    /// <summary>
-    /// International Standard Recording Code.
-    /// A unique identifier for recordings, used for rights management.
-    /// </summary>
-    public string? Isrc { get; set; }
-
     // ── Foreign Keys ──
 
     /// <summary>
@@ -83,4 +77,8 @@ public class Track : BaseEntity
     /// </summary>
     public ICollection<PlaylistTrack> PlaylistTracks { get; set; } = new List<PlaylistTrack>();
 
+    /// <summary>
+    /// Gets or sets the collection of users who have saved this item (many-to-many).
+    /// </summary>
+    public ICollection<User> SavedByUsers { get; set; } = new List<User>();
 }
