@@ -23,12 +23,12 @@ public interface IArtistService
     /// <summary>
     /// GET /artists/{id}/albums
     /// </summary>
-    Task<PaginatedResult<AlbumSummaryDto>> GetArtistAlbumsAsync(Guid artistId, int offset = 0, int limit = 20, string? market = null, CancellationToken cancellationToken = default);
+    Task<PaginatedResult<AlbumSummaryDto>> GetArtistAlbumsAsync(Guid artistId, int offset = 0, int limit = 20, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// GET /artists/{id}/top-tracks
     /// </summary>
-    Task<IReadOnlyList<TrackDto>> GetArtistTopTracksAsync(Guid artistId, string? market = null, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<TrackDto>> GetArtistTopTracksAsync(Guid artistId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// GET /artists/{id}/related-artists

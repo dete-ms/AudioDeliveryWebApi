@@ -20,28 +20,18 @@ This is the largest phase. You'll implement all the service methods that current
 Every service method follows this workflow:
 
 ```csharp
-public async Task<AlbumDto?> GetAlbumAsync(Guid id, string? market = null)
+public async Task<AlbumDto?> GetAlbumAsync(Guid id)
 {
     // Step 1: Query the database
     var album = await _context.Albums
         .Include(a => a.Artists)
         .Include(a => a.Images)
         .Include(a => a.Tracks)
-        .Include(a => a.Copyrights)
-        .Include(a => a.AvailableMarkets)
         .FirstOrDefaultAsync(a => a.Id == id);
 
     if (album is null) return null;
 
-    // Step 2: Apply market filtering (optional)
-    if (!string.IsNullOrEmpty(market))
-    {
-        // Check if album is available in the requested market
-        var isAvailable = album.AvailableMarkets.Any(m => m.Code == market);
-        if (!isAvailable) return null;
-    }
-
-    // Step 3: Map entity to DTO
+    // Step 2: Map entity to DTO
     return MapToAlbumDto(album);
 }
 
@@ -92,7 +82,7 @@ public class AlbumService : IAlbumService
         _albumRepository = albumRepository;
     }
 
-    public async Task<AlbumDto?> GetAlbumAsync(Guid id, string? market = null)
+    public async Task<AlbumDto?> GetAlbumAsync(Guid id)
     {
         var album = await _albumRepository.GetAlbumWithDetailsAsync(id);
         // ...
@@ -115,7 +105,7 @@ public class AlbumService : IAlbumService
         _context = context;
     }
 
-    public async Task<AlbumDto?> GetAlbumAsync(Guid id, string? market = null)
+    public async Task<AlbumDto?> GetAlbumAsync(Guid id)
     {
         var album = await _context.Albums
             .Include(a => a.Artists)
@@ -176,9 +166,11 @@ public class AlbumService : IAlbumService
 
 - [ ] `GetAvailableGenreSeedsAsync` – Return all genre names.
 
-### Markets (`MarketService.cs`)
+### Library (`LibraryService.cs`)
 
-- [ ] `GetAvailableMarketsAsync` – Return all market codes.
+- [ ] `SaveItemsAsync` – Save items by Spotify URI to user library.
+- [ ] `RemoveItemsAsync` – Remove items by Spotify URI from user library.
+- [ ] `CheckItemsAsync` – Return ordered bool array for each URI.
 
 ### Categories (`CategoryService.cs`)
 
@@ -249,7 +241,7 @@ dotnet run --project src/AudioDelivery.Api
 
 # Test endpoints via Swagger UI or curl:
 curl https://localhost:5001/api/v1/genres/seeds
-curl https://localhost:5001/api/v1/markets
+curl https://localhost:5001/api/v1/categories
 ```
 
 ## Next Phase

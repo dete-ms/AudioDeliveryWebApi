@@ -34,9 +34,9 @@ public class PlaylistsController : ControllerBase
     [HttpGet("playlists/{id:guid}")]
     [ProducesResponseType(typeof(PlaylistDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetPlaylist(Guid id, [FromQuery] string? market = null)
+    public async Task<IActionResult> GetPlaylist(Guid id)
     {
-        var result = await _playlistService.GetPlaylistAsync(id, market);
+        var result = await _playlistService.GetPlaylistAsync(id);
         if (result is null) return NotFound();
         return Ok(result);
     }
@@ -59,9 +59,9 @@ public class PlaylistsController : ControllerBase
     /// </summary>
     [HttpGet("playlists/{id:guid}/items")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetPlaylistTracks(Guid id, [FromQuery] int offset = 0, [FromQuery] int limit = 100, [FromQuery] string? market = null)
+    public async Task<IActionResult> GetPlaylistTracks(Guid id, [FromQuery] int offset = 0, [FromQuery] int limit = 100)
     {
-        var result = await _playlistService.GetPlaylistTracksAsync(id, offset, limit, market);
+        var result = await _playlistService.GetPlaylistTracksAsync(id, offset, limit);
         return Ok(result);
     }
 

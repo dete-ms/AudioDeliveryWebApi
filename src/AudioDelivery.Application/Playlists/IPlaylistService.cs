@@ -12,7 +12,7 @@ public interface IPlaylistService
     /// <summary>
     /// GET /playlists/{id}
     /// </summary>
-    Task<PlaylistDto?> GetPlaylistAsync(Guid id, string? market = null, CancellationToken cancellationToken = default);
+    Task<PlaylistDto?> GetPlaylistAsync(Guid id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// PUT /playlists/{id}
@@ -22,7 +22,7 @@ public interface IPlaylistService
     /// <summary>
     /// GET /playlists/{id}/items
     /// </summary>
-    Task<PaginatedResult<TrackDto>> GetPlaylistTracksAsync(Guid playlistId, int offset = 0, int limit = 100, string? market = null, CancellationToken cancellationToken = default);
+    Task<PaginatedResult<TrackDto>> GetPlaylistTracksAsync(Guid playlistId, int offset = 0, int limit = 100, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// POST /playlists/{id}/items

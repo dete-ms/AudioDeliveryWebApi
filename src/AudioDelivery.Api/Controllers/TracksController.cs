@@ -32,9 +32,9 @@ public class TracksController : ControllerBase
     [HttpGet("tracks/{id:guid}")]
     [ProducesResponseType(typeof(TrackDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetTrack(Guid id, [FromQuery] string? market = null)
+    public async Task<IActionResult> GetTrack(Guid id)
     {
-        var result = await _trackService.GetTrackAsync(id, market);
+        var result = await _trackService.GetTrackAsync(id);
         if (result is null) return NotFound();
         return Ok(result);
     }
@@ -44,10 +44,10 @@ public class TracksController : ControllerBase
     /// </summary>
     [HttpGet("tracks")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetSeveralTracks([FromQuery] string ids, [FromQuery] string? market = null)
+    public async Task<IActionResult> GetSeveralTracks([FromQuery] string ids)
     {
         var guidList = ids.Split(',').Select(s => Guid.Parse(s.Trim())).ToList();
-        var result = await _trackService.GetSeveralTracksAsync(guidList, market);
+        var result = await _trackService.GetSeveralTracksAsync(guidList);
         return Ok(new { tracks = result });
     }
 }

@@ -21,7 +21,7 @@ public class PlaylistService : IPlaylistService
         _userRepository = userRepository;
     }
 
-    public async Task<PlaylistDto?> GetPlaylistAsync(Guid id, string? market = null, CancellationToken cancellationToken = default)
+    public async Task<PlaylistDto?> GetPlaylistAsync(Guid id, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException("Implement in Phase 6");
     }
@@ -31,7 +31,7 @@ public class PlaylistService : IPlaylistService
         throw new NotImplementedException("Implement in Phase 6");
     }
 
-    public async Task<PaginatedResult<TrackDto>> GetPlaylistTracksAsync(Guid playlistId, int offset = 0, int limit = 100, string? market = null, CancellationToken cancellationToken = default)
+    public async Task<PaginatedResult<TrackDto>> GetPlaylistTracksAsync(Guid playlistId, int offset = 0, int limit = 100, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException("Implement in Phase 6");
     }

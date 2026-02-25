@@ -57,9 +57,9 @@ public class ArtistsController : ControllerBase
     /// </summary>
     [HttpGet("{id:guid}/albums")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetArtistAlbums(Guid id, [FromQuery] int offset = 0, [FromQuery] int limit = 20, [FromQuery] string? market = null)
+    public async Task<IActionResult> GetArtistAlbums(Guid id, [FromQuery] int offset = 0, [FromQuery] int limit = 20)
     {
-        var result = await _artistService.GetArtistAlbumsAsync(id, offset, limit, market);
+        var result = await _artistService.GetArtistAlbumsAsync(id, offset, limit);
         return Ok(result);
     }
 
@@ -68,9 +68,9 @@ public class ArtistsController : ControllerBase
     /// </summary>
     [HttpGet("{id:guid}/top-tracks")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetArtistTopTracks(Guid id, [FromQuery] string? market = null)
+    public async Task<IActionResult> GetArtistTopTracks(Guid id)
     {
-        var result = await _artistService.GetArtistTopTracksAsync(id, market);
+        var result = await _artistService.GetArtistTopTracksAsync(id);
         return Ok(new { tracks = result });
     }
 

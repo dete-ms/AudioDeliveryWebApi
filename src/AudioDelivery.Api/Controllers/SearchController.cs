@@ -30,7 +30,6 @@ public class SearchController : ControllerBase
     /// </summary>
     /// <param name="q">The search query.</param>
     /// <param name="type">Comma-separated list of types: album, artist, track, playlist.</param>
-    /// <param name="market">Optional ISO 3166-1 alpha-2 country code.</param>
     /// <param name="limit">Max results per type (default 20, max 50).</param>
     /// <param name="offset">Pagination offset (default 0).</param>
     [HttpGet]
@@ -39,14 +38,13 @@ public class SearchController : ControllerBase
     public async Task<IActionResult> Search(
         [FromQuery] string q,
         [FromQuery] string type,
-        [FromQuery] string? market = null,
         [FromQuery] int limit = 20,
         [FromQuery] int offset = 0)
     {
         if (string.IsNullOrWhiteSpace(q) || string.IsNullOrWhiteSpace(type))
             return BadRequest(new { error = "Both 'q' and 'type' query parameters are required." });
 
-        var result = await _searchService.SearchAsync(q, type, market, limit, offset);
+        var result = await _searchService.SearchAsync(q, type, limit, offset);
         return Ok(result);
     }
 }

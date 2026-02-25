@@ -30,15 +30,13 @@ public class AlbumsController : ControllerBase
     /// Get Spotify catalog information for a single album.
     /// </summary>
     /// <param name="id">The album ID.</param>
-    /// <param name="market">Optional ISO 3166-1 alpha-2 country code.</param>
     [HttpGet("{id:guid}")]
     [ProducesResponseType(typeof(AlbumDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAlbum(Guid id, [FromQuery] string? market = null)
+    public async Task<IActionResult> GetAlbum(Guid id)
     {
-        // TODO: Call _albumService.GetAlbumAsync(id, market)
-        //       Return Ok(result) if found, NotFound() if null
-        var result = await _albumService.GetAlbumAsync(id, market);
+        // TODO: Return Ok(result) if found, NotFound() if null
+        var result = await _albumService.GetAlbumAsync(id);
         if (result is null) return NotFound();
         return Ok(result);
     }
@@ -47,15 +45,13 @@ public class AlbumsController : ControllerBase
     /// Get Spotify catalog information for multiple albums by their IDs.
     /// </summary>
     /// <param name="ids">Comma-separated list of album IDs (max 20).</param>
-    /// <param name="market">Optional market filter.</param>
     [HttpGet]
     [ProducesResponseType(typeof(IReadOnlyList<AlbumDto>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetSeveralAlbums([FromQuery] string ids, [FromQuery] string? market = null)
+    public async Task<IActionResult> GetSeveralAlbums([FromQuery] string ids)
     {
         // TODO: Parse comma-separated ids string into Guid list
-        //       Call _albumService.GetSeveralAlbumsAsync(guidList, market)
         var guidList = ids.Split(',').Select(s => Guid.Parse(s.Trim())).ToList();
-        var result = await _albumService.GetSeveralAlbumsAsync(guidList, market);
+        var result = await _albumService.GetSeveralAlbumsAsync(guidList);
         return Ok(new { albums = result });
     }
 
@@ -65,9 +61,9 @@ public class AlbumsController : ControllerBase
     [HttpGet("{id:guid}/tracks")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAlbumTracks(Guid id, [FromQuery] int offset = 0, [FromQuery] int limit = 20, [FromQuery] string? market = null)
+    public async Task<IActionResult> GetAlbumTracks(Guid id, [FromQuery] int offset = 0, [FromQuery] int limit = 20)
     {
-        var result = await _albumService.GetAlbumTracksAsync(id, offset, limit, market);
+        var result = await _albumService.GetAlbumTracksAsync(id, offset, limit);
         return Ok(result);
     }
 

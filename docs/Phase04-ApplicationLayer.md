@@ -55,9 +55,9 @@ Each domain area has a service interface that defines available operations:
 ```csharp
 public interface IAlbumService
 {
-    Task<AlbumDto?> GetAlbumAsync(Guid id, string? market = null);
-    Task<IReadOnlyList<AlbumDto>> GetSeveralAlbumsAsync(IEnumerable<Guid> ids, string? market = null);
-    Task<PaginatedResult<TrackDto>> GetAlbumTracksAsync(Guid albumId, int offset, int limit, string? market = null);
+    Task<AlbumDto?> GetAlbumAsync(Guid id);
+    Task<IReadOnlyList<AlbumDto>> GetSeveralAlbumsAsync(IEnumerable<Guid> ids);
+    Task<PaginatedResult<TrackDto>> GetAlbumTracksAsync(Guid albumId, int offset, int limit);
     Task<PaginatedResult<AlbumSummaryDto>> GetNewReleasesAsync(int offset, int limit, string? country = null);
 }
 ```
@@ -72,13 +72,12 @@ public interface IAlbumService
 All service methods currently throw `NotImplementedException`:
 
 ```csharp
-public async Task<AlbumDto?> GetAlbumAsync(Guid id, string? market = null)
+public async Task<AlbumDto?> GetAlbumAsync(Guid id)
 {
     // TODO: Implement in Phase 6
     // 1. Use _albumRepository to fetch the album with includes
-    // 2. Apply market filtering if provided
-    // 3. Map Album entity to AlbumDto
-    // 4. Return the DTO (or null if not found)
+    // 2. Map Album entity to AlbumDto
+    // 3. Return the DTO (or null if not found)
     throw new NotImplementedException("Implement in Phase 6 – see docs/Phase06-ServiceImplementation.md");
 }
 ```
@@ -114,8 +113,8 @@ Mirrors Spotify's paginated response format:
 | Search | `ISearchService` | `SearchService` | `SearchResultDto` |
 | Users | `IUserService` | `UserService` | `UserProfileDto`, `PublicUserDto` |
 | Genres | `IGenreService` | `GenreService` | `GenreDto` |
-| Markets | `IMarketService` | `MarketService` | `MarketDto` |
 | Categories | `ICategoryService` | `CategoryService` | `CategoryDto` |
+| Library | `ILibraryService` | `LibraryService` | `LibraryItemRequest`, `LibraryCheckResult` |
 
 ## 4.6 DI Registration
 

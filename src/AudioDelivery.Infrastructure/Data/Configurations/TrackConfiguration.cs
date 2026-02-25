@@ -11,7 +11,6 @@ namespace AudioDelivery.Infrastructure.Data.Configurations;
 ///   - Table name, primary key, property constraints
 ///   - Many-to-one with Album (Track.AlbumId → Album.Id)
 ///   - Many-to-many with Artist (join table "ArtistTrack")
-///   - Many-to-many with Market (join table "TrackMarket")
 ///   - One-to-many with PlaylistTrack
 ///   - Index on Name, AlbumId for query performance
 /// </summary>
@@ -24,7 +23,7 @@ public class TrackConfiguration : IEntityTypeConfiguration<Track>
 
         // TODO: Configure properties – Name (required), DurationMs, TrackNumber, etc.
         // TODO: Configure Album relationship (required FK)
-        // TODO: Configure many-to-many relationships (Artists, Markets)
+        // TODO: Configure many-to-many relationship with Artists
         // TODO: Add indexes
     }
 }

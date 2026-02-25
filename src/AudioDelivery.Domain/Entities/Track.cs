@@ -79,11 +79,6 @@ public class Track : BaseEntity
     public ICollection<Artist> Artists { get; set; } = new List<Artist>();
 
     /// <summary>
-    /// Markets where this track is available (many-to-many).
-    /// </summary>
-    public ICollection<Market> AvailableMarkets { get; set; } = new List<Market>();
-
-    /// <summary>
     /// Playlists containing this track (many-to-many via PlaylistTrack).
     /// </summary>
     public ICollection<PlaylistTrack> PlaylistTracks { get; set; } = new List<PlaylistTrack>();

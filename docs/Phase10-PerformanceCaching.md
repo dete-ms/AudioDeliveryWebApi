@@ -51,7 +51,6 @@ public class GenreService : IGenreService
 | Endpoint | TTL | Reason |
 |----------|-----|--------|
 | Genre seeds | 24 hours | Rarely changes |
-| Markets | 24 hours | Rarely changes |
 | Categories | 1 hour | Changes occasionally |
 | Album details | 5 minutes | May update (popularity) |
 | Search results | No cache | Too variable |
@@ -203,7 +202,7 @@ curl -v https://localhost:5001/api/v1/genres/seeds
 # Should include: Cache-Control: public, max-age=86400
 
 # Check CORS headers
-curl -v -H "Origin: http://localhost:3000" https://localhost:5001/api/v1/markets
+curl -v -H "Origin: http://localhost:3000" https://localhost:5001/api/v1/categories
 # Should include: Access-Control-Allow-Origin: http://localhost:3000
 ```
 

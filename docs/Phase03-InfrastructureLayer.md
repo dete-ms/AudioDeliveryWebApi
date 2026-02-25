@@ -104,20 +104,10 @@ public void Configure(EntityTypeBuilder<Album> builder)
     builder.HasMany(a => a.Artists)
         .WithMany(ar => ar.Albums);
 
-    // Many Albums ↔ Many Markets
-    builder.HasMany(a => a.AvailableMarkets)
-        .WithMany(m => m.Albums);
-
     // One Album → Many Images
     builder.HasMany(a => a.Images)
         .WithOne()
         .HasForeignKey(i => i.AlbumId)
-        .OnDelete(DeleteBehavior.Cascade);
-
-    // One Album → Many Copyrights
-    builder.HasMany(a => a.Copyrights)
-        .WithOne(c => c.Album)
-        .HasForeignKey(c => c.AlbumId)
         .OnDelete(DeleteBehavior.Cascade);
 
     // 5. INDEXES (optional, improves query performance)
@@ -130,14 +120,13 @@ public void Configure(EntityTypeBuilder<Album> builder)
 
 Implement the `Configure` method body for each file:
 
-- [ ] `AlbumConfiguration.cs` – Table, properties, relationships to Artists/Tracks/Images/Copyrights/Markets
+- [ ] `AlbumConfiguration.cs` – Table, properties, relationships to Artists/Tracks/Images
 - [ ] `ArtistConfiguration.cs` – Table, properties, relationships to Genres/Images
-- [ ] `TrackConfiguration.cs` – Table, properties, FK to Album, relationships to Artists/Markets
+- [ ] `TrackConfiguration.cs` – Table, properties, FK to Album, relationship to Artists
 - [ ] `AudioFeaturesConfiguration.cs` – Table, properties, one-to-one with Track
 - [ ] `PlaylistConfiguration.cs` – Table, properties, FK to User (Owner), relationship to Images/PlaylistTracks
 - [ ] `UserConfiguration.cs` – Table, properties, relationships to Playlists/Images
 - [ ] `GenreConfiguration.cs` – Table, unique index on Name
-- [ ] `MarketConfiguration.cs` – Table, unique index on Code
 - [ ] `CategoryConfiguration.cs` – Table, properties, relationships to Images/Playlists
 
 ### Tips

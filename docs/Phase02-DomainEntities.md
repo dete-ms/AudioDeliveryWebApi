@@ -58,10 +58,8 @@ public abstract class BaseEntity
 | Playlist Track | `PlaylistTrack.cs` | Position, AddedAt (join entity) |
 | User | `User.cs` | DisplayName, Email, Country |
 | Genre | `Genre.cs` | Name |
-| Market | `Market.cs` | Code (ISO 3166-1), Name |
 | Category | `Category.cs` | Name, Slug |
 | Image | `Image.cs` | Url, Height, Width (polymorphic) |
-| Copyright | `Copyright.cs` | Text, Type |
 
 ## 2.4 Relationships
 
@@ -69,9 +67,7 @@ public abstract class BaseEntity
 
 ```
 Album ←→ Artist     (an album has multiple artists, an artist has multiple albums)
-Album ←→ Market     (an album is available in multiple markets)
 Track ←→ Artist     (a track features multiple artists)
-Track ←→ Market     (a track is available in multiple markets)
 Artist ←→ Genre     (an artist belongs to multiple genres)
 Category ←→ Playlist (a category contains multiple playlists)
 ```
@@ -82,7 +78,6 @@ EF Core handles these with **skip navigations** (implicit join tables) configure
 
 ```
 Album → Track       (an album contains multiple tracks)
-Album → Copyright   (an album has copyright entries)
 Album → Image       (an album has cover art)
 User → Playlist     (a user owns multiple playlists)
 Track → AudioFeatures (a track has one set of audio features)

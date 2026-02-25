@@ -14,26 +14,22 @@ public interface IAlbumService
     /// <summary>
     /// GET /albums/{id} – Get a single album by its ID.
     /// </summary>
-    Task<AlbumDto?> GetAlbumAsync(Guid id, string? market = null, CancellationToken cancellationToken = default);
+    Task<AlbumDto?> GetAlbumAsync(Guid id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// GET /albums?ids=... – Get several albums by their IDs.
     /// </summary>
-    Task<IReadOnlyList<AlbumDto>> GetSeveralAlbumsAsync(IEnumerable<Guid> ids, string? market = null, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<AlbumDto>> GetSeveralAlbumsAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// GET /albums/{id}/tracks – Get tracks for an album (paginated).
     /// </summary>
-    Task<PaginatedResult<AlbumSummaryDto>> GetAlbumTracksAsync(Guid albumId, int offset = 0, int limit = 20, string? market = null, CancellationToken cancellationToken = default);
+    Task<PaginatedResult<AlbumSummaryDto>> GetAlbumTracksAsync(Guid albumId, int offset = 0, int limit = 20, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// GET /browse/new-releases – Get new album releases.
     /// </summary>
     Task<PaginatedResult<AlbumSummaryDto>> GetNewReleasesAsync(int offset = 0, int limit = 20, string? country = null, CancellationToken cancellationToken = default);
 
-    // TODO: Add methods for user's saved albums:
-    //   - GetUserSavedAlbumsAsync(...)
-    //   - SaveAlbumsAsync(...)
-    //   - RemoveAlbumsAsync(...)
-    //   - CheckSavedAlbumsAsync(...)
+    // TODO: Add methods for user's saved albums (handled by LibraryService).
 }

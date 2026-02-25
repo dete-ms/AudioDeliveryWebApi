@@ -7,7 +7,7 @@ namespace AudioDelivery.Infrastructure.Repositories;
 ///
 /// TODO: Add methods like:
 ///   - GetArtistWithAlbumsAsync(Guid id)
-///   - GetArtistTopTracksAsync(Guid id, string market) – top tracks by popularity
+///   - GetArtistTopTracksAsync(Guid id) – top tracks by popularity
 ///   - GetRelatedArtistsAsync(Guid id) – artists sharing genres
 ///   - SearchArtistsAsync(string query, int offset, int limit)
 /// </summary>

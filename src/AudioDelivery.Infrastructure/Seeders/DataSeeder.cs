@@ -7,7 +7,7 @@ namespace AudioDelivery.Infrastructure.Seeders;
 ///
 /// This class populates:
 ///   - Genres: The standard Spotify genre seeds (e.g., "rock", "pop", "hip-hop", ...)
-///   - Markets: ISO 3166-1 alpha-2 country codes where the service is available
+///   - Categories: Browse categories (e.g., "Top Lists", "Mood", "Workout")
 ///   - (Optional) Sample artists, albums, tracks for development/testing
 ///
 /// HOW TO USE:
@@ -19,7 +19,7 @@ namespace AudioDelivery.Infrastructure.Seeders;
 ///   - After adding new reference data
 ///   - In development for quick testing with Swagger
 ///
-/// TODO: Implement SeedAsync with actual genre/market data.
+/// TODO: Implement SeedAsync with actual genre data.
 ///       Use context.Genres.AnyAsync() to check if already seeded (idempotent).
 /// </summary>
 public static class DataSeeder

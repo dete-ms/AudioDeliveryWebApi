@@ -31,12 +31,12 @@ public class ArtistService : IArtistService
         throw new NotImplementedException("Implement in Phase 6");
     }
 
-    public async Task<PaginatedResult<AlbumSummaryDto>> GetArtistAlbumsAsync(Guid artistId, int offset = 0, int limit = 20, string? market = null, CancellationToken cancellationToken = default)
+    public async Task<PaginatedResult<AlbumSummaryDto>> GetArtistAlbumsAsync(Guid artistId, int offset = 0, int limit = 20, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException("Implement in Phase 6");
     }
 
-    public async Task<IReadOnlyList<TrackDto>> GetArtistTopTracksAsync(Guid artistId, string? market = null, CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<TrackDto>> GetArtistTopTracksAsync(Guid artistId, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException("Implement in Phase 6");
     }

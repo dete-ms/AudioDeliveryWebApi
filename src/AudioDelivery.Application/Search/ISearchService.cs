@@ -13,8 +13,7 @@ public interface ISearchService
     /// </summary>
     /// <param name="query">The search query string.</param>
     /// <param name="types">Comma-separated types to search: "album", "artist", "track", "playlist".</param>
-    /// <param name="market">Optional ISO 3166-1 alpha-2 country code.</param>
     /// <param name="limit">Max results per type (default 20, max 50).</param>
     /// <param name="offset">Offset for pagination (default 0).</param>
-    Task<SearchResultDto> SearchAsync(string query, string types, string? market = null, int limit = 20, int offset = 0, CancellationToken cancellationToken = default);
+    Task<SearchResultDto> SearchAsync(string query, string types, int limit = 20, int offset = 0, CancellationToken cancellationToken = default);
 }

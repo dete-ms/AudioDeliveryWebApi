@@ -8,7 +8,7 @@ In this phase you'll:
 1. Complete the entity configurations (if not done in Phase 3)
 2. Create your first EF Core migration
 3. Apply the migration to create the database
-4. Seed initial data (genres, markets)
+4. Seed initial data (genres, categories)
 
 ## Prerequisites
 
@@ -128,19 +128,6 @@ public class DataSeeder
         };
         _context.Genres.AddRange(genres);
 
-        // Seed Markets (ISO 3166-1 alpha-2 codes)
-        var markets = new List<Market>
-        {
-            new() { Id = Guid.NewGuid(), Code = "US", Name = "United States" },
-            new() { Id = Guid.NewGuid(), Code = "GB", Name = "United Kingdom" },
-            new() { Id = Guid.NewGuid(), Code = "DE", Name = "Germany" },
-            new() { Id = Guid.NewGuid(), Code = "FR", Name = "France" },
-            new() { Id = Guid.NewGuid(), Code = "JP", Name = "Japan" },
-            new() { Id = Guid.NewGuid(), Code = "BG", Name = "Bulgaria" },
-            // Add more as needed...
-        };
-        _context.Markets.AddRange(markets);
-
         // Seed Categories
         var categories = new List<Category>
         {
@@ -208,8 +195,8 @@ Always check `if (await _context.Genres.AnyAsync()) return;` before seeding to p
 dotnet run --project src/AudioDelivery.Api
 
 # Check the database (use SSMS, Azure Data Studio, or SQL command line)
-SELECT COUNT(*) FROM Genres;   -- Should show seeded genres
-SELECT COUNT(*) FROM Markets;  -- Should show seeded markets
+SELECT COUNT(*) FROM Genres;      -- Should show seeded genres
+SELECT COUNT(*) FROM Categories;  -- Should show seeded categories
 ```
 
 ## Next Phase

@@ -29,23 +29,22 @@ public class AlbumService : IAlbumService
         _albumRepository = albumRepository;
     }
 
-    public async Task<AlbumDto?> GetAlbumAsync(Guid id, string? market = null, CancellationToken cancellationToken = default)
+    public async Task<AlbumDto?> GetAlbumAsync(Guid id, CancellationToken cancellationToken = default)
     {
         // TODO: Implement
         // 1. Fetch album from repository (with includes for artists, images, etc.)
         // 2. If not found, return null
         // 3. Map Album entity → AlbumDto
-        // 4. If market is specified, filter available_markets
         throw new NotImplementedException("Implement in Phase 6 – see docs/Phase06-ServiceLayer.md");
     }
 
-    public async Task<IReadOnlyList<AlbumDto>> GetSeveralAlbumsAsync(IEnumerable<Guid> ids, string? market = null, CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<AlbumDto>> GetSeveralAlbumsAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
     {
         // TODO: Implement – fetch multiple albums by ID list, map to DTOs
         throw new NotImplementedException("Implement in Phase 6");
     }
 
-    public async Task<PaginatedResult<AlbumSummaryDto>> GetAlbumTracksAsync(Guid albumId, int offset = 0, int limit = 20, string? market = null, CancellationToken cancellationToken = default)
+    public async Task<PaginatedResult<AlbumSummaryDto>> GetAlbumTracksAsync(Guid albumId, int offset = 0, int limit = 20, CancellationToken cancellationToken = default)
     {
         // TODO: Implement – fetch tracks for a specific album with pagination
         throw new NotImplementedException("Implement in Phase 6");

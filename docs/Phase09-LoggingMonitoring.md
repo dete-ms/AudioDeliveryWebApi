@@ -124,10 +124,10 @@ dotnet add src/AudioDelivery.Api package AspNetCore.HealthChecks.SqlServer
 
 ```csharp
 // ✅ DO: Use structured logging with named parameters
-_logger.LogInformation("Fetching album {AlbumId} for market {Market}", id, market);
+_logger.LogInformation("Fetching album {AlbumId}", id);
 
 // ❌ DON'T: Use string interpolation (breaks structured logging)
-_logger.LogInformation($"Fetching album {id} for market {market}");
+_logger.LogInformation($"Fetching album {id}");
 
 // ✅ DO: Log at appropriate levels
 _logger.LogDebug("Query returned {Count} results", items.Count);        // Detailed debugging
@@ -140,8 +140,8 @@ _logger.LogError(ex, "Failed to fetch album {AlbumId}", id);           // Errors
 
 ### Why Structured Logging?
 
-Traditional logging: `"Fetching album abc-123 for market US"` → just a string  
-Structured logging: `{ AlbumId: "abc-123", Market: "US" }` → searchable, filterable properties
+Traditional logging: `"Fetching album abc-123"` → just a string  
+Structured logging: `{ AlbumId: "abc-123" }` → searchable, filterable properties
 
 ### Correlation IDs
 

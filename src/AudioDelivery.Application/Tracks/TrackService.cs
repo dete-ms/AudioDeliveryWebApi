@@ -17,12 +17,12 @@ public class TrackService : ITrackService
         _trackRepository = trackRepository;
     }
 
-    public async Task<TrackDto?> GetTrackAsync(Guid id, string? market = null, CancellationToken cancellationToken = default)
+    public async Task<TrackDto?> GetTrackAsync(Guid id, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException("Implement in Phase 6");
     }
 
-    public async Task<IReadOnlyList<TrackDto>> GetSeveralTracksAsync(IEnumerable<Guid> ids, string? market = null, CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<TrackDto>> GetSeveralTracksAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException("Implement in Phase 6");
     }
