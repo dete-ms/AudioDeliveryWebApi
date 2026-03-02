@@ -127,7 +127,7 @@ Implement the `Configure` method body for each file:
 - [x] `UserConfiguration.cs` – Table, properties, relationships to Playlists/Images
 - [x] `GenreConfiguration.cs` – Table, unique index on Name
 - [x] `CategoryConfiguration.cs` – Table, properties, relationships to Images/Playlists
-- [ ] `PlaylistTrackConfiguration.cs` – Composite index on (PlaylistId, Position), SetNull on AddedByUser FK (see 3.5.1)
+- [x] `PlaylistTrackConfiguration.cs` – Composite index on (PlaylistId, Position), SetNull on AddedByUser FK (see 3.5.1)
 
 ### Tips
 
