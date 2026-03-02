@@ -36,11 +36,6 @@ public class PlaylistConfiguration : IEntityTypeConfiguration<Playlist>
         builder.Property(p => p.ExternalUrl)
             .HasMaxLength(500);
 
-        builder.HasMany(p => p.PlaylistTracks)
-            .WithOne(pt => pt.Playlist)
-            .HasForeignKey(pt => pt.PlaylistId)
-            .OnDelete(DeleteBehavior.Cascade);
-
         builder.HasMany(p => p.Images)
             .WithOne(i => i.Playlist)
             .HasForeignKey(i => i.PlaylistId)
