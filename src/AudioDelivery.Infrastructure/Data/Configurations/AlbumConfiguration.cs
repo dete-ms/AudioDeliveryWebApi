@@ -23,9 +23,6 @@ public class AlbumConfiguration : IEntityTypeConfiguration<Album>
             .IsRequired()
             .HasConversion<string>();
 
-        builder.Property(a => a.TotalTracks)
-            .HasDefaultValue(0);
-
         builder.Property(a => a.ReleaseDate)
             .HasMaxLength(15);
 

@@ -30,8 +30,6 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        // Register each domain service as Scoped
-        // Scoped = one instance per HTTP request, matching DbContext's lifetime
         services.AddScoped<IAlbumService, AlbumService>();
         services.AddScoped<IArtistService, ArtistService>();
         services.AddScoped<ITrackService, TrackService>();
