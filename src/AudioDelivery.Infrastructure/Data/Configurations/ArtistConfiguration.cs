@@ -42,6 +42,8 @@ public class ArtistConfiguration : IEntityTypeConfiguration<Artist>
             .WithMany(g => g.Artists)
             .UsingEntity(j => j.ToTable("ArtistGenre"));
 
+        // Restrict is intentional: deleting an artist should not silently remove user follow records.
+        // Use Cascade here if you prefer automatic cleanup, but Restrict surfaces the dependency.
         builder.HasMany(a => a.Followers)
             .WithMany(u => u.FollowedArtists)
             .UsingEntity(j => j.ToTable("ArtistFollower"));

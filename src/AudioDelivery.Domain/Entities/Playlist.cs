@@ -19,14 +19,13 @@ public class Playlist : BaseEntity
 
     /// <summary>
     /// Whether the playlist is public (visible on the user's profile).
-    /// null = status is not relevant.
     /// </summary>
-    public bool? IsPublic { get; set; }
+    public bool IsPublic { get; set; } = false;
 
     /// <summary>
     /// Whether the owner allows other users to modify the playlist.
     /// </summary>
-    public bool Collaborative { get; set; }
+    public bool Collaborative { get; set; } = false;
 
     /// <summary>
     /// Version identifier for the current playlist state.

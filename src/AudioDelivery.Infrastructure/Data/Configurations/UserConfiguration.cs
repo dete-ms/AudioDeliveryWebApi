@@ -6,9 +6,17 @@ namespace AudioDelivery.Infrastructure.Data.Configurations;
 
 /// <summary>
 /// EF Core configuration for the User entity.
-/// TODO: Check if artists needs to inherit from User or if we can keep them separate. 
-/// The reason for this concern are the followers.
-/// TODO: Authentication fields will be added later when we integrate Identity.
+///
+/// DESIGN NOTE — Artist vs User:
+/// Artist deliberately does NOT inherit from User. Artists are music catalog entities
+/// (acts, bands, historical artists) that may not have a user account. Users are account/
+/// security principals with Email, Country, and personal library. The overlapping fields
+/// (Uri, ExternalUrl, FollowerCount) are coincidental naming — different domain objects.
+/// If an artist has a user account they'll be linked via a nullable UserId FK on Artist,
+/// added in Phase 8 (Authentication).
+///
+/// TODO: Authentication fields (password hash, refresh tokens, roles) will be added
+/// when integrating ASP.NET Core Identity in Phase 8.
 /// </summary>
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {
@@ -25,7 +33,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasMaxLength(200);
 
         builder.Property(u => u.Country)
-            .IsRequired()
             .HasMaxLength(10);
 
         builder.Property(u => u.Uri)
