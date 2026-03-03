@@ -1,4 +1,5 @@
 using AudioDelivery.Application.Albums;
+using AudioDelivery.Application.Albums.Profiles;
 using AudioDelivery.Application.Artists;
 using AudioDelivery.Application.Categories;
 using AudioDelivery.Application.Genres;
@@ -7,6 +8,7 @@ using AudioDelivery.Application.Playlists;
 using AudioDelivery.Application.Search;
 using AudioDelivery.Application.Tracks;
 using AudioDelivery.Application.Users;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AudioDelivery.Api.Extensions;
 
@@ -30,6 +32,9 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
+        services.AddAutoMapper(cfg => { cfg.LicenseKey = "Add Lucky Penny Software license here"; }, 
+            typeof(AlbumProfile).Assembly);
+
         services.AddScoped<IAlbumService, AlbumService>();
         services.AddScoped<IArtistService, ArtistService>();
         services.AddScoped<ITrackService, TrackService>();

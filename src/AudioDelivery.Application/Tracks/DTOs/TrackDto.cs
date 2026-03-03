@@ -1,10 +1,10 @@
+using AudioDelivery.Application.Albums.DTOs;
+using AudioDelivery.Application.Artists.DTOs;
+
 namespace AudioDelivery.Application.Tracks.DTOs;
 
 /// <summary>
 /// Full track details returned by GET /api/v1/tracks/{id}.
-/// Maps to Spotify's TrackObject.
-///
-/// See: https://developer.spotify.com/documentation/web-api/reference/get-track
 /// </summary>
 public class TrackDto
 {
@@ -19,6 +19,6 @@ public class TrackDto
     public bool IsLocal { get; set; }
     public string Uri { get; set; } = string.Empty;
     public string? ExternalUrl { get; set; }
-
-    // TODO: Add Album (AlbumSummaryDto) and Artists (List<ArtistSummaryDto>)
+    public AlbumSummaryDto Album { get; set; } = null!;
+    public IList<ArtistSummaryDto> Artists { get; set; } = null!;
 }

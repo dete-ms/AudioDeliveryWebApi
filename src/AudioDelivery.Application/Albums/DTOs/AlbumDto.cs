@@ -1,17 +1,11 @@
+using AudioDelivery.Application.Artists.DTOs;
+using AudioDelivery.Application.Images.DTOs;
+using AudioDelivery.Application.Tracks.DTOs;
+
 namespace AudioDelivery.Application.Albums.DTOs;
 
 /// <summary>
 /// Full album details returned by GET /api/v1/albums/{id}.
-/// Maps to Spotify's AlbumObject.
-///
-/// TODO: Add properties matching the Spotify response:
-///   - Id, Name, AlbumType, TotalTracks, ReleaseDate, ReleaseDatePrecision
-///   - Popularity, Label, Uri, ExternalUrl
-///   - Artists (list of ArtistSummaryDto)
-///   - Images (list of ImageDto)
-///   - Tracks (PaginatedResult of TrackDto — optional, may come from a sub-endpoint)
-///
-/// See: https://developer.spotify.com/documentation/web-api/reference/get-an-album
 /// </summary>
 public class AlbumDto
 {
@@ -25,6 +19,7 @@ public class AlbumDto
     public string? Label { get; set; }
     public string Uri { get; set; } = string.Empty;
     public string? ExternalUrl { get; set; }
-
-    // TODO: Add nested DTOs for Artists, Images,
+    public IList<ArtistDto> Artists { get; set; } = null!;
+    public IList<TrackDto> Tracks { get; set; } = null!;
+    public IList<ImageDto> Images { get; set; } = null!;
 }

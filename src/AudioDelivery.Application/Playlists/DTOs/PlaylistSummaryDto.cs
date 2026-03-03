@@ -1,3 +1,6 @@
+using AudioDelivery.Application.Images.DTOs;
+using AudioDelivery.Application.Users.DTOs;
+
 namespace AudioDelivery.Application.Playlists.DTOs;
 
 /// <summary>
@@ -13,6 +16,6 @@ public class PlaylistSummaryDto
     public bool Collaborative { get; set; }
     public string Uri { get; set; } = string.Empty;
     public string? ExternalUrl { get; set; }
-
-    // TODO: Add Owner (PublicUserDto), Images
+    public PublicUserDto Owner { get; set; } = null!;
+    public IList<ImageDto> Images { get; set; } = null!;
 }

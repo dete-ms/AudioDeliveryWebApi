@@ -2,7 +2,6 @@ namespace AudioDelivery.Domain.Enums;
 
 /// <summary>
 /// The type of an album, matching Spotify's album_type field.
-/// See: https://developer.spotify.com/documentation/web-api/reference/get-an-album
 ///
 /// Values:
 ///   Album       – A full-length album release

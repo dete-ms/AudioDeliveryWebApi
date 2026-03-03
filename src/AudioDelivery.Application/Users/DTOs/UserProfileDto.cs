@@ -1,10 +1,9 @@
+using AudioDelivery.Application.Images.DTOs;
+
 namespace AudioDelivery.Application.Users.DTOs;
 
 /// <summary>
 /// Full user profile returned by GET /api/v1/me (current user).
-/// Maps to Spotify's PrivateUserObject.
-///
-/// See: https://developer.spotify.com/documentation/web-api/reference/get-current-users-profile
 /// </summary>
 public class UserProfileDto
 {
@@ -15,6 +14,5 @@ public class UserProfileDto
     public string Uri { get; set; } = string.Empty;
     public string? ExternalUrl { get; set; }
     public int FollowerCount { get; set; }
-
-    // TODO: Add Images list
+    public IList<ImageDto> Images { get; set; } = null!;
 }
