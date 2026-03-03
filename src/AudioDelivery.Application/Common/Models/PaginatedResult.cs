@@ -7,7 +7,7 @@ namespace AudioDelivery.Application.Common.Models;
 ///   { href, items, limit, offset, next, previous, total }
 ///
 /// Usage:
-///   return new PaginatedResult&lt;AlbumDto&gt;
+///   return new PaginatedResult<AlbumDto>;
 ///   {
 ///       Items = albumDtos,
 ///       Total = totalCount,
@@ -18,7 +18,6 @@ namespace AudioDelivery.Application.Common.Models;
 ///
 /// The Next/Previous properties can be computed from Offset, Limit, and Total.
 ///
-/// See: Any Spotify endpoint returning a "paging object"
 /// </summary>
 /// <typeparam name="T">The type of items in the page.</typeparam>
 public class PaginatedResult<T>

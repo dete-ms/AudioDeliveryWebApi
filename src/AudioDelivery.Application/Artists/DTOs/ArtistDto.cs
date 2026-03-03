@@ -1,10 +1,9 @@
+using AudioDelivery.Application.Images.DTOs;
+
 namespace AudioDelivery.Application.Artists.DTOs;
 
 /// <summary>
 /// Full artist details returned by GET /api/v1/artists/{id}.
-/// Maps to Spotify's ArtistObject.
-///
-/// See: https://developer.spotify.com/documentation/web-api/reference/get-an-artist
 /// </summary>
 public class ArtistDto
 {
@@ -15,6 +14,5 @@ public class ArtistDto
     public string Uri { get; set; } = string.Empty;
     public string? ExternalUrl { get; set; }
     public IList<string> Genres { get; set; } = new List<string>();
-
-    // TODO: Add Images list (ImageDto)
+    public IList<ImageDto> Images { get; set; } = new List<ImageDto>();
 }

@@ -6,7 +6,7 @@ namespace AudioDelivery.Application.Library.DTOs;
 public sealed class LibraryItemRequest
 {
     /// <summary>
-    /// A comma-separated list of Spotify URIs to save or remove (max 40).
+    /// A comma-separated list of URIs to save or remove (max 40).
     ///
     /// Examples:
     ///   "spotify:track:4iV5W9uYEdYUVa79Axb7Rh"

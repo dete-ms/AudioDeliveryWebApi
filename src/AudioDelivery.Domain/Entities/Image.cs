@@ -13,14 +13,14 @@ public class Image : BaseEntity
     public string Url { get; set; } = string.Empty;
 
     /// <summary>
-    /// The image height in pixels. Nullable because Spotify allows null.
+    /// The image height in pixels.
     /// </summary>
-    public int? Height { get; set; }
+    public int Height { get; set; }
 
     /// <summary>
-    /// The image width in pixels. Nullable because Spotify allows null.
+    /// The image width in pixels.
     /// </summary>
-    public int? Width { get; set; }
+    public int Width { get; set; }
 
     // ── Foreign Keys ──
     // Only ONE of these will be set per image row (polymorphic ownership).

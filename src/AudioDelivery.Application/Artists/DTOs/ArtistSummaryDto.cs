@@ -2,7 +2,6 @@ namespace AudioDelivery.Application.Artists.DTOs;
 
 /// <summary>
 /// Simplified artist representation used inside Album and Track responses.
-/// Maps to Spotify's SimplifiedArtistObject.
 /// </summary>
 public class ArtistSummaryDto
 {
