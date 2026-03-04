@@ -13,5 +13,7 @@ public class PlaylistProfile : Profile
                 dto => dto.Tracks,
                 opt => opt.MapFrom(src => src.PlaylistTracks)
             );
+
+        this.CreateMap<Playlist, PlaylistSummaryDto>();
     }
 }
