@@ -17,7 +17,7 @@ public class AlbumProfile : Profile
                 opt => opt.MapFrom(src => src.ReleaseDatePrecision.ToString().ToLowerInvariant()))
             .ForMember(
                 dto => dto.TotalTracks,
-                opt => opt.Ignore()
+                opt => opt.MapFrom(src => src.Tracks.Count)
             );
 
         this.CreateMap<Album, AlbumSummaryDto>()
@@ -26,7 +26,7 @@ public class AlbumProfile : Profile
                 opt => opt.MapFrom(src => src.AlbumType.ToString().ToLowerInvariant()))
             .ForMember(
                 dto => dto.TotalTracks,
-                opt => opt.Ignore()
+                opt => opt.MapFrom(src => src.Tracks.Count)
             );
 
     }
