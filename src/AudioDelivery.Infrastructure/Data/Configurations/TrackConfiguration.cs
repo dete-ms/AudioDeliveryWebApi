@@ -42,11 +42,6 @@ public class TrackConfiguration : IEntityTypeConfiguration<Track>
         builder.Property(t => t.ExternalUrl)
             .HasMaxLength(500);
 
-        builder.HasMany(t => t.PlaylistTracks)
-            .WithOne(pt => pt.Track)
-            .HasForeignKey(pt => pt.TrackId)
-            .OnDelete(DeleteBehavior.Cascade);
-
         builder.HasIndex(t => t.Name);
         builder.HasIndex(t => t.AlbumId);
 
