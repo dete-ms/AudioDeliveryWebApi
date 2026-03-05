@@ -1,4 +1,5 @@
 using AudioDelivery.Domain.Entities;
+using AudioDelivery.Domain.JoinTables;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -32,26 +33,59 @@ public class ArtistConfiguration : IEntityTypeConfiguration<Artist>
 
         builder.HasMany(a => a.Albums)
             .WithMany(al => al.Artists)
-            .UsingEntity(j => j.ToTable("ArtistAlbum"));
+            .UsingEntity<ArtistAlbum>(
+                j => j.HasOne(aa => aa.Album)
+                    .WithMany()
+                    .HasForeignKey(aa => aa.AlbumId)
+                    .OnDelete(DeleteBehavior.Cascade),
+                j => j.HasOne(aa => aa.Artist)
+                    .WithMany()
+                    .HasForeignKey(aa => aa.ArtistId)
+                    .OnDelete(DeleteBehavior.Cascade),
+                j => j.ToTable(nameof(ArtistAlbum))
+            );
 
         builder.HasMany(a => a.Tracks)
             .WithMany(t => t.Artists)
-            .UsingEntity(j => j.ToTable("ArtistTrack"));
+            .UsingEntity<ArtistTrack>(
+                j => j.HasOne(at => at.Track)
+                    .WithMany()
+                    .HasForeignKey(at => at.TrackId)
+                    .OnDelete(DeleteBehavior.Cascade),
+                j => j.HasOne(at => at.Artist)
+                    .WithMany()
+                    .HasForeignKey(at => at.ArtistId)
+                    .OnDelete(DeleteBehavior.Cascade),
+                j => j.ToTable(nameof(ArtistTrack))
+            );
 
         builder.HasMany(a => a.Genres)
             .WithMany(g => g.Artists)
-            .UsingEntity(j => j.ToTable("ArtistGenre"));
+            .UsingEntity<ArtistGenre>(
+                j => j.HasOne(ag => ag.Genre)
+                    .WithMany()
+                    .HasForeignKey(ag => ag.GenreId)
+                    .OnDelete(DeleteBehavior.Cascade),
+                j => j.HasOne(ag => ag.Artist)
+                    .WithMany()
+                    .HasForeignKey(ag => ag.ArtistId)
+                    .OnDelete(DeleteBehavior.Cascade),
+                j => j.ToTable(nameof(ArtistGenre))
+            );
 
-        // Restrict is intentional: deleting an artist should not silently remove user follow records.
-        // Use Cascade here if you prefer automatic cleanup, but Restrict surfaces the dependency.
         builder.HasMany(a => a.Followers)
             .WithMany(u => u.FollowedArtists)
-            .UsingEntity(j => j.ToTable("ArtistFollower"));
-
-        builder.HasMany(a => a.Images)
-            .WithOne(i => i.Artist)
-            .HasForeignKey(i => i.ArtistId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .UsingEntity<ArtistFollower>(
+                j => j.HasOne(af => af.User)
+                    .WithMany()
+                    .HasForeignKey(af => af.UserId)
+                    .OnDelete(DeleteBehavior.Cascade),
+                j => j.HasOne(af => af.Artist)
+                    .WithMany()
+                    .HasForeignKey(af => af.ArtistId)
+                    .OnDelete(DeleteBehavior.Cascade),
+                j => j.ToTable(nameof(ArtistFollower))
+            );
 
         builder.HasIndex(a => a.Name);
     }

@@ -1,4 +1,5 @@
 using AudioDelivery.Domain.Entities;
+using AudioDelivery.Domain.JoinTables;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -25,7 +26,17 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
 
         builder.HasMany(c => c.Playlists)
             .WithMany()
-            .UsingEntity(j => j.ToTable("CategoryPlaylist"));
+            .UsingEntity<CategoryPlaylist>(
+                j => j.HasOne(cp => cp.Playlist)
+                    .WithMany()
+                    .HasForeignKey(cp => cp.PlaylistId)
+                    .OnDelete(DeleteBehavior.Cascade),
+                j => j.HasOne(cp => cp.Category)
+                    .WithMany()
+                    .HasForeignKey(cp => cp.CategoryId)
+                    .OnDelete(DeleteBehavior.Cascade),
+                j => j.ToTable(nameof(CategoryPlaylist))
+            );
 
         builder.HasIndex(c => c.Name);
 

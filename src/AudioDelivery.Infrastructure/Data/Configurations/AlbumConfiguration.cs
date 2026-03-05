@@ -45,11 +45,6 @@ public class AlbumConfiguration : IEntityTypeConfiguration<Album>
             .HasForeignKey(t => t.AlbumId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasMany(a => a.Images)
-            .WithOne(i => i.Album)
-            .HasForeignKey(i => i.AlbumId)
-            .OnDelete(DeleteBehavior.Cascade);
-
         builder.HasIndex(a => a.Name);
         builder.HasIndex(a => a.AlbumType);
     }
