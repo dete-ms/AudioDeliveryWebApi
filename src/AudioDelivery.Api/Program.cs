@@ -3,6 +3,7 @@ using AudioDelivery.Api.Middleware;
 using AudioDelivery.Infrastructure.Data;
 using AudioDelivery.Infrastructure.Extensions;
 using AudioDelivery.Infrastructure.Seeders;
+using Microsoft.EntityFrameworkCore;
 
 // =============================================================================
 // Program.cs – Application Entry Point
@@ -91,11 +92,14 @@ app.MapControllers();
 
 using var scope = app.Services.CreateScope();
 var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-//await DataSeeder.SeedRealDataAsync(dbContext);
+await dbContext.Database.MigrateAsync(); // so that we don't have to run update-database manually
+//var seeder = new DataSeeder(dbContext);
+//await seeder.SeedRealDataAsync();
 
 if (app.Environment.IsDevelopment())
 {
-    await DataSeeder.SeedTestDataAsync(dbContext);
+    var seeder = new DataSeeder(dbContext);
+    await seeder.SeedTestDataAsync();
 }
 
 app.Run();
