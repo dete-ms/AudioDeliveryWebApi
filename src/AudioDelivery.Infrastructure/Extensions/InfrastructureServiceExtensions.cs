@@ -21,34 +21,21 @@ public static class InfrastructureServiceExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        // ── Register DbContext ──
-        // Uses SQL Server if a connection string is configured,
-        // otherwise falls back to InMemory for development/testing.
         var connectionString = configuration.GetConnectionString("DefaultConnection");
 
         services.AddDbContext<AppDbContext>(options =>
         {
-            if (!string.IsNullOrEmpty(connectionString) 
-                && !connectionString.Contains("PLACEHOLDER", System.StringComparison.OrdinalIgnoreCase))
+            options.UseSqlServer(connectionString, sqlOptions =>
             {
-                options.UseSqlServer(connectionString, sqlOptions =>
-                {
-                    // Tell EF Core that migrations live in the Infrastructure assembly
-                    sqlOptions.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName);
-                });
-            }
-            else
-            {
-                // Fallback: InMemory database for quick testing without SQL Server
-                // TODO Phase 5: Set up your SQL Server and update the connection string
-                options.UseInMemoryDatabase("AudioDeliveryDb");
-            }
+                sqlOptions.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName);
+            });
+
+            // Fallback: InMemory database for quick testing without SQL Server
+            // options.UseInMemoryDatabase("AudioDeliveryDb");
         });
 
-        // ── Register Generic Repository ──
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
-        // ── Register Domain-Specific Repositories ──
         services.AddScoped<IAlbumRepository, AlbumRepository>();
         services.AddScoped<IArtistRepository, ArtistRepository>();
         services.AddScoped<ITrackRepository, TrackRepository>();

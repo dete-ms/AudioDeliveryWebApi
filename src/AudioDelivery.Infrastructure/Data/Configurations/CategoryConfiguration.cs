@@ -1,5 +1,6 @@
 using AudioDelivery.Domain.Entities;
 using AudioDelivery.Domain.JoinTables;
+using AudioDelivery.Infrastructure.Seeders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -40,5 +41,21 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
 
         builder.HasIndex(c => c.Name);
 
+        builder.HasData(LoadData());
+    }
+
+    private static IEnumerable<Category> LoadData()
+    {
+        var names = DataSeeder.LoadNamesFromXml("categories.xml", nameof(Category));
+
+        var index = 0;
+        foreach (var name in names)
+        {
+            yield return new Category
+            {
+                Id = Guid.Parse($"b1000000-0000-0000-0000-{index++ + 1:000000000000}"),
+                Name = name
+            };
+        }
     }
 }

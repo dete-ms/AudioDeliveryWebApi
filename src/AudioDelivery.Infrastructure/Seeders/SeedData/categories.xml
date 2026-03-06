@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Categories>
+
+  <!-- ─── Discovery & Editorial ─────────────────────────────────── -->
+  <Category name="Music" />
+  <Category name="New Releases" />
+  <Category name="Upcoming Releases" />
+  <Category name="Made For You" />
+  <Category name="Discover" />
+  <Category name="Fresh Finds" />
+  <Category name="Trending" />
+  <Category name="Spotify Singles" />
+  <Category name="EQUAL" />
+  <Category name="RADAR" />
+  <Category name="Mixed By" />
+
+  <!-- ─── Charts ────────────────────────────────────────────────── -->
+  <Category name="Charts" />
+  <Category name="Podcast Charts" />
+
+  <!-- ─── Genre ─────────────────────────────────────────────────── -->
+  <Category name="Pop" />
+  <Category name="Hip-Hop" />
+  <Category name="Rock" />
+  <Category name="Latin" />
+  <Category name="Dance/Electronic" />
+  <Category name="Country" />
+  <Category name="R&amp;B" />
+  <Category name="K-Pop" />
+  <Category name="Indie" />
+  <Category name="Metal" />
+  <Category name="Jazz" />
+  <Category name="Blues" />
+  <Category name="Soul" />
+  <Category name="Classical" />
+  <Category name="Punk" />
+  <Category name="Ambient" />
+  <Category name="Folk &amp; Acoustic" />
+  <Category name="Funk &amp; Disco" />
+  <Category name="Alternative" />
+  <Category name="Afro" />
+  <Category name="Caribbean" />
+  <Category name="Instrumental" />
+
+  <!-- ─── Mood & Activity ───────────────────────────────────────── -->
+  <Category name="Mood" />
+  <Category name="Chill" />
+  <Category name="Sleep" />
+  <Category name="Party" />
+  <Category name="Workout" />
+  <Category name="Focus" />
+  <Category name="Love" />
+  <Category name="Summer" />
+  <Category name="At Home" />
+  <Category name="Wellness" />
+  <Category name="Nature &amp; Noise" />
+
+  <!-- ─── Decades ───────────────────────────────────────────────── -->
+  <Category name="Decades" />
+
+  <!-- ─── Lifestyle ─────────────────────────────────────────────── -->
+  <Category name="Travel" />
+  <Category name="Cooking &amp; Dining" />
+  <Category name="Gaming" />
+  <Category name="Kids &amp; Family" />
+  <Category name="Songwriters" />
+
+  <!-- ─── Podcast & Media ───────────────────────────────────────── -->
+  <Category name="Podcasts" />
+  <Category name="Educational" />
+  <Category name="Documentary" />
+  <Category name="Comedy" />
+  <Category name="TV &amp; Movies" />
+  <Category name="Anime" />
+  <Category name="Netflix" />
+
+  <!-- ─── Live ──────────────────────────────────────────────────── -->
+  <Category name="Live Events" />
+  <Category name="Radio" />
+
+</Categories>
