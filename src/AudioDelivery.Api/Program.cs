@@ -1,6 +1,8 @@
 using AudioDelivery.Api.Extensions;
 using AudioDelivery.Api.Middleware;
+using AudioDelivery.Infrastructure.Data;
 using AudioDelivery.Infrastructure.Extensions;
+using AudioDelivery.Infrastructure.Seeders;
 
 // =============================================================================
 // Program.cs – Application Entry Point
@@ -86,5 +88,14 @@ app.UseAuthorization();
 app.MapControllers();
 
 // ── 4. RUN ──────────────────────────────────────────────────────────────────
+
+using var scope = app.Services.CreateScope();
+var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+//await DataSeeder.SeedRealDataAsync(dbContext);
+
+if (app.Environment.IsDevelopment())
+{
+    await DataSeeder.SeedTestDataAsync(dbContext);
+}
 
 app.Run();

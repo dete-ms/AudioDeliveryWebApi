@@ -13,20 +13,197 @@ In this phase you'll:
 
 ## Prerequisites
 
-- SQL Server instance running (local, Docker, or Azure SQL)
-- Connection string configured in `appsettings.Development.json`
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running
+- Connection string configured in `appsettings.Development.json` (see [section below](#connection-string))
 
-### Quick SQL Server Setup with Docker
+---
 
+## SQL Server Setup with Docker
+
+Running SQL Server in Docker means **zero local SQL Server installation**, and the identical setup works on every PC you own. The `docker-compose.yml` at the repo root defines the container so spinning it up is a single command.
+
+### Why Docker for SQL Server?
+
+| Concern | Answer |
+|---------|--------|
+| Cross-platform | Runs on Windows, macOS (Intel & ARM), Linux |
+| No local install | No SQL Server edition to license or manage |
+| Reproducible | Everyone on the project gets the exact same version |
+| Persistent data | Named volume survives restarts and image updates |
+| Portable | One `docker-compose up -d` on any machine with Docker |
+
+---
+
+### Option A — docker-compose (Recommended)
+
+A `docker-compose.yml` is already included in the repo root. Use it on every PC you work from.
+
+**Start the SQL Server container:**
 ```bash
-docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=YourStrong!Pass123" \
-  -p 1433:1433 -d mcr.microsoft.com/mssql/server:2022-latest
+# From the repo root (d:\Coding Projects\AudioDeliveryWebApi)
+docker-compose up -d
 ```
 
-Then update your connection string:
+**What the compose file creates:**
+
+| Setting | Value |
+|---------|-------|
+| Image | `mcr.microsoft.com/mssql/server:2022-latest` |
+| Container name | `audiodelivery-sql` |
+| SA password | `YourStrong!Pass123` |
+| Port | `1433:1433` (host:container) |
+| Data volume | `audiodelivery-sqldata` (named, persists data) |
+| Restart policy | `unless-stopped` (auto-starts with Docker) |
+
+**Other useful compose commands:**
+
+```bash
+# Check status
+docker-compose ps
+
+# View SQL Server logs
+docker-compose logs -f sqlserver
+
+# Stop the container (data preserved in named volume)
+docker-compose stop
+
+# Stop and remove the container (data still preserved in named volume)
+docker-compose down
+
+# ⚠️ Stop, remove container AND delete all data (full reset)
+docker-compose down -v
+```
+
+---
+
+### Option B — docker run (Manual, One-Off)
+
+If you prefer not to use the compose file, run this command directly:
+
+```bash
+docker run \
+  --name audiodelivery-sql \
+  -e "ACCEPT_EULA=Y" \
+  -e "SA_PASSWORD=YourStrong!Pass123" \
+  -e "MSSQL_PID=Developer" \
+  -p 1433:1433 \
+  -v audiodelivery-sqldata:/var/opt/mssql \
+  --restart unless-stopped \
+  -d mcr.microsoft.com/mssql/server:2022-latest
+```
+
+> The `-v audiodelivery-sqldata:/var/opt/mssql` flag attaches the same named volume used by the
+> compose file, so the data persists between container restarts and removals.
+
+**Manage the container:**
+
+```bash
+docker stop audiodelivery-sql    # Stop (preserves data)
+docker start audiodelivery-sql   # Restart
+docker rm audiodelivery-sql      # Remove container (data still in volume)
+```
+
+---
+
+### Verify SQL Server is Running
+
+**1. Check the container is up:**
+```bash
+docker ps --filter "name=audiodelivery-sql"
+```
+
+Expected output includes `STATUS: Up ... (healthy)` once the health check passes (~30 s after first start).
+
+**2. Check SQL Server logs:**
+```bash
+docker logs audiodelivery-sql
+```
+
+Look for:
+```
+SQL Server is now ready for client connections. This is an informational message...
+```
+
+**3. Test connectivity from inside the container:**
+```bash
+docker exec -it audiodelivery-sql \
+  /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "YourStrong!Pass123" -Q "SELECT @@VERSION" -No -C
+```
+
+You should receive the SQL Server version string as output.
+
+---
+
+### Named Volume — Data Persistence
+
+Docker volumes keep your database data alive across container lifecycles.
+
+```bash
+# List all volumes
+docker volume ls
+
+# Inspect the volume (shows where Docker stores the data on your host)
+docker volume inspect audiodelivery-sqldata
+```
+
+| Command | Container | Volume (data) |
+|---------|-----------|---------------|
+| `docker-compose stop` | Stopped | ✅ Preserved |
+| `docker-compose down` | Removed | ✅ Preserved |
+| `docker-compose down -v` | Removed | ❌ **Deleted** |
+
+---
+
+### Connection String {#connection-string}
+
+Docker SQL Server uses **SQL authentication** (SA login), not Windows Authentication.
+Update `src/AudioDelivery.Api/appsettings.Development.json` to:
+
 ```json
 "DefaultConnection": "Server=localhost;Database=AudioDeliveryDb_Dev;User Id=sa;Password=YourStrong!Pass123;TrustServerCertificate=True;"
 ```
+
+> ⚠️ The existing value uses `Trusted_Connection=True` (Windows Auth), which **will not work**
+> with a Docker SQL Server container. Replace the entire connection string with the SA-password
+> version above.
+
+---
+
+### Troubleshooting
+
+**Port 1433 already in use**
+
+Another SQL Server instance (local install or another container) is bound to port 1433. Either stop the conflicting instance, or map to a different host port in `docker-compose.yml`:
+
+```yaml
+ports:
+  - "1434:1433"   # host port 1434 → container port 1433
+```
+
+Then update your connection string to use port 1434:
+```
+Server=localhost,1434;Database=AudioDeliveryDb_Dev;...
+```
+
+**Password complexity error**
+
+SQL Server requires the SA password to contain uppercase, lowercase, digits, and special characters, and be at least 8 characters. `YourStrong!Pass123` satisfies this. If you choose your own password, ensure it meets these requirements.
+
+**ARM64 / Apple Silicon (M-series Macs)**
+
+The `mcr.microsoft.com/mssql/server` image does not support ARM64. Use the Azure SQL Edge image instead:
+
+```yaml
+image: mcr.microsoft.com/azure-sql-edge:latest
+```
+
+This is a compatible lightweight SQL Server variant that runs natively on ARM64. The connection string and behaviour are identical.
+
+**Container exits immediately**
+
+Run `docker logs audiodelivery-sql` — the most common cause is a password that doesn't meet complexity requirements or a port conflict logged at startup.
+
+---
 
 ### Alternative: In-Memory Database (No SQL Server Needed)
 

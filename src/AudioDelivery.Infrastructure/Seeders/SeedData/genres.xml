@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Genres>
+
+  <!-- ─── Rock ─────────────────────────────────────────────────── -->
+  <Genre name="Rock" />
+  <Genre name="Alternative Rock" />
+  <Genre name="Indie Rock" />
+  <Genre name="Grunge" />
+  <Genre name="Progressive Rock" />
+  <Genre name="Psychedelic Rock" />
+  <Genre name="Art Rock" />
+  <Genre name="Surf Rock" />
+  <Genre name="Stoner Rock" />
+  <Genre name="Shoegaze" />
+  <Genre name="Post-Rock" />
+  <Genre name="Math Rock" />
+  <Genre name="Britpop" />
+
+  <!-- ─── Metal ─────────────────────────────────────────────────── -->
+  <Genre name="Metal" />
+  <Genre name="Heavy Metal" />
+  <Genre name="Thrash Metal" />
+  <Genre name="Death Metal" />
+  <Genre name="Black Metal" />
+  <Genre name="Power Metal" />
+  <Genre name="Progressive Metal" />
+  <Genre name="Symphonic Metal" />
+  <Genre name="Doom Metal" />
+  <Genre name="Folk Metal" />
+  <Genre name="Melodic Death Metal" />
+  <Genre name="Metalcore" />
+
+  <!-- ─── Punk ──────────────────────────────────────────────────── -->
+  <Genre name="Punk Rock" />
+  <Genre name="Hardcore Punk" />
+  <Genre name="Post-Punk" />
+  <Genre name="Post-Hardcore" />
+  <Genre name="Ska Punk" />
+  <Genre name="Emo" />
+  <Genre name="Gothic Rock" />
+
+  <!-- ─── Pop ───────────────────────────────────────────────────── -->
+  <Genre name="Pop" />
+  <Genre name="Synth-Pop" />
+  <Genre name="New Wave" />
+  <Genre name="Dance-Pop" />
+  <Genre name="Disco" />
+  <Genre name="Latin Pop" />
+  <Genre name="K-Pop" />
+  <Genre name="J-Pop" />
+  <Genre name="Mandopop" />
+
+  <!-- ─── Hip-Hop / R&B ─────────────────────────────────────────── -->
+  <Genre name="Hip-Hop" />
+  <Genre name="Rap" />
+  <Genre name="Trap" />
+  <Genre name="Drill" />
+  <Genre name="Boom Bap" />
+  <Genre name="G-Funk" />
+  <Genre name="Crunk" />
+  <Genre name="Grime" />
+  <Genre name="R&amp;B" />
+  <Genre name="Soul" />
+  <Genre name="Neo-Soul" />
+  <Genre name="New Jack Swing" />
+  <Genre name="Funk" />
+
+  <!-- ─── Electronic / Dance ────────────────────────────────────── -->
+  <Genre name="Electronic" />
+  <Genre name="House" />
+  <Genre name="Deep House" />
+  <Genre name="Progressive House" />
+  <Genre name="Acid House" />
+  <Genre name="Techno" />
+  <Genre name="Trance" />
+  <Genre name="Psytrance" />
+  <Genre name="Dubstep" />
+  <Genre name="Drum and Bass" />
+  <Genre name="Hardstyle" />
+  <Genre name="Gabber" />
+  <Genre name="Hardcore" />
+  <Genre name="UK Garage" />
+  <Genre name="Breakbeat" />
+  <Genre name="Electro" />
+  <Genre name="Electro Swing" />
+  <Genre name="IDM" />
+  <Genre name="EBM" />
+  <Genre name="Synthwave" />
+  <Genre name="Vaporwave" />
+  <Genre name="Future Bass" />
+  <Genre name="Glitch Hop" />
+  <Genre name="Trip Hop" />
+  <Genre name="Chillout" />
+  <Genre name="Lo-Fi" />
+  <Genre name="Ambient" />
+
+  <!-- ─── Jazz / Blues ──────────────────────────────────────────── -->
+  <Genre name="Jazz" />
+  <Genre name="Blues" />
+  <Genre name="Soul Blues" />
+
+  <!-- ─── Country / Folk / Roots ────────────────────────────────── -->
+  <Genre name="Country" />
+  <Genre name="Folk" />
+  <Genre name="Bluegrass" />
+  <Genre name="Americana" />
+  <Genre name="Cajun" />
+  <Genre name="Zydeco" />
+
+  <!-- ─── Classical ─────────────────────────────────────────────── -->
+  <Genre name="Classical" />
+  <Genre name="Opera" />
+  <Genre name="Baroque" />
+  <Genre name="Romantic" />
+  <Genre name="Impressionism" />
+  <Genre name="Contemporary Classical" />
+  <Genre name="Minimalism" />
+  <Genre name="Avant-Garde" />
+  <Genre name="Experimental" />
+
+  <!-- ─── Reggae / Caribbean ────────────────────────────────────── -->
+  <Genre name="Reggae" />
+  <Genre name="Ska" />
+  <Genre name="Dancehall" />
+  <Genre name="Reggaeton" />
+
+  <!-- ─── Latin / World ─────────────────────────────────────────── -->
+  <Genre name="Salsa" />
+  <Genre name="Bachata" />
+  <Genre name="Merengue" />
+  <Genre name="Cumbia" />
+  <Genre name="Flamenco" />
+  <Genre name="Bossa Nova" />
+  <Genre name="Samba" />
+  <Genre name="Tango" />
+  <Genre name="Afrobeat" />
+  <Genre name="Afropop" />
+  <Genre name="Highlife" />
+  <Genre name="Rai" />
+  <Genre name="Qawwali" />
+  <Genre name="Bollywood" />
+  <Genre name="World Music" />
+  <Genre name="Ethno" />
+
+  <!-- ─── Gospel / Spiritual ────────────────────────────────────── -->
+  <Genre name="Gospel" />
+  <Genre name="Christian Rock" />
+
+  <!-- ─── European / Other ──────────────────────────────────────── -->
+  <Genre name="Polka" />
+  <Genre name="Chanson" />
+  <Genre name="Schlager" />
+
+  <!-- ─── Soundtrack / Score ────────────────────────────────────── -->
+  <Genre name="Soundtrack" />
+  <Genre name="Industrial" />
+
+</Genres>

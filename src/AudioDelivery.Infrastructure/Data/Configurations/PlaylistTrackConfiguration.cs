@@ -35,7 +35,7 @@ public class PlaylistTrackConfiguration : IEntityTypeConfiguration<PlaylistTrack
             .WithMany()
             .HasForeignKey(pt => pt.AddedByUserId)
             .IsRequired(false)
-            .OnDelete(DeleteBehavior.SetNull);
+            .OnDelete(DeleteBehavior.NoAction);
 
         builder.HasIndex(pt => new { pt.PlaylistId, pt.Position });
     }

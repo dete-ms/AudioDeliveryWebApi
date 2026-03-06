@@ -26,8 +26,6 @@ public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-    // ── DbSets ──────────────────────────────────────────────────────────────
-
     public DbSet<Album> Albums => Set<Album>();
     public DbSet<Artist> Artists => Set<Artist>();
     public DbSet<Track> Tracks => Set<Track>();
@@ -38,30 +36,16 @@ public class AppDbContext : DbContext
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<Image> Images => Set<Image>();
 
-    // ── Model Configuration ─────────────────────────────────────────────────
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        // Apply all IEntityTypeConfiguration<T> classes from this assembly.
         // This keeps the DbContext clean — each entity's config lives in its own file.
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
     }
 
-    // ── Automatic Audit Timestamps ──────────────────────────────────────────
-
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        // TODO: Implement auto-setting of CreatedAt / UpdatedAt
-        // 
-        // Loop through ChangeTracker.Entries<BaseEntity>() and:
-        //   - If state == EntityState.Added → set CreatedAt = UpdatedAt = DateTime.UtcNow
-        //   - If state == EntityState.Modified → set UpdatedAt = DateTime.UtcNow
-        //
-        // This ensures every entity gets consistent timestamps without
-        // needing to remember to set them manually in every service method.
-
         foreach (var entry in ChangeTracker.Entries<BaseEntity>())
         {
             switch (entry.State)

@@ -7,9 +7,13 @@ namespace AudioDelivery.Infrastructure.Data.Configurations;
 /// <summary>
 /// Configures the entity mapping for the Image type in the Entity Framework model.
 /// </summary>
-/// <remarks>The DeleteBehavior is set to NoAction by design. 
-/// Deleting images should be performed manually because cascade delete may cause cycles or multiple cascade paths.
-/// Remember to .Include() and/or .ThenInclude() the Images when deleting.</remarks>
+/// <remarks>
+/// The DeleteBehavior is set to NoAction by design to avoid cascade delete cycles or multiple cascade paths.
+/// When deleting a related principal (e.g., Album, Artist, Playlist, User, or Category), any associated Images
+/// must be deleted explicitly (for example, by removing them via the DbContext before deleting the principal),
+/// or the relationship must be configured to cascade deletes in a controlled way. Simply eager-loading Images
+/// with .Include() / .ThenInclude() does not delete them automatically.
+/// </remarks>
 public class ImageConfiguration : IEntityTypeConfiguration<Image>
 {
     public void Configure(EntityTypeBuilder<Image> builder)
