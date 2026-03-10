@@ -8,7 +8,7 @@ namespace AudioDelivery.Infrastructure.Data;
 /// The central EF Core DbContext for the AudioDelivery application.
 ///
 /// This class:
-///   1. Declares a DbSet&lt;T&gt; for every domain entity → each becomes a table.
+///   1. Declares a DbSet<T> for every domain entity → each becomes a table.
 ///   2. Applies entity configurations from the Configurations/ folder.
 ///   3. Overrides SaveChangesAsync to auto-set CreatedAt/UpdatedAt timestamps.
 ///
