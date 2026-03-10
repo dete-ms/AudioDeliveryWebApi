@@ -30,7 +30,7 @@ public class GenresController : ControllerBase
     [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAvailableGenreSeeds()
     {
-        var result = await _genreService.GetAvailableGenreSeedsAsync();
+        var result = await _genreService.GetAllGenresAsync();
         return Ok(new { genres = result });
     }
 }

@@ -8,7 +8,12 @@ namespace AudioDelivery.Application.Genres;
 public interface IGenreService
 {
     /// <summary>
-    /// GET /recommendations/available-genre-seeds – List available genre seeds.
+    /// GET /recommendations/genres – List available genres.
     /// </summary>
-    Task<IReadOnlyList<GenreDto>> GetAvailableGenreSeedsAsync(CancellationToken cancellationToken = default);
+    Task<List<GenreDto>> GetAllGenresAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// GET /recommendations/genre/{id} – Get genre.
+    /// </summary>
+    Task<GenreDto?> GetGenreAsync(Guid id, CancellationToken cancellationToken = default);
 }

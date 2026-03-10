@@ -1,5 +1,8 @@
+using AudioDelivery.Application.Common.Interfaces;
 using AudioDelivery.Application.Genres.DTOs;
-using AudioDelivery.Infrastructure.Repositories;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace AudioDelivery.Application.Genres;
 
@@ -8,16 +11,29 @@ namespace AudioDelivery.Application.Genres;
 /// </summary>
 public class GenreService : IGenreService
 {
-    private readonly IGenreRepository _genreRepository;
+    private readonly IGenreRepository _repository;
+    private readonly IMapper _mapper;
 
-    public GenreService(IGenreRepository genreRepository)
+    public GenreService(
+        IGenreRepository genreRepository,
+        IMapper mapper)
     {
-        _genreRepository = genreRepository;
+        _repository = genreRepository;
+        _mapper = mapper;
     }
 
-    public async Task<IReadOnlyList<GenreDto>> GetAvailableGenreSeedsAsync(CancellationToken cancellationToken = default)
+    public Task<List<GenreDto>> GetAllGenresAsync(CancellationToken cancellationToken = default)
     {
-        // TODO: Implement – fetch all genres, map to GenreDto
-        throw new NotImplementedException("Implement in Phase 6");
+        return _repository.Query()
+            .ProjectTo<GenreDto>(_mapper.ConfigurationProvider)
+            .ToListAsync(cancellationToken);
+    }
+
+    public Task<GenreDto?> GetGenreAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return _repository.Query()
+            .Where(g => g.Id == id)
+            .ProjectTo<GenreDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(cancellationToken);
     }
 }
