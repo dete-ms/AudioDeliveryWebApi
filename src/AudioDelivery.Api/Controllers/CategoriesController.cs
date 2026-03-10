@@ -1,5 +1,6 @@
 using AudioDelivery.Application.Categories;
 using AudioDelivery.Application.Categories.DTOs;
+using AudioDelivery.Application.Playlists;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AudioDelivery.Api.Controllers;
@@ -19,10 +20,12 @@ namespace AudioDelivery.Api.Controllers;
 public class CategoriesController : ControllerBase
 {
     private readonly ICategoryService _categoryService;
+    private readonly IPlaylistService _playlistService;
 
-    public CategoriesController(ICategoryService categoryService)
+    public CategoriesController(ICategoryService categoryService, IPlaylistService playlistService)
     {
         _categoryService = categoryService;
+        _playlistService = playlistService;
     }
 
     /// <summary>
@@ -34,7 +37,7 @@ public class CategoriesController : ControllerBase
         [FromQuery] string? country = null,
         [FromQuery] string? locale = null,
         [FromQuery] int offset = 0,
-        [FromQuery] int limit = 20)
+        [FromQuery] int limit = 50)
     {
         var result = await _categoryService.GetCategoriesAsync(country, locale, offset, limit);
         return Ok(new { categories = result });
@@ -58,9 +61,9 @@ public class CategoriesController : ControllerBase
     /// </summary>
     [HttpGet("{id:guid}/playlists")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetCategoryPlaylists(Guid id, [FromQuery] string? country = null, [FromQuery] int offset = 0, [FromQuery] int limit = 20)
+    public async Task<IActionResult> GetCategoryPlaylists(Guid id, [FromQuery] int offset = 0, [FromQuery] int limit = 50)
     {
-        var result = await _categoryService.GetCategoryPlaylistsAsync(id, country, offset, limit);
+        var result = await _playlistService.GetPlaylistsByCategoryAsync(id, offset, limit);
         return Ok(new { playlists = result });
     }
 }

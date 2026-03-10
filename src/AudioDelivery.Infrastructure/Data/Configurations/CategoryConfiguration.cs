@@ -26,7 +26,7 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(c => c.Playlists)
-            .WithMany()
+            .WithMany(p => p.Categories)
             .UsingEntity<CategoryPlaylist>(
                 j => j.HasOne(cp => cp.Playlist)
                     .WithMany()

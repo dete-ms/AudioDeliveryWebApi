@@ -9,5 +9,6 @@ public class CategoryProfile : Profile
     public CategoryProfile()
     {
         this.CreateMap<Category, CategoryDto>();
+        this.CreateMap<Category, CategorySummaryDto>();
     }
 }
