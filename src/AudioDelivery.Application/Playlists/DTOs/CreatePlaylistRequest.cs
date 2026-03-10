@@ -2,8 +2,6 @@ namespace AudioDelivery.Application.Playlists.DTOs;
 
 /// <summary>
 /// Request body for POST /api/v1/users/{userId}/playlists (create a playlist).
-///
-/// See: https://developer.spotify.com/documentation/web-api/reference/create-playlist
 /// </summary>
 public class CreatePlaylistRequest
 {

@@ -10,24 +10,22 @@ public class AlbumProfile : Profile
     {
         this.CreateMap<Album, AlbumDto>()
             .ForMember(
-                dto => dto.AlbumType,
-                opt => opt.MapFrom(src => src.AlbumType.ToString().ToLowerInvariant()))
-            .ForMember(
-                dto => dto.ReleaseDatePrecision,
-                opt => opt.MapFrom(src => src.ReleaseDatePrecision.ToString().ToLowerInvariant()))
-            .ForMember(
                 dto => dto.TotalTracks,
                 opt => opt.MapFrom(src => src.Tracks.Count)
             );
 
         this.CreateMap<Album, AlbumSummaryDto>()
             .ForMember(
-                dto => dto.AlbumType,
-                opt => opt.MapFrom(src => src.AlbumType.ToString().ToLowerInvariant()))
-            .ForMember(
                 dto => dto.TotalTracks,
                 opt => opt.MapFrom(src => src.Tracks.Count)
             );
 
+        this.CreateMap<CreateAlbumRequest, Album>()
+            .ForMember(dst => dst.Id, opt => opt.Ignore())
+            .ForMember(dst => dst.Artists, opt => opt.Ignore())
+            .ForMember(dst => dst.Images, opt => opt.Ignore())
+            .ForMember(dst => dst.Tracks, opt => opt.Ignore());
+
+        this.CreateMap<UpdateAlbumRequest, Album>();
     }
 }

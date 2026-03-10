@@ -39,6 +39,9 @@ namespace AudioDelivery.Infrastructure.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<bool>("IsPublic")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Label")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");

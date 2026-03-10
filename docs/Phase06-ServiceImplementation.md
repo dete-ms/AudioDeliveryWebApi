@@ -17,130 +17,154 @@ This is the largest phase. You'll implement all the service methods that current
 
 ## 6.1 Implementation Pattern
 
-Every service method follows this workflow:
+Now that AutoMapper profiles are set up, use `ProjectTo<TDto>()` instead of `.Include()` + manual mapping. This is simpler **and** faster — AutoMapper translates your profile into a SQL `SELECT` that fetches only the columns your DTO needs, with JOINs generated automatically from your navigation property mappings. No `Include()` calls, no in-memory mapping loop, no hand-written `MapToDto` private methods.
+
+### Prerequisite: Fix AlbumProfile before using ProjectTo
+
+> **Action required in `AlbumProfile.cs` and the two Album DTOs before implementing any service.**
+>
+> `ProjectTo<TDto>()` runs entirely at the SQL level. Any `ForMember` config that calls a C# method EF Core can't translate to SQL will throw a runtime exception. `AlbumProfile` currently has two such configs:
+>
+> ```csharp
+> opt => opt.MapFrom(src => src.AlbumType.ToString().ToLowerInvariant())         // ⚠️ Not SQL-translatable
+> opt => opt.MapFrom(src => src.ReleaseDatePrecision.ToString().ToLowerInvariant()) // ⚠️ Not SQL-translatable
+> ```
+>
+> **To fix:**
+>
+> **Step 1 — Change the DTO property types** in `AlbumDto.cs` and `AlbumSummaryDto.cs`:
+> ```csharp
+> // Before
+> public string AlbumType { get; set; } = string.Empty;
+> public string ReleaseDatePrecision { get; set; } = string.Empty;
+>
+> // After
+> public AlbumType AlbumType { get; set; }               // using AudioDelivery.Domain.Enums;
+> public ReleaseDatePrecision ReleaseDatePrecision { get; set; }
+> ```
+>
+> **Step 2 — Remove the two broken `ForMember` configs** from `AlbumProfile`. AutoMapper maps `enum → enum` with the same name automatically — no `ForMember` needed. Keep the `TotalTracks` one.
+>
+> **Step 3 — Add `JsonStringEnumConverter` in `Program.cs`** so the JSON responses still serialize enum values as lowercase strings:
+> ```csharp
+> builder.Services.AddControllers()
+>     .AddJsonOptions(o =>
+>     {
+>         o.JsonSerializerOptions.Converters.Add(
+>             new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+>     });
+> ```
+> Add `using System.Text.Json.Serialization;` at the top of `Program.cs`. This formats `AlbumType.Compilation` as `"compilation"` in JSON — matching the original string behaviour.
+
+### The ProjectTo pattern
+
+Every read service method follows this workflow:
 
 ```csharp
-public async Task<AlbumDto?> GetAlbumAsync(Guid id)
+// Single entity
+public async Task<AlbumDto?> GetAlbumAsync(Guid id, CancellationToken ct = default)
 {
-    // Step 1: Query the database
-    var album = await _context.Albums
-        .Include(a => a.Artists)
-        .Include(a => a.Images)
-        .Include(a => a.Tracks)
-        .FirstOrDefaultAsync(a => a.Id == id);
-
-    if (album is null) return null;
-
-    // Step 2: Map entity to DTO
-    return MapToAlbumDto(album);
+    return await _context.Albums
+        .Where(a => a.Id == id)
+        .ProjectTo<AlbumDto>(_mapper.ConfigurationProvider)
+        .FirstOrDefaultAsync(ct);
+    // Returns null automatically when not found — no null-check needed.
+    // AutoMapper generates the JOINs for Artists, Images, Tracks from the profile.
+    // No Include() calls required.
 }
 
-private static AlbumDto MapToAlbumDto(Album album)
+// Multiple entities by ID list
+public async Task<IReadOnlyList<AlbumDto>> GetSeveralAlbumsAsync(
+    IEnumerable<Guid> ids, CancellationToken ct = default)
 {
-    return new AlbumDto
-    {
-        Id = album.Id,
-        Name = album.Name,
-        AlbumType = album.AlbumType.ToString().ToLowerInvariant(),
-        TotalTracks = album.TotalTracks,
-        ReleaseDate = album.ReleaseDate,
-        ReleaseDatePrecision = album.ReleaseDatePrecision.ToString().ToLowerInvariant(),
-        Label = album.Label,
-        Popularity = album.Popularity,
-        ExternalUrl = album.ExternalUrl,
-        Uri = album.Uri,
-        Artists = album.Artists.Select(a => new ArtistSummaryDto
-        {
-            Id = a.Id,
-            Name = a.Name,
-            ExternalUrl = a.ExternalUrl,
-            Uri = a.Uri
-        }).ToList(),
-        Images = album.Images.Select(i => new ImageDto
-        {
-            Url = i.Url,
-            Height = i.Height,
-            Width = i.Width
-        }).ToList()
-    };
+    return await _context.Albums
+        .Where(a => ids.Contains(a.Id))
+        .ProjectTo<AlbumDto>(_mapper.ConfigurationProvider)
+        .ToListAsync(ct);
 }
 ```
 
-## 6.2 Choosing Repository vs DbContext Directly
+**Why no `Include()`?** AutoMapper reads your profile at startup and builds an expression tree that translates directly to SQL. Navigation properties referenced in the profile (e.g. `Artists`, `Images`) become `LEFT JOIN` clauses in the generated query. EF Core never loads full entity graphs into memory.
 
-You have two options for data access in services:
+## 6.2 Service Constructor Pattern
 
-### Option A: Use Domain-Specific Repositories
-
-```csharp
-public class AlbumService : IAlbumService
-{
-    private readonly IAlbumRepository _albumRepository;
-
-    public AlbumService(IAlbumRepository albumRepository)
-    {
-        _albumRepository = albumRepository;
-    }
-
-    public async Task<AlbumDto?> GetAlbumAsync(Guid id)
-    {
-        var album = await _albumRepository.GetAlbumWithDetailsAsync(id);
-        // ...
-    }
-}
-```
-
-**Pros:** Cleaner services, reusable queries, testable
-**Cons:** More files, more abstraction
-
-### Option B: Inject DbContext Directly
+All services should inject **`AppDbContext`** and **`IMapper`**. Here is the standard constructor you will write for every read service:
 
 ```csharp
 public class AlbumService : IAlbumService
 {
     private readonly AppDbContext _context;
+    private readonly IMapper _mapper;
 
-    public AlbumService(AppDbContext context)
+    public AlbumService(AppDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
-    public async Task<AlbumDto?> GetAlbumAsync(Guid id)
+    // Read: ProjectTo handles JOINs and mapping in one SQL query
+    public async Task<AlbumDto?> GetAlbumAsync(Guid id, CancellationToken ct = default)
     {
-        var album = await _context.Albums
-            .Include(a => a.Artists)
-            .FirstOrDefaultAsync(a => a.Id == id);
-        // ...
+        return await _context.Albums
+            .Where(a => a.Id == id)
+            .ProjectTo<AlbumDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(ct);
+    }
+
+    // Write: fetch a tracked entity, modify it, save
+    public async Task<bool> UpdateAlbumAsync(Guid id, ...)
+    {
+        var album = await _context.Albums.FindAsync(id);  // tracked
+        if (album is null) return false;
+        album.Name = ...;
+        await _context.SaveChangesAsync();
+        return true;
     }
 }
 ```
 
-**Pros:** Simpler, fewer files, full EF Core API access
-**Cons:** Harder to unit test, queries scattered across services
+**Why inject `AppDbContext` instead of the repositories?**
 
-**Recommendation:** Start with Option B for simplicity. Move complex/reusable queries to repositories later.
+`ProjectTo<TDto>()` is an extension method on `IQueryable<T>`. It needs direct access to a `DbSet<T>` (which is an `IQueryable<T>`) to build its SQL expression. The existing repositories return `Task<T?>` or `Task<IReadOnlyList<T>>` — materialized results, not queryables — so `ProjectTo` can't be called through them.
+
+| | Repositories (`IAlbumRepository`) | DbContext directly |
+|---|---|---|
+| ProjectTo support | ✗ (returns materialized results) | ✓ (DbSet is IQueryable) |
+| Write operations | ✓ | ✓ (`FindAsync` + `SaveChangesAsync`) |
+| Unit-testable reads | ✓ (mockable interface) | Harder (requires in-memory DB) |
+| Phase 6 scope | Unnecessary for reads | **Use this** |
+
+Repositories remain in the project for future testability and write operations, but for reads in Phase 6, inject `AppDbContext` directly.
+
+**Updating the service stubs:** The existing stubs inject `IAlbumRepository`, `IArtistRepository`, etc. Before implementing each service, update the constructor to inject `AppDbContext` and `IMapper` instead. You'll also need to update `ServiceCollectionExtensions.cs` — currently it registers services before the DI container knows about `AppDbContext`. Make sure `AddApplicationServices()` is called **after** `AddDbContext<AppDbContext>(...)` in `Program.cs`; that order is already correct since `AddDbContext` is called in the Infrastructure registration step.
 
 ## 6.3 Service Implementation Checklist
 
 ### Albums (`AlbumService.cs`)
 
-- [ ] `GetAlbumAsync` – Fetch album with includes. Map to `AlbumDto`.
-- [ ] `GetSeveralAlbumsAsync` – Fetch multiple albums by ID list. Return list of `AlbumDto`.
-- [ ] `GetAlbumTracksAsync` – Query tracks for an album with pagination. Return `PaginatedResult<TrackDto>`.
-- [ ] `GetNewReleasesAsync` – Query albums ordered by release date desc. Return `PaginatedResult<AlbumSummaryDto>`.
+> Constructor: `AppDbContext context, IMapper mapper`. Remember to fix `AlbumProfile` + DTOs first (section 6.1 prerequisite).
+
+- [ ] `GetAlbumAsync` – `ProjectTo<AlbumDto>()` filtered by `Id`. Returns null if not found.
+- [ ] `GetSeveralAlbumsAsync` – `Where(a => ids.Contains(a.Id))` + `ProjectTo<AlbumDto>()`.
+- [ ] `GetAlbumTracksAsync` – `Where(t => t.AlbumId == albumId)` on `_context.Tracks` + `ProjectTo<TrackDto>()` + paginate.
+- [ ] `GetNewReleasesAsync` – `OrderByDescending(a => a.ReleaseDate)` + `ProjectTo<AlbumSummaryDto>()` + paginate.
 
 ### Artists (`ArtistService.cs`)
 
-- [ ] `GetArtistAsync` – Fetch artist with genres and images.
-- [ ] `GetSeveralArtistsAsync` – Fetch multiple artists.
-- [ ] `GetArtistAlbumsAsync` – Query albums for an artist with pagination.
-- [ ] `GetArtistTopTracksAsync` – Query tracks by artist, ordered by popularity desc, limit 10.
-- [ ] `GetRelatedArtistsAsync` – Query artists sharing genres with the given artist.
+> Constructor: `AppDbContext context, IMapper mapper`.
+
+- [ ] `GetArtistAsync` – `ProjectTo<ArtistDto>()` filtered by `Id`.
+- [ ] `GetSeveralArtistsAsync` – `Where(a => ids.Contains(a.Id))` + `ProjectTo<ArtistDto>()`.
+- [ ] `GetArtistAlbumsAsync` – Join albums via `_context.Albums.Where(a => a.Artists.Any(ar => ar.Id == artistId))` + `ProjectTo<AlbumSummaryDto>()` + paginate.
+- [ ] `GetArtistTopTracksAsync` – `Where(t => t.Artists.Any(a => a.Id == artistId)).OrderByDescending(t => t.Popularity).Take(10)` + `ProjectTo<TrackDto>()`.
+- [ ] `GetRelatedArtistsAsync` – Find genres of the artist, then `Where(a => a.Genres.Any(g => genreIds.Contains(g.Id)) && a.Id != artistId)` + `ProjectTo<ArtistDto>()`.
 
 ### Tracks (`TrackService.cs`)
 
-- [ ] `GetTrackAsync` – Fetch track with album and artists.
-- [ ] `GetSeveralTracksAsync` – Fetch multiple tracks.
+> Constructor: `AppDbContext context, IMapper mapper`.
+
+- [ ] `GetTrackAsync` – `ProjectTo<TrackDto>()` filtered by `Id`.
+- [ ] `GetSeveralTracksAsync` – `Where(t => ids.Contains(t.Id))` + `ProjectTo<TrackDto>()`.
 - [ ] `GetAudioFeaturesAsync` – Fetch audio features for a track.
 - [ ] `GetSeveralAudioFeaturesAsync` – Fetch audio features for multiple tracks.
 
@@ -180,55 +204,72 @@ public class AlbumService : IAlbumService
 
 ## 6.4 EF Core Query Tips
 
-### Loading Related Data
+### Loading Related Data with ProjectTo
+
+You do **not** need `Include()` when using `ProjectTo<TDto>()`. AutoMapper generates the necessary JOINs from your profiles.
 
 ```csharp
-// Eager loading (loads in one query with JOINs)
+// ✅ Correct — ProjectTo generates JOINs from the AlbumProfile mapping
 var album = await _context.Albums
-    .Include(a => a.Artists)
-    .Include(a => a.Images)
-    .FirstOrDefaultAsync(a => a.Id == id);
+    .Where(a => a.Id == id)
+    .ProjectTo<AlbumDto>(_mapper.ConfigurationProvider)
+    .FirstOrDefaultAsync(ct);
 
-// Nested includes
+// ✅ Correct — nested navigation properties (e.g. PlaylistTracks → Track → Artists)
+// are handled by the PlaylistProfile + PlaylistTrackProfile + TrackProfile chain.
+// AutoMapper resolves the full JOIN chain automatically.
 var playlist = await _context.Playlists
-    .Include(p => p.PlaylistTracks)
-        .ThenInclude(pt => pt.Track)
-            .ThenInclude(t => t.Artists)
-    .FirstOrDefaultAsync(p => p.Id == id);
+    .Where(p => p.Id == id)
+    .ProjectTo<PlaylistDto>(_mapper.ConfigurationProvider)
+    .FirstOrDefaultAsync(ct);
+
+// ❌ Avoid — Include() with ProjectTo is redundant and can cause unexpected behaviour.
+// EF Core may ignore the Include() or double-join. Don't mix them.
 ```
+
+> **When is `Include()` still valid?** Only when you need a fully tracked entity graph for a write operation (e.g. loading a playlist with its tracks in order to add/remove a track). For all read-only responses that map to a DTO, use `ProjectTo`.
 
 ### Pagination
 
 ```csharp
+// Build the base query (no .ToList() yet — still IQueryable)
 var query = _context.Albums
+    .Where(...)                          // optional filters
     .OrderByDescending(a => a.ReleaseDate)
-    .AsQueryable();
+    .ProjectTo<AlbumSummaryDto>(_mapper.ConfigurationProvider);
 
-var total = await query.CountAsync();
+// COUNT runs as a separate SELECT COUNT(*) — same filters, no data fetched
+var total = await query.CountAsync(ct);
+
+// Data fetch — single query with OFFSET/FETCH NEXT
 var items = await query
     .Skip(offset)
     .Take(limit)
-    .ToListAsync();
+    .ToListAsync(ct);
 
 return new PaginatedResult<AlbumSummaryDto>
 {
-    Items = items.Select(MapToSummaryDto).ToList(),
+    Items = items,      // already List<AlbumSummaryDto> — no .Select() needed
     Total = total,
     Offset = offset,
     Limit = limit,
-    Next = offset + limit < total ? $"...?offset={offset + limit}&limit={limit}" : null,
-    Previous = offset > 0 ? $"...?offset={Math.Max(0, offset - limit)}&limit={limit}" : null
+    Next = offset + limit < total ? $"/api/v1/albums/new-releases?offset={offset + limit}&limit={limit}" : null,
+    Previous = offset > 0 ? $"/api/v1/albums/new-releases?offset={Math.Max(0, offset - limit)}&limit={limit}" : null
 };
 ```
+
+> `ProjectTo` is called **before** `Skip`/`Take`, so the SQL includes both the column projection and the pagination in a single query. The `CountAsync()` call re-runs the query as `SELECT COUNT(*)` — no data is fetched twice.
 
 ### Search
 
 ```csharp
 // Case-insensitive search (SQL Server default collation is CI)
+// ProjectTo works the same way — add the Where() before ProjectTo
 var albums = await _context.Albums
-    .Where(a => a.Name.Contains(query))
+    .Where(a => a.Name.Contains(searchQuery))
+    .ProjectTo<AlbumSummaryDto>(_mapper.ConfigurationProvider)
     .Take(limit)
-    .ToListAsync();
+    .ToListAsync(ct);
 ```
 
 ## Verify

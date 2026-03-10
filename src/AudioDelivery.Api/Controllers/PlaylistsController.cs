@@ -1,5 +1,6 @@
 using AudioDelivery.Application.Playlists;
 using AudioDelivery.Application.Playlists.DTOs;
+using AudioDelivery.Application.Tracks;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AudioDelivery.Api.Controllers;
@@ -22,10 +23,12 @@ namespace AudioDelivery.Api.Controllers;
 public class PlaylistsController : ControllerBase
 {
     private readonly IPlaylistService _playlistService;
+    private readonly ITrackService _trackService;
 
-    public PlaylistsController(IPlaylistService playlistService)
+    public PlaylistsController(IPlaylistService playlistService, ITrackService trackService)
     {
         _playlistService = playlistService;
+        _trackService = trackService;
     }
 
     /// <summary>
@@ -61,7 +64,7 @@ public class PlaylistsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetPlaylistTracks(Guid id, [FromQuery] int offset = 0, [FromQuery] int limit = 100)
     {
-        var result = await _playlistService.GetPlaylistTracksAsync(id, offset, limit);
+        var result = await _trackService.GetTracksInPlaylistAsync(id, offset, limit);
         return Ok(result);
     }
 
@@ -81,7 +84,7 @@ public class PlaylistsController : ControllerBase
     /// </summary>
     [HttpGet("users/{userId:guid}/playlists")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetUserPlaylists(Guid userId, [FromQuery] int offset = 0, [FromQuery] int limit = 20)
+    public async Task<IActionResult> GetUserPlaylists(Guid userId, [FromQuery] int offset = 0, [FromQuery] int limit = 50)
     {
         var result = await _playlistService.GetUserPlaylistsAsync(userId, offset, limit);
         return Ok(result);

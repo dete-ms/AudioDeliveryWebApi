@@ -1,7 +1,5 @@
-using AudioDelivery.Application.Albums.DTOs;
 using AudioDelivery.Application.Artists.DTOs;
 using AudioDelivery.Application.Common.Models;
-using AudioDelivery.Application.Tracks.DTOs;
 
 namespace AudioDelivery.Application.Artists;
 
@@ -18,20 +16,15 @@ public interface IArtistService
     /// <summary>
     /// GET /artists?ids=...
     /// </summary>
-    Task<IReadOnlyList<ArtistDto>> GetSeveralArtistsAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// GET /artists/{id}/albums
-    /// </summary>
-    Task<PaginatedResult<AlbumSummaryDto>> GetArtistAlbumsAsync(Guid artistId, int offset = 0, int limit = 20, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// GET /artists/{id}/top-tracks
-    /// </summary>
-    Task<IReadOnlyList<TrackDto>> GetArtistTopTracksAsync(Guid artistId, CancellationToken cancellationToken = default);
+    Task<PaginatedResult<ArtistDto>> GetSeveralArtistsAsync(IEnumerable<Guid> ids, int offset = 0, int limit = 50, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// GET /artists/{id}/related-artists
     /// </summary>
-    Task<IReadOnlyList<ArtistDto>> GetRelatedArtistsAsync(Guid artistId, CancellationToken cancellationToken = default);
+    Task<PaginatedResult<ArtistDto>> GetRelatedArtistsAsync(Guid artistId, int offset = 0, int limit = 50, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// POST /artists/new. Creates a new artist using the specified request data.
+    /// </summary>
+    Task<ArtistDto?> CreateArtist(CreateArtistRequest createArtistRequest);
 }

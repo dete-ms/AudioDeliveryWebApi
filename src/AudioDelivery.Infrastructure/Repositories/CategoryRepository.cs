@@ -1,5 +1,7 @@
+using AudioDelivery.Application.Common.Interfaces;
 using AudioDelivery.Domain.Entities;
 using AudioDelivery.Infrastructure.Data;
+using AutoMapper;
 
 namespace AudioDelivery.Infrastructure.Repositories;
 
@@ -8,7 +10,5 @@ namespace AudioDelivery.Infrastructure.Repositories;
 /// </summary>
 public class CategoryRepository : Repository<Category>, ICategoryRepository
 {
-    public CategoryRepository(AppDbContext context) : base(context) { }
-
-    // TODO: Implement category-specific query methods
+    public CategoryRepository(AppDbContext context, IMapper mapper) : base(context, mapper) { }
 }

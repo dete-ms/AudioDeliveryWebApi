@@ -1,5 +1,7 @@
-using AudioDelivery.Infrastructure.Data;
+using AudioDelivery.Application.Common.Interfaces;
 using AudioDelivery.Infrastructure.Repositories;
+using AudioDelivery.Infrastructure.Storage;
+using AudioDelivery.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +34,7 @@ public static class InfrastructureServiceExtensions
 
             // Fallback: InMemory database for quick testing without SQL Server
             // options.UseInMemoryDatabase("AudioDeliveryDb");
+            // also, install the EntityFrameworkCore.InMemory package on this project for this to work
         });
 
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
@@ -43,6 +46,8 @@ public static class InfrastructureServiceExtensions
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IGenreRepository, GenreRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
+
+        services.AddSingleton<IStorageService, AzureBlobStorageService>();
 
         return services;
     }

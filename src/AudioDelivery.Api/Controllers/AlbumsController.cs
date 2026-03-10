@@ -1,5 +1,6 @@
 using AudioDelivery.Application.Albums;
 using AudioDelivery.Application.Albums.DTOs;
+using AudioDelivery.Application.Tracks;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AudioDelivery.Api.Controllers;
@@ -20,10 +21,12 @@ namespace AudioDelivery.Api.Controllers;
 public class AlbumsController : ControllerBase
 {
     private readonly IAlbumService _albumService;
+    private readonly ITrackService _trackService;
 
-    public AlbumsController(IAlbumService albumService)
+    public AlbumsController(IAlbumService albumService, ITrackService trackService)
     {
         _albumService = albumService;
+        _trackService = trackService;
     }
 
     /// <summary>
@@ -56,14 +59,14 @@ public class AlbumsController : ControllerBase
     }
 
     /// <summary>
-    /// Get Spotify catalog information about an album's tracks.
+    /// Get a collection of an album's tracks.
     /// </summary>
     [HttpGet("{id:guid}/tracks")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAlbumTracks(Guid id, [FromQuery] int offset = 0, [FromQuery] int limit = 20)
+    public async Task<IActionResult> GetAlbumTracks(Guid id, [FromQuery] int offset = 0, [FromQuery] int limit = 50)
     {
-        var result = await _albumService.GetAlbumTracksAsync(id, offset, limit);
+        var result = await _trackService.GetTracksInAlbumAsync(id, offset, limit);
         return Ok(result);
     }
 
@@ -72,9 +75,22 @@ public class AlbumsController : ControllerBase
     /// </summary>
     [HttpGet("/api/v1/browse/new-releases")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetNewReleases([FromQuery] int offset = 0, [FromQuery] int limit = 20, [FromQuery] string? country = null)
+    public async Task<IActionResult> GetNewReleases([FromQuery] int offset = 0, [FromQuery] int limit = 50, [FromQuery] string? country = null)
     {
         var result = await _albumService.GetNewReleasesAsync(offset, limit, country);
         return Ok(new { albums = result });
+    }
+
+    [HttpPatch("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateAlbum(Guid id, [FromBody] UpdateAlbumRequest request, CancellationToken cancellationToken)
+    {
+        var result = await _albumService.UpdateAlbum(id, request);
+
+        if (result == null)
+            return NotFound();
+
+        return Ok(result);
     }
 }

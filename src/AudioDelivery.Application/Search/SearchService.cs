@@ -1,5 +1,5 @@
+using AudioDelivery.Application.Common.Interfaces;
 using AudioDelivery.Application.Search.DTOs;
-using AudioDelivery.Infrastructure.Repositories;
 
 namespace AudioDelivery.Application.Search;
 
@@ -33,7 +33,7 @@ public class SearchService : ISearchService
         _playlistRepository = playlistRepository;
     }
 
-    public async Task<SearchResultDto> SearchAsync(string query, string types, int limit = 20, int offset = 0, CancellationToken cancellationToken = default)
+    public async Task<SearchResultDto> SearchAsync(string query, string types, int limit = 50, int offset = 0, CancellationToken cancellationToken = default)
     {
         // TODO: Implement search logic
         // 1. Split types by comma: var typeList = types.Split(',').Select(t => t.Trim().ToLower())

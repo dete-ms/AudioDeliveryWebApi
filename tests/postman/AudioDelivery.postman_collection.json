@@ -1,0 +1,771 @@
+{
+	"info": {
+		"_postman_id": "c9f3e8a2-4b1d-4f7c-9e5a-0d8c6f2e4b7a",
+		"name": "AudioDelivery API",
+		"description": "Complete test suite for the AudioDelivery REST API.\n\nImport this file into Postman, start the API (`dotnet run` from `src/AudioDelivery.Api`), then:\n1. Run **Categories** and **Genres** requests first — they use deterministic seeded GUIDs and work out-of-the-box.\n2. Use response data to populate the collection variables (userId, artistId, albumId, trackId, playlistId).\n3. Work through the remaining folders in the suggested order from `tests/postman/README.md`.\n\n**AlbumType enum** (used in PATCH Album body):\n- `0` = Album\n- `1` = Single\n- `2` = Compilation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5150",
+			"type": "string",
+			"description": "Base URL of the running API (matches launchSettings.json 'http' profile)"
+		},
+		{
+			"key": "userId",
+			"value": "00000000-0000-0000-0000-000000000000",
+			"type": "string",
+			"description": "A valid User GUID — populate from GET /api/v1/me or database after seeding"
+		},
+		{
+			"key": "artistId",
+			"value": "00000000-0000-0000-0000-000000000000",
+			"type": "string",
+			"description": "A valid Artist GUID — populate from GET /api/v1/artists or database after seeding"
+		},
+		{
+			"key": "artistId2",
+			"value": "00000000-0000-0000-0000-000000000000",
+			"type": "string",
+			"description": "A second valid Artist GUID — used in 'Get Several Artists'"
+		},
+		{
+			"key": "albumId",
+			"value": "00000000-0000-0000-0000-000000000000",
+			"type": "string",
+			"description": "A valid Album GUID — populate from GET /api/v1/browse/new-releases or database after seeding"
+		},
+		{
+			"key": "albumId2",
+			"value": "00000000-0000-0000-0000-000000000000",
+			"type": "string",
+			"description": "A second valid Album GUID — used in 'Get Several Albums'"
+		},
+		{
+			"key": "trackId",
+			"value": "00000000-0000-0000-0000-000000000000",
+			"type": "string",
+			"description": "A valid Track GUID — populate from GET /api/v1/albums/{id}/tracks or database after seeding"
+		},
+		{
+			"key": "trackId2",
+			"value": "00000000-0000-0000-0000-000000000000",
+			"type": "string",
+			"description": "A second valid Track GUID — used in 'Get Several Tracks'"
+		},
+		{
+			"key": "playlistId",
+			"value": "00000000-0000-0000-0000-000000000000",
+			"type": "string",
+			"description": "A valid Playlist GUID — populate by creating a playlist first via POST /api/v1/users/{userId}/playlists"
+		},
+		{
+			"key": "categoryId",
+			"value": "b1000000-0000-0000-0000-000000000001",
+			"type": "string",
+			"description": "Seeded: 'Music' category — pre-populated and ready to use. Other seeded categories increment the last segment: ...000000000002 = 'New Releases', ...000000000003 = 'Upcoming Releases', etc."
+		}
+	],
+	"item": [
+		{
+			"name": "Albums",
+			"item": [
+				{
+					"name": "Get Single Album",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/albums/{{albumId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "albums", "{{albumId}}"]
+						},
+						"description": "GET /api/v1/albums/{id}\n\nGet Spotify catalogue information for a single album.\n\n**Responses:**\n- `200 OK` — AlbumDto\n- `404 Not Found` — album does not exist"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Several Albums",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/albums?ids={{albumId}},{{albumId2}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "albums"],
+							"query": [
+								{
+									"key": "ids",
+									"value": "{{albumId}},{{albumId2}}",
+									"description": "Comma-separated list of Album GUIDs (max 20)"
+								}
+							]
+						},
+						"description": "GET /api/v1/albums?ids=...\n\nGet catalogue information for multiple albums in a single request.\n\n**Responses:**\n- `200 OK` — `{ \"albums\": [AlbumDto] }`"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Album Tracks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/albums/{{albumId}}/tracks?offset=0&limit=50",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "albums", "{{albumId}}", "tracks"],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0",
+									"description": "Pagination offset (default: 0)"
+								},
+								{
+									"key": "limit",
+									"value": "50",
+									"description": "Max tracks to return (default: 50)"
+								}
+							]
+						},
+						"description": "GET /api/v1/albums/{id}/tracks\n\nGet a paginated collection of an album's tracks.\n\n**Responses:**\n- `200 OK` — array of TrackDto\n- `404 Not Found` — album does not exist"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Album",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Updated Album Title\",\n  \"albumType\": 0,\n  \"isPublic\": true,\n  \"label\": \"Test Label\",\n  \"artistIds\": [\"{{artistId}}\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/albums/{{albumId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "albums", "{{albumId}}"]
+						},
+						"description": "PATCH /api/v1/albums/{id}\n\nPartially update an album's details.\n\n**AlbumType enum:**\n- `0` = Album\n- `1` = Single\n- `2` = Compilation\n\n**Responses:**\n- `200 OK` — updated AlbumDto\n- `404 Not Found` — album does not exist"
+					},
+					"response": []
+				},
+				{
+					"name": "Get New Releases",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/browse/new-releases?offset=0&limit=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "browse", "new-releases"],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "country",
+									"value": "US",
+									"disabled": true,
+									"description": "Optional ISO 3166-1 alpha-2 country code filter"
+								}
+							]
+						},
+						"description": "GET /api/v1/browse/new-releases\n\nGet a paginated list of new album releases featured in Spotify.\n\n**Responses:**\n- `200 OK` — `{ \"albums\": [AlbumSummaryDto] }`"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Artists",
+			"item": [
+				{
+					"name": "Get Single Artist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/artists/{{artistId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "artists", "{{artistId}}"]
+						},
+						"description": "GET /api/v1/artists/{id}\n\nGet Spotify catalogue information for a single artist.\n\n**Responses:**\n- `200 OK` — ArtistDto\n- `404 Not Found` — artist does not exist"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Several Artists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/artists?ids={{artistId}},{{artistId2}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "artists"],
+							"query": [
+								{
+									"key": "ids",
+									"value": "{{artistId}},{{artistId2}}",
+									"description": "Comma-separated list of Artist GUIDs (max 50)"
+								}
+							]
+						},
+						"description": "GET /api/v1/artists?ids=...\n\nGet catalogue information for multiple artists in a single request.\n\n**Responses:**\n- `200 OK` — `{ \"artists\": [ArtistDto] }`"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Artist Albums",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/artists/{{artistId}}/albums?offset=0&limit=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "artists", "{{artistId}}", "albums"],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "GET /api/v1/artists/{id}/albums\n\nGet a paginated list of albums by an artist.\n\n**Responses:**\n- `200 OK` — array of AlbumSummaryDto"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Artist Top Tracks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/artists/{{artistId}}/top-tracks",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "artists", "{{artistId}}", "top-tracks"]
+						},
+						"description": "GET /api/v1/artists/{id}/top-tracks\n\nGet an artist's top tracks.\n\n**Responses:**\n- `200 OK` — `{ \"tracks\": [TrackDto] }`"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Related Artists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/artists/{{artistId}}/related-artists",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "artists", "{{artistId}}", "related-artists"]
+						},
+						"description": "GET /api/v1/artists/{id}/related-artists\n\nGet artists similar to a given artist (based on shared genres).\n\n**Responses:**\n- `200 OK` — `{ \"artists\": [ArtistDto] }`"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "Get All Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/browse/categories?offset=0&limit=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "browse", "categories"],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "country",
+									"value": "US",
+									"disabled": true,
+									"description": "Optional country filter"
+								},
+								{
+									"key": "locale",
+									"value": "en_US",
+									"disabled": true,
+									"description": "Optional locale filter (e.g. en_US, es_ES)"
+								}
+							]
+						},
+						"description": "GET /api/v1/browse/categories\n\nGet a paginated list of categories used to tag items in Spotify.\n\n✅ **Uses seeded data — works without setting any collection variables.**\n\n**Responses:**\n- `200 OK` — `{ \"categories\": [CategoryDto] }`"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/browse/categories/{{categoryId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "browse", "categories", "{{categoryId}}"],
+							"query": [
+								{
+									"key": "country",
+									"value": "US",
+									"disabled": true
+								},
+								{
+									"key": "locale",
+									"value": "en_US",
+									"disabled": true
+								}
+							]
+						},
+						"description": "GET /api/v1/browse/categories/{id}\n\nGet a single browse category.\n\n✅ **Default `categoryId` variable points to the seeded 'Music' category — works out-of-the-box.**\n\nOther seeded GUIDs:\n- `b1000000-0000-0000-0000-000000000002` = New Releases\n- `b1000000-0000-0000-0000-000000000003` = Upcoming Releases\n- `b1000000-0000-0000-0000-000000000004` = Made For You\n\n**Responses:**\n- `200 OK` — CategoryDto\n- `404 Not Found` — category does not exist"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category Playlists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/browse/categories/{{categoryId}}/playlists?offset=0&limit=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "browse", "categories", "{{categoryId}}", "playlists"],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "GET /api/v1/browse/categories/{id}/playlists\n\nGet a list of Spotify playlists tagged with a particular category. Requires at least one playlist to be linked to the category.\n\n**Responses:**\n- `200 OK` — `{ \"playlists\": [PlaylistSummaryDto] }`"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Genres",
+			"item": [
+				{
+					"name": "Get Available Genre Seeds",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/genres/seeds",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "genres", "seeds"]
+						},
+						"description": "GET /api/v1/genres/seeds\n\nRetrieve a list of all available genre seed values for recommendations.\n\n✅ **Uses seeded data — works without setting any collection variables.**\n\nFirst few seeded genres (index-based GUIDs `b1000000-0000-0000-0000-{n}`):\n- `...000000000001` = Rock\n- `...000000000002` = Alternative Rock\n- `...000000000003` = Indie Rock\n\n**Responses:**\n- `200 OK` — `{ \"genres\": [GenreDto] }`"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Library",
+			"item": [
+				{
+					"name": "Save Items to Library",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"uris\": \"spotify:track:{{trackId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/me/library?userId={{userId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "me", "library"],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{userId}}",
+									"description": "Temporary workaround — will be resolved from JWT claims in Phase 8"
+								}
+							]
+						},
+						"description": "PUT /api/v1/me/library\n\nSave one or more items to the current user's library (max 40 URIs).\n\n**Supported URI types:** `track`, `album`, `artist`, `playlist`\n\nExample URIs:\n- `spotify:track:{{trackId}}`\n- `spotify:album:{{albumId}}`\n- `spotify:artist:{{artistId}}`\n- `spotify:playlist:{{playlistId}}`\n\nMultiple items: separate with commas in the `uris` string.\n\n**Responses:**\n- `200 OK` — items saved\n- `400 Bad Request` — uris missing"
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Items from Library",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"uris\": \"spotify:track:{{trackId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/me/library?userId={{userId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "me", "library"],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{userId}}",
+									"description": "Temporary workaround — will be resolved from JWT claims in Phase 8"
+								}
+							]
+						},
+						"description": "DELETE /api/v1/me/library\n\nRemove one or more items from the current user's library (max 40 URIs).\n\n**Responses:**\n- `200 OK` — items removed\n- `400 Bad Request` — uris missing"
+					},
+					"response": []
+				},
+				{
+					"name": "Check Saved Items",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/me/library/contains?userId={{userId}}&uris=spotify:track:{{trackId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "me", "library", "contains"],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{userId}}",
+									"description": "Temporary workaround — will be resolved from JWT claims in Phase 8"
+								},
+								{
+									"key": "uris",
+									"value": "spotify:track:{{trackId}}",
+									"description": "Comma-separated Spotify URIs to check (max 40)"
+								}
+							]
+						},
+						"description": "GET /api/v1/me/library/contains\n\nCheck whether one or more items are saved in the current user's library.\n\n**Responses:**\n- `200 OK` — LibraryCheckResult with boolean results per URI\n- `400 Bad Request` — uris query param missing"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Playlists",
+			"item": [
+				{
+					"name": "Get Playlist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/playlists/{{playlistId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "playlists", "{{playlistId}}"]
+						},
+						"description": "GET /api/v1/playlists/{id}\n\nGet full details of a playlist owned by a user, including tracks.\n\n**Responses:**\n- `200 OK` — PlaylistDto\n- `404 Not Found` — playlist does not exist"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Playlist",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Renamed Playlist\",\n  \"isPublic\": false,\n  \"collaborative\": true,\n  \"description\": \"Updated via Postman\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/playlists/{{playlistId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "playlists", "{{playlistId}}"]
+						},
+						"description": "PUT /api/v1/playlists/{id}\n\nChange a playlist's name, description, and public/private/collaborative state. All fields are optional — only provided fields are updated.\n\n**Responses:**\n- `200 OK` — playlist updated\n- `404 Not Found` — playlist does not exist"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Playlist Items",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/playlists/{{playlistId}}/items?offset=0&limit=100",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "playlists", "{{playlistId}}", "items"],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "100"
+								}
+							]
+						},
+						"description": "GET /api/v1/playlists/{id}/items\n\nGet full details of tracks in a playlist (paginated).\n\n**Responses:**\n- `200 OK` — array of PlaylistTrackDto"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Items to Playlist",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"uris\": [\"spotify:track:{{trackId}}\"],\n  \"position\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/playlists/{{playlistId}}/items",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "playlists", "{{playlistId}}", "items"]
+						},
+						"description": "POST /api/v1/playlists/{id}/items\n\nAdd one or more tracks to a playlist.\n\n- `uris` — array of Spotify track URIs (`spotify:track:{guid}`)\n- `position` — zero-based insert position; omit to append to the end\n\n**Responses:**\n- `201 Created` — `{ \"snapshot_id\": \"...\" }`"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Playlists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/users/{{userId}}/playlists?offset=0&limit=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "users", "{{userId}}", "playlists"],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "GET /api/v1/users/{userId}/playlists\n\nGet a paginated list of playlists owned or followed by a user.\n\n**Responses:**\n- `200 OK` — array of PlaylistSummaryDto"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Playlist",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"My Test Playlist\",\n  \"isPublic\": true,\n  \"collaborative\": false,\n  \"description\": \"Created via Postman\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/users/{{userId}}/playlists",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "users", "{{userId}}", "playlists"]
+						},
+						"description": "POST /api/v1/users/{userId}/playlists\n\nCreate a new playlist for a user. Copy the returned `id` into the `playlistId` collection variable to use it in subsequent requests.\n\n**Responses:**\n- `201 Created` — PlaylistDto (copy the `id` into the `playlistId` variable)"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Search",
+			"item": [
+				{
+					"name": "Search Items",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/search?q=rock&type=album,artist,track,playlist&limit=10&offset=0",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "search"],
+							"query": [
+								{
+									"key": "q",
+									"value": "rock",
+									"description": "The search query string (required)"
+								},
+								{
+									"key": "type",
+									"value": "album,artist,track,playlist",
+									"description": "Comma-separated result types (required): album, artist, track, playlist"
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"description": "Max results per type (default: 50, max: 50)"
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"description": "Pagination offset (default: 0)"
+								}
+							]
+						},
+						"description": "GET /api/v1/search\n\nSearch for albums, artists, tracks, and/or playlists matching a keyword string. Both `q` and `type` are required.\n\nTry different queries:\n- `q=the beatles&type=artist,album`\n- `q=summer hits&type=playlist`\n- `q=jazz&type=track,album`\n\n**Responses:**\n- `200 OK` — SearchResultDto\n- `400 Bad Request` — q or type missing"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tracks",
+			"item": [
+				{
+					"name": "Get Single Track",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/tracks/{{trackId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "tracks", "{{trackId}}"]
+						},
+						"description": "GET /api/v1/tracks/{id}\n\nGet Spotify catalogue information for a single track.\n\n**Responses:**\n- `200 OK` — TrackDto\n- `404 Not Found` — track does not exist"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Several Tracks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/tracks?ids={{trackId}},{{trackId2}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "tracks"],
+							"query": [
+								{
+									"key": "ids",
+									"value": "{{trackId}},{{trackId2}}",
+									"description": "Comma-separated list of Track GUIDs"
+								}
+							]
+						},
+						"description": "GET /api/v1/tracks?ids=...\n\nGet catalogue information for multiple tracks in a single request.\n\n**Responses:**\n- `200 OK` — `{ \"tracks\": [TrackDto] }`"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get Current User Profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/me?userId={{userId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "me"],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{userId}}",
+									"description": "Temporary workaround — will be resolved from JWT claims in Phase 8"
+								}
+							]
+						},
+						"description": "GET /api/v1/me\n\nGet detailed profile information about the current user. Temporarily accepts `userId` as a query parameter until JWT authentication is implemented in Phase 8.\n\n**Responses:**\n- `200 OK` — UserProfileDto\n- `404 Not Found` — user does not exist"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Public User Profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/users/{{userId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "users", "{{userId}}"]
+						},
+						"description": "GET /api/v1/users/{userId}\n\nGet the public profile information about any user.\n\n**Responses:**\n- `200 OK` — PublicUserDto\n- `404 Not Found` — user does not exist"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

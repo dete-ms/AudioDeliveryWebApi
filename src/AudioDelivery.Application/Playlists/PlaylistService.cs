@@ -1,7 +1,10 @@
+using AudioDelivery.Application.Common.Extensions;
+using AudioDelivery.Application.Common.Interfaces;
 using AudioDelivery.Application.Common.Models;
 using AudioDelivery.Application.Playlists.DTOs;
-using AudioDelivery.Application.Tracks.DTOs;
-using AudioDelivery.Infrastructure.Repositories;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace AudioDelivery.Application.Playlists;
 
@@ -12,43 +15,56 @@ namespace AudioDelivery.Application.Playlists;
 /// </summary>
 public class PlaylistService : IPlaylistService
 {
-    private readonly IPlaylistRepository _playlistRepository;
-    private readonly IUserRepository _userRepository;
+    private readonly IPlaylistRepository _repository;
+    private readonly IMapper _mapper;
 
-    public PlaylistService(IPlaylistRepository playlistRepository, IUserRepository userRepository)
+    public PlaylistService(
+        IPlaylistRepository playlistRepository, 
+        IMapper mapper)
     {
-        _playlistRepository = playlistRepository;
-        _userRepository = userRepository;
+        _repository = playlistRepository;
+        _mapper = mapper;
     }
 
-    public async Task<PlaylistDto?> GetPlaylistAsync(Guid id, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException("Implement in Phase 6");
-    }
-
-    public async Task<bool> UpdatePlaylistAsync(Guid id, UpdatePlaylistRequest request, CancellationToken cancellationToken = default)
+    public Task<PlaylistDto?> CreatePlaylistAsync(Guid userId, CreatePlaylistRequest request, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException("Implement in Phase 6");
     }
 
-    public async Task<PaginatedResult<TrackDto>> GetPlaylistTracksAsync(Guid playlistId, int offset = 0, int limit = 100, CancellationToken cancellationToken = default)
+    public Task<PlaylistDto?> GetPlaylistAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return _repository.Query()
+            .Where(p => p.Id == id)
+            .ProjectTo<PlaylistDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public Task<bool> UpdatePlaylistAsync(Guid id, UpdatePlaylistRequest request, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException("Implement in Phase 6");
     }
 
-    public async Task<string?> AddItemsToPlaylistAsync(Guid playlistId, AddItemsRequest request, CancellationToken cancellationToken = default)
+    public Task<string?> AddItemsToPlaylistAsync(Guid playlistId, AddItemsRequest request, CancellationToken cancellationToken = default)
     {
         // TODO: Return the new snapshot_id after adding items
         throw new NotImplementedException("Implement in Phase 6");
     }
 
-    public async Task<PaginatedResult<PlaylistSummaryDto>> GetUserPlaylistsAsync(Guid userId, int offset = 0, int limit = 20, CancellationToken cancellationToken = default)
+    public Task<PaginatedResult<PlaylistSummaryDto>> GetUserPlaylistsAsync(Guid userId, int offset = 0, int limit = 50, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException("Implement in Phase 6");
+        return _repository.Query()
+            .Where(p => p.OwnerId == userId)
+            .ProjectTo<PlaylistSummaryDto>(_mapper.ConfigurationProvider)
+            .ToPaginatedResultAsync(offset, limit, this.GetHref(offset, limit), cancellationToken);
     }
 
-    public async Task<PlaylistDto?> CreatePlaylistAsync(Guid userId, CreatePlaylistRequest request, CancellationToken cancellationToken = default)
+    public Task<PaginatedResult<PlaylistSummaryDto>> GetPlaylistsByCategoryAsync(Guid categoryId, int offset = 0, int limit = 50, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException("Implement in Phase 6");
+        return _repository.Query()
+            .Where(p => p.Categories.Any(c => c.Id == categoryId))
+            .ProjectTo<PlaylistSummaryDto>(_mapper.ConfigurationProvider)
+            .ToPaginatedResultAsync(offset, limit, this.GetHref(offset, limit), cancellationToken);
     }
+
+    private string GetHref(int offset, int limit) => $"/api/v1/playlists?offset={offset}&limit={limit}";
 }

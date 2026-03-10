@@ -8,7 +8,7 @@ namespace AudioDelivery.Api.Controllers;
 /// Search API – mirrors Spotify's /search endpoint.
 ///
 /// Endpoints:
-///   GET /api/v1/search?q=...&amp;type=...  → Search for items
+///   GET /api/v1/search?q=...&type=...  → Search for items
 ///
 /// Supported types: album, artist, track, playlist
 ///
@@ -38,7 +38,7 @@ public class SearchController : ControllerBase
     public async Task<IActionResult> Search(
         [FromQuery] string q,
         [FromQuery] string type,
-        [FromQuery] int limit = 20,
+        [FromQuery] int limit = 50,
         [FromQuery] int offset = 0)
     {
         if (string.IsNullOrWhiteSpace(q) || string.IsNullOrWhiteSpace(type))

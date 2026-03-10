@@ -1,3 +1,4 @@
+using AudioDelivery.Application.Categories.DTOs;
 using AudioDelivery.Application.Images.DTOs;
 using AudioDelivery.Application.Users.DTOs;
 
@@ -19,4 +20,5 @@ public class PlaylistDto
     public PublicUserDto Owner { get; set; } = null!;
     public IList<PlaylistTrackDto> Tracks { get; set; } = null!;
     public IList<ImageDto> Images { get; set; } = null!;
+    public IList<CategorySummaryDto> Categories { get; set; } = null!;
 }
