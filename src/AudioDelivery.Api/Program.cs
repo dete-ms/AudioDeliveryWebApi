@@ -4,6 +4,7 @@ using AudioDelivery.Infrastructure.Data;
 using AudioDelivery.Infrastructure.Extensions;
 using AudioDelivery.Infrastructure.Seeders;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 // =============================================================================
 // Program.cs – Application Entry Point
@@ -36,7 +37,12 @@ var builder = WebApplication.CreateBuilder(args);
 // ── 1. SERVICE REGISTRATION ─────────────────────────────────────────────────
 
 // Add controller support (discovers all [ApiController] classes)
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(opt =>
+    {
+        opt.JsonSerializerOptions.Converters.Add(
+            new JsonStringEnumConverter(System.Text.Json.JsonNamingPolicy.CamelCase));
+    });
 
 // Add Swagger/OpenAPI documentation generation
 // Swashbuckle scans controllers and generates an OpenAPI spec
