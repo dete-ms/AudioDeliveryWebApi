@@ -1,5 +1,8 @@
+using AudioDelivery.Application.Common.Interfaces;
 using AudioDelivery.Application.Users.DTOs;
-using AudioDelivery.Infrastructure.Repositories;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace AudioDelivery.Application.Users;
 
@@ -10,20 +13,35 @@ namespace AudioDelivery.Application.Users;
 /// </summary>
 public class UserService : IUserService
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IUserRepository _repository;
+    private readonly IMapper _mapper;
 
-    public UserService(IUserRepository userRepository)
+    public UserService(
+        IUserRepository userRepository,
+        IMapper mapper)
     {
-        _userRepository = userRepository;
+        _repository = userRepository;
+        _mapper = mapper;
     }
 
-    public async Task<UserProfileDto?> GetCurrentUserAsync(Guid userId, CancellationToken cancellationToken = default)
+    // create user
+
+    public Task<UserProfileDto?> GetCurrentUserAsync(Guid userId, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException("Implement in Phase 6");
+        return _repository.Query()
+            .Where(u => u.Id == userId)
+            .ProjectTo<UserProfileDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(cancellationToken);
     }
 
-    public async Task<PublicUserDto?> GetUserAsync(Guid userId, CancellationToken cancellationToken = default)
+    public Task<PublicUserDto?> GetUserAsync(Guid userId, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException("Implement in Phase 6");
+        return _repository.Query()
+            .Where(u => u.Id == userId)
+            .ProjectTo<PublicUserDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(cancellationToken);
     }
+
+    //update user
+    //delete user
 }
