@@ -15,5 +15,5 @@ public interface ISearchService
     /// <param name="types">Comma-separated types to search: "album", "artist", "track", "playlist".</param>
     /// <param name="limit">Max results per type (default 20, max 50).</param>
     /// <param name="offset">Offset for pagination (default 0).</param>
-    Task<SearchResultDto> SearchAsync(string query, string types, int limit = 20, int offset = 0, CancellationToken cancellationToken = default);
+    Task<SearchResultDto> SearchAsync(string query, string types, int limit = 50, int offset = 0, CancellationToken cancellationToken = default);
 }
