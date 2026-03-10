@@ -53,7 +53,3 @@ dotnet build AudioDeliveryWebApi.sln
 # Run the API (launches Swagger UI at https://localhost:<port>/)
 dotnet run --project src/AudioDelivery.Api
 ```
-
-> **Note:** The API will build and launch out of the box, but all endpoints will return
-> `500 Internal Server Error` until you implement the service methods in Phase 6.
-> This is by design – the stubs throw `NotImplementedException` to guide you.
