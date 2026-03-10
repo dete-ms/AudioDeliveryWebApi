@@ -1,48 +1,68 @@
-using AudioDelivery.Application.Albums.DTOs;
 using AudioDelivery.Application.Artists.DTOs;
+using AudioDelivery.Application.Common.Extensions;
+using AudioDelivery.Application.Common.Interfaces;
 using AudioDelivery.Application.Common.Models;
-using AudioDelivery.Application.Tracks.DTOs;
-using AudioDelivery.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 
 namespace AudioDelivery.Application.Artists;
 
 /// <summary>
-/// Artist service implementation.
-///
-/// TODO: Implement each method following the same pattern as AlbumService:
-///   1. Fetch from repository  2. Map to DTO  3. Return
+/// Provides methods for retrieving artist information and related artists from the underlying data store.
 /// </summary>
+/// <remarks>The ArtistService is responsible for accessing artist data and exposing operations to fetch
+/// individual artists, multiple artists, and related artists. All methods are asynchronous and support cancellation via
+/// a CancellationToken. This service is typically used in application layers to abstract data access and business logic
+/// related to artists.</remarks>
 public class ArtistService : IArtistService
 {
-    private readonly IArtistRepository _artistRepository;
+    private readonly IArtistRepository _repository;
+    private readonly IMapper _mapper;
 
-    public ArtistService(IArtistRepository artistRepository)
+    public ArtistService(
+        IArtistRepository artistRepository,
+        IMapper mapper)
     {
-        _artistRepository = artistRepository;
+        _repository = artistRepository;
+        _mapper = mapper;
     }
 
-    public async Task<ArtistDto?> GetArtistAsync(Guid id, CancellationToken cancellationToken = default)
+    public Task<ArtistDto?> CreateArtist(CreateArtistRequest createArtistRequest)
     {
-        throw new NotImplementedException("Implement in Phase 6");
+        return _repository.CreateArtistAsync(createArtistRequest);
     }
 
-    public async Task<IReadOnlyList<ArtistDto>> GetSeveralArtistsAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
+    public Task<ArtistDto?> GetArtistAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException("Implement in Phase 6");
+        return _repository.Query()
+            .Where(a => a.Id == id)
+            .ProjectTo<ArtistDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(cancellationToken);
     }
 
-    public async Task<PaginatedResult<AlbumSummaryDto>> GetArtistAlbumsAsync(Guid artistId, int offset = 0, int limit = 20, CancellationToken cancellationToken = default)
+    public Task<PaginatedResult<ArtistDto>> GetSeveralArtistsAsync(
+        IEnumerable<Guid> ids, 
+        int offset = 0,
+        int limit = 50,
+        CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException("Implement in Phase 6");
+        return _repository.Query()
+            .Where(a => ids.Contains(a.Id))
+            .ProjectTo<ArtistDto>(_mapper.ConfigurationProvider)
+            .ToPaginatedResultAsync(offset, limit, this.GetHref(offset, limit), cancellationToken);
     }
 
-    public async Task<IReadOnlyList<TrackDto>> GetArtistTopTracksAsync(Guid artistId, CancellationToken cancellationToken = default)
+    public Task<PaginatedResult<ArtistDto>> GetRelatedArtistsAsync(
+        Guid artistId, 
+        int offset = 0,
+        int limit = 50, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException("Implement in Phase 6");
+        throw new NotImplementedException();
     }
 
-    public async Task<IReadOnlyList<ArtistDto>> GetRelatedArtistsAsync(Guid artistId, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException("Implement in Phase 6");
-    }
+    // update
+    // delete
+
+    private string GetHref(int offset, int limit) => $"/api/v1/artists/?offset={offset}&limit={limit}";
 }
