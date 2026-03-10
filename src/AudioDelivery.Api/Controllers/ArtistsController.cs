@@ -1,5 +1,7 @@
+using AudioDelivery.Application.Albums;
 using AudioDelivery.Application.Artists;
 using AudioDelivery.Application.Artists.DTOs;
+using AudioDelivery.Application.Tracks;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AudioDelivery.Api.Controllers;
@@ -21,10 +23,18 @@ namespace AudioDelivery.Api.Controllers;
 public class ArtistsController : ControllerBase
 {
     private readonly IArtistService _artistService;
+    private readonly IAlbumService _albumService;
+    private readonly ITrackService _trackService;
 
-    public ArtistsController(IArtistService artistService)
+
+    public ArtistsController(
+        IArtistService artistService, 
+        IAlbumService albumService,
+        ITrackService trackService)
     {
         _artistService = artistService;
+        _albumService = albumService;
+        _trackService = trackService;
     }
 
     /// <summary>
@@ -57,9 +67,9 @@ public class ArtistsController : ControllerBase
     /// </summary>
     [HttpGet("{id:guid}/albums")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetArtistAlbums(Guid id, [FromQuery] int offset = 0, [FromQuery] int limit = 20)
+    public async Task<IActionResult> GetArtistAlbums(Guid id, [FromQuery] int offset = 0, [FromQuery] int limit = 50)
     {
-        var result = await _artistService.GetArtistAlbumsAsync(id, offset, limit);
+        var result = await _albumService.GetAlbumsByArtistAsync(id, offset, limit);
         return Ok(result);
     }
 
@@ -70,7 +80,7 @@ public class ArtistsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetArtistTopTracks(Guid id)
     {
-        var result = await _artistService.GetArtistTopTracksAsync(id);
+        var result = await _trackService.GetTopTracksOfArtistAsync(id);
         return Ok(new { tracks = result });
     }
 
