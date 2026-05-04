@@ -1,21 +1,33 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <None Remove="Seeders\SeedData\default_album_cover.png" />
+    <None Remove="Seeders\SeedData\default_artist_cover.png" />
+    <None Remove="Seeders\SeedData\default_user_cover.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AudioDelivery.Application\AudioDelivery.Application.csproj" />
     <ProjectReference Include="..\AudioDelivery.Domain\AudioDelivery.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Seeders\SeedData\default_album_cover.png" />
+    <EmbeddedResource Include="Seeders\SeedData\default_artist_cover.png" />
+    <EmbeddedResource Include="Seeders\SeedData\default_user_cover.png" />
     <EmbeddedResource Include="Seeders\SeedData\genres.xml" />
     <EmbeddedResource Include="Seeders\SeedData\categories.xml" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.27.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.*" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.*">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.5" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
   </ItemGroup>
 
   <PropertyGroup>
