@@ -1,5 +1,6 @@
 using AudioDelivery.Api.Extensions;
 using AudioDelivery.Api.Middleware;
+using AudioDelivery.Application.Common.Interfaces;
 using AudioDelivery.Infrastructure.Data;
 using AudioDelivery.Infrastructure.Extensions;
 using AudioDelivery.Infrastructure.Seeders;
@@ -25,7 +26,6 @@ using System.Text.Json.Serialization;
 //   • Controllers are discovered automatically by AddControllers().
 //
 // PHASE GUIDE:
-//   Phase 5: EF Core configuration & connection string setup
 //   Phase 8: Add Authentication & Authorization middleware
 //   Phase 9: Add structured logging (Serilog)
 //   Phase 10: Add response caching, CORS, rate limiting
@@ -50,7 +50,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Register Infrastructure layer services (DbContext + Repositories)
-// The connection string is read from appsettings.json → "ConnectionStrings:DefaultConnection"
+// The connection string is read from appsettings.json → "ConnectionStrings:SqlServerConnectionString"
 builder.Services.AddInfrastructure(builder.Configuration);
 
 // Register Application layer services (business logic services)
@@ -98,14 +98,18 @@ app.MapControllers();
 
 using var scope = app.Services.CreateScope();
 var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+var imageRepository = scope.ServiceProvider.GetRequiredService<IImageRepository>();
 await dbContext.Database.MigrateAsync(); // so that we don't have to run update-database manually
-//var seeder = new DataSeeder(dbContext);
-//await seeder.SeedRealDataAsync();
 
 if (app.Environment.IsDevelopment())
 {
-    var seeder = new DataSeeder(dbContext);
+    var seeder = new DataSeeder(dbContext, imageRepository);
     await seeder.SeedTestDataAsync();
+}
+else
+{
+    var seeder = new DataSeeder(dbContext, imageRepository);
+    await seeder.SeedRealDataAsync();
 }
 
 app.Run();

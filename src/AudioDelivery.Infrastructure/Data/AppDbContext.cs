@@ -1,6 +1,9 @@
-using AudioDelivery.Domain.Common;
+using AudioDelivery.Domain.JoinTables;
 using AudioDelivery.Domain.Entities;
+using AudioDelivery.Domain.Common;
+using AudioDelivery.Domain.Events;
 using Microsoft.EntityFrameworkCore;
+using MediatR;
 
 namespace AudioDelivery.Infrastructure.Data;
 
@@ -24,17 +27,34 @@ namespace AudioDelivery.Infrastructure.Data;
 /// </summary>
 public class AppDbContext : DbContext
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+    private readonly IMediator _mediator;
 
-    public DbSet<Album> Albums => Set<Album>();
-    public DbSet<Artist> Artists => Set<Artist>();
-    public DbSet<Track> Tracks => Set<Track>();
-    public DbSet<Playlist> Playlists => Set<Playlist>();
-    public DbSet<PlaylistTrack> PlaylistTracks => Set<PlaylistTrack>();
-    public DbSet<User> Users => Set<User>();
-    public DbSet<Genre> Genres => Set<Genre>();
+    public AppDbContext(
+        DbContextOptions<AppDbContext> options,
+        IMediator mediator) : base(options) 
+    {
+        _mediator = mediator;
+    }
+
+    #region DbSets
     public DbSet<Category> Categories => Set<Category>();
+    public DbSet<Playlist> Playlists => Set<Playlist>();
+    public DbSet<Artist> Artists => Set<Artist>();
     public DbSet<Image> Images => Set<Image>();
+    public DbSet<Genre> Genres => Set<Genre>();
+    public DbSet<Album> Albums => Set<Album>();
+    public DbSet<Track> Tracks => Set<Track>();
+    public DbSet<User> Users => Set<User>();
+    public DbSet<UserLibraryItem> UserLibraryItems => Set<UserLibraryItem>();
+    public DbSet<UserFollowedUser> UserFollowedUsers => Set<UserFollowedUser>();
+    public DbSet<PlaylistTrack> PlaylistTracks => Set<PlaylistTrack>();
+    public DbSet<PlaylistImage> PlaylistImages => Set<PlaylistImage>();
+    public DbSet<CategoryImage> CategoryImages => Set<CategoryImage>();
+    public DbSet<ArtistImage> ArtistImages => Set<ArtistImage>();
+    public DbSet<ArtistAlbum> ArtistAlbums => Set<ArtistAlbum>();
+    public DbSet<AlbumImage> AlbumImages => Set<AlbumImage>();
+    public DbSet<UserImage> UserImages => Set<UserImage>();
+    #endregion
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -46,7 +66,9 @@ public class AppDbContext : DbContext
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        foreach (var entry in ChangeTracker.Entries<BaseEntity>())
+        var domainEvents = new List<IDomainEvent>();
+
+        foreach (var entry in base.ChangeTracker.Entries<BaseEntity>())
         {
             switch (entry.State)
             {
@@ -58,8 +80,19 @@ public class AppDbContext : DbContext
                     entry.Entity.UpdatedAt = DateTime.UtcNow;
                     break;
             }
+
+            var currentEntity = entry.Entity;
+            domainEvents.AddRange(currentEntity.DomainEvents);
+            currentEntity.ClearDomainEvents();
         }
 
-        return await base.SaveChangesAsync(cancellationToken);
+        var result = await base.SaveChangesAsync(cancellationToken);
+
+        foreach (var domainEvent in domainEvents)
+        {
+            await _mediator.Publish(domainEvent, cancellationToken);
+        }
+
+        return result;
     }
 }
