@@ -6,7 +6,7 @@ using AudioDelivery.Domain.Enums;
 namespace AudioDelivery.Application.Albums.DTOs;
 
 /// <summary>
-/// Full album details returned by GET /api/v1/albums/{id}.
+/// Full album details.
 /// </summary>
 public class AlbumDto
 {

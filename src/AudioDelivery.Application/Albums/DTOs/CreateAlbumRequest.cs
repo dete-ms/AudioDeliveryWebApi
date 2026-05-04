@@ -1,6 +1,6 @@
-﻿using AudioDelivery.Application.Images.DTOs;
-using AudioDelivery.Domain.Entities;
+﻿using AudioDelivery.Application.Tracks.DTOs;
 using AudioDelivery.Domain.Enums;
+using Microsoft.AspNetCore.Http;
 
 namespace AudioDelivery.Application.Albums.DTOs;
 
@@ -43,15 +43,12 @@ public class CreateAlbumRequest
     public string? Label { get; set; }
 
     /// <summary>
-    /// Gets or sets the popularity score associated with the item.
+    /// Gets or sets the uploaded image file associated with the request.
     /// </summary>
-    public int? Popularity { get; set; }
-
-    /// <summary>
-    /// Gets or sets the collection of image creation requests to be processed.
-    /// </summary>
-    /// <remarks>Each item in the collection represents a separate image creation operation.</remarks>
-    public List<CreateImageRequest> Images { get; set; } = [];
+    /// <remarks>The image is provided as an <see cref="IFormFile"/> and can be null if no file was uploaded.
+    /// This property is typically used to receive image data from multipart form submissions in web
+    /// applications.</remarks>
+    public IFormFile? Image { get; set; }
 
     /// <summary>
     /// Gets or sets the collection of unique identifiers for the associated artists.
@@ -62,5 +59,5 @@ public class CreateAlbumRequest
     /// Gets or sets the collection of tracks associated with this album.
     /// </summary>
     /// <remarks>The returned list is never null, but it may be empty if no tracks have been added.</remarks>
-    public List<Guid> TrackIds { get; set; } = [];
+    public List<CreateTrackRequest> TracksToAdd { get; set; } = [];
 }
