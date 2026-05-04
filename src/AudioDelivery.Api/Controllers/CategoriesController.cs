@@ -7,13 +7,6 @@ namespace AudioDelivery.Api.Controllers;
 
 /// <summary>
 /// Categories API – mirrors Spotify's /browse/categories endpoints.
-///
-/// Endpoints:
-///   GET /api/v1/browse/categories             → Get several browse categories
-///   GET /api/v1/browse/categories/{id}        → Get a single category
-///   GET /api/v1/browse/categories/{id}/playlists → Get a category's playlists
-///
-/// See: https://developer.spotify.com/documentation/web-api/reference/get-categories
 /// </summary>
 [ApiController]
 [Route("api/v1/browse/categories")]

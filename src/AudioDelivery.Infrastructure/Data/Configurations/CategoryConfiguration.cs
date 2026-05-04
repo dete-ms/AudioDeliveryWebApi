@@ -20,11 +20,6 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
             .IsRequired()
             .HasMaxLength(150);
 
-        builder.HasMany(c => c.Images)
-            .WithOne(i => i.Category)
-            .HasForeignKey(i => i.CategoryId)
-            .OnDelete(DeleteBehavior.Cascade);
-
         builder.HasMany(c => c.Playlists)
             .WithMany(p => p.Categories)
             .UsingEntity<CategoryPlaylist>(
