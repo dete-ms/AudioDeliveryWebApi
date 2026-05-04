@@ -1,5 +1,4 @@
 using AudioDelivery.Domain.Common;
-using AudioDelivery.Domain.Entities;
 using System.Linq.Expressions;
 
 namespace AudioDelivery.Application.Common.Interfaces;
@@ -11,7 +10,7 @@ namespace AudioDelivery.Application.Common.Interfaces;
 public interface IRepository<T> where T : BaseEntity
 {
     /// <summary>
-    /// Returns a queryable collection of entities of type T that can be further filtered, ordered, and projected using
+    /// Returns a queryable collection of entities of type <see cref="T"/> that can be further filtered, ordered, and projected using
     /// LINQ.
     /// </summary>
     /// <remarks>The returned query supports deferred execution. Additional LINQ operators can be applied to
@@ -20,6 +19,15 @@ public interface IRepository<T> where T : BaseEntity
     /// <returns>An <see cref="IQueryable{T}"/> representing the collection of entities. The query is not executed until the
     /// result is enumerated.</returns>
     IQueryable<T> Query();
+
+    /// <summary>
+    /// Returns a queryable collection of entities of type <see cref="T"/> with change tracking enabled.
+    /// </summary>
+    /// <remarks>Entities returned by this query are tracked by the underlying context. Changes made to these
+    /// entities will be detected and can be persisted to the data store when saving changes. Use this method when you
+    /// intend to modify or update entities.</remarks>
+    /// <returns>An <see cref="IQueryable{T}"/> that can be used to query and track changes to entities of type <see cref="T"/>.</returns>
+    IQueryable<T> QueryTracked();
 
     /// <summary>
     /// Gets an entity by its primary key.
@@ -37,6 +45,18 @@ public interface IRepository<T> where T : BaseEntity
     Task<TDto?> GetByIdAsync<TDto>(Guid id, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Asynchronously retrieves an entity by its unique identifier with change tracking enabled.
+    /// Should be used when you want to modify the entity and have those changes tracked for persistence.
+    /// </summary>
+    /// <remarks>The returned entity is tracked by the underlying context, allowing changes to be detected and
+    /// persisted. Use this method when you intend to modify the entity and save changes.</remarks>
+    /// <param name="id">The unique identifier of the entity to retrieve.</param>
+    /// <param name="cancellationToken">A cancellation token that can be used to cancel the asynchronous operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the entity of type <see cref="T"/> if found;
+    /// otherwise, null.</returns>
+    Task<T?> GetByIdTrackedAsync(Guid id, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Gets all entities of this type. Use sparingly on large tables.
     /// </summary>
     Task<List<T>> GetAllAsync(CancellationToken cancellationToken = default);
@@ -52,6 +72,16 @@ public interface IRepository<T> where T : BaseEntity
     /// <typeparam name="TDto">The type to which the matching entities will be projected. Must be a data transfer object (DTO) type compatible
     /// with the entity.</typeparam>
     Task<List<TDto>> FindAsync<TDto>(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Asynchronously finds the first entity that matches the specified predicate and projects it to the specified DTO type.
+    /// </summary>
+    /// <typeparam name="TDto">The type to which the entity is projected. Must be a type that can represent the desired data from the entity.</typeparam>
+    /// <param name="predicate">An expression that defines the conditions the entity must satisfy.</param>
+    /// <param name="cancellationToken">A cancellation token that can be used to cancel the asynchronous operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the projected DTO of the first
+    /// matching entity, or null if no entity matches the predicate.</returns>
+    Task<TDto?> FindFirstAsync<TDto>(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Add a new entity to the context (not yet saved to DB).
