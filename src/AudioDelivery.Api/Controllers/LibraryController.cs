@@ -1,31 +1,44 @@
+using AudioDelivery.Application.Playlists;
+using AudioDelivery.Application.Artists;
 using AudioDelivery.Application.Library;
+using AudioDelivery.Application.Albums;
+using AudioDelivery.Application.Tracks;
+using AudioDelivery.Application.Playlists.DTOs;
+using AudioDelivery.Application.Common.Models;
+using AudioDelivery.Application.Artists.DTOs;
 using AudioDelivery.Application.Library.DTOs;
+using AudioDelivery.Application.Albums.DTOs;
+using AudioDelivery.Application.Tracks.DTOs;
+using AudioDelivery.Application.Common.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AudioDelivery.Api.Controllers;
 
 /// <summary>
 /// Library API – unified endpoint for saving, removing, and checking items.
-///
-/// Endpoints:
-///   PUT    /api/v1/me/library          → Save items to current user's library
-///   DELETE /api/v1/me/library          → Remove items from current user's library
-///   GET    /api/v1/me/library/contains → Check if items are in current user's library
-///
-/// Accepts Spotify URIs: spotify:{type}:{id}
-/// Supported types: track, album, artist, playlist
-///
-/// See: https://developer.spotify.com/documentation/web-api/reference/save-tracks-user
 /// </summary>
 [ApiController]
 [Route("api/v1/me/library")]
 public class LibraryController : ControllerBase
 {
-    private readonly ILibraryService _libraryService;
+    private readonly IUserLibraryService _userLibraryService;
+    private readonly IPlaylistService _playlistService;
+    private readonly IArtistService _artistService;
+    private readonly IAlbumService _albumService;
+    private readonly ITrackService _trackService;
 
-    public LibraryController(ILibraryService libraryService)
+    public LibraryController(
+        IUserLibraryService libraryService,
+        IPlaylistService playlistService,
+        IArtistService artistService,
+        IAlbumService albumService,
+        ITrackService trackService)
     {
-        _libraryService = libraryService;
+        _userLibraryService = libraryService;
+        _playlistService = playlistService;
+        _artistService = artistService;
+        _albumService = albumService;
+        _trackService = trackService;
     }
 
     /// <summary>
@@ -42,7 +55,7 @@ public class LibraryController : ControllerBase
             return BadRequest(new { error = "Request body must contain 'uris'." });
 
         // TODO: Replace userId query param with ClaimsPrincipal resolution in Phase 8
-        await _libraryService.SaveItemsAsync(userId, request);
+        await _userLibraryService.SaveItemsAsync(userId, request);
         return Ok();
     }
 
@@ -60,7 +73,7 @@ public class LibraryController : ControllerBase
             return BadRequest(new { error = "Request body must contain 'uris'." });
 
         // TODO: Replace userId query param with ClaimsPrincipal resolution in Phase 8
-        await _libraryService.RemoveItemsAsync(userId, request);
+        await _userLibraryService.RemoveItemsAsync(userId, request);
         return Ok();
     }
 
@@ -70,7 +83,7 @@ public class LibraryController : ControllerBase
     /// <param name="userId">The current user's ID (will be resolved from auth token in Phase 8).</param>
     /// <param name="uris">Comma-separated Spotify URIs to check (max 40).</param>
     [HttpGet("contains")]
-    [ProducesResponseType(typeof(LibraryCheckResult), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ItemCheckResult), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CheckItems([FromQuery] Guid userId, [FromQuery] string uris)
     {
@@ -78,7 +91,48 @@ public class LibraryController : ControllerBase
             return BadRequest(new { error = "The 'uris' query parameter is required." });
 
         // TODO: Replace userId query param with ClaimsPrincipal resolution in Phase 8
-        var result = await _libraryService.CheckItemsAsync(userId, uris);
+        var request = new LibraryItemRequest { Uris = uris };
+        var result = await _userLibraryService.CheckItemsAsync(userId, request);
+        return Ok(result);
+    }
+
+    [HttpGet("albums")]
+    [ProducesResponseType(typeof(PaginatedResult<AlbumSummaryDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetSavedAlbums([FromQuery] Guid userId)
+    {
+        // TODO: Replace userId query param with ClaimsPrincipal resolution in Phase 8
+        var result = await _albumService.GetSavedAlbumsAsync(userId);
+        return Ok(result);
+    }
+
+    [HttpGet("tracks")]
+    [ProducesResponseType(typeof(PaginatedResult<TrackDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetSavedTracks([FromQuery] Guid userId)
+    {
+        // TODO: Replace userId query param with ClaimsPrincipal resolution in Phase 8
+        var result = await _trackService.GetSavedTracksAsync(userId);
+        return Ok(result);
+    }
+
+    [HttpGet("artists")]
+    [ProducesResponseType(typeof(PaginatedResult<ArtistSummaryDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetSavedArtists([FromQuery] Guid userId)
+    {
+        // TODO: Replace userId query param with ClaimsPrincipal resolution in Phase 8
+        var result = await _artistService.GetSavedArtistsAsync(userId);
+        return Ok(result);
+    }
+
+    [HttpGet("playlists")]
+    [ProducesResponseType(typeof(PaginatedResult<PlaylistSummaryDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetSavedPlaylists([FromQuery] Guid userId)
+    {
+        // TODO: Replace userId query param with ClaimsPrincipal resolution in Phase 8
+        var result = await _playlistService.GetSavedPlaylistsAsync(userId);
         return Ok(result);
     }
 }
