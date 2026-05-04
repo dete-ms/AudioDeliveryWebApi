@@ -47,34 +47,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasForeignKey(p => p.OwnerId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasMany(u => u.SavedAlbums)
-            .WithMany(a => a.SavedByUsers)
-            .UsingEntity<UserSavedAlbum>(
-                j => j.HasOne(usa => usa.Album)
-                    .WithMany()
-                    .HasForeignKey(usa => usa.AlbumId)
-                    .OnDelete(DeleteBehavior.Cascade),
-                j => j.HasOne(usa => usa.User)
-                    .WithMany()
-                    .HasForeignKey(usa => usa.UserId)
-                    .OnDelete(DeleteBehavior.Cascade),
-                j => j.ToTable(nameof(UserSavedAlbum))
-            );
-
-        builder.HasMany(u => u.SavedTracks)
-            .WithMany(t => t.SavedByUsers)
-            .UsingEntity<UserSavedTrack>(
-                j => j.HasOne(ust => ust.Track)
-                    .WithMany()
-                    .HasForeignKey(ust => ust.TrackId)
-                    .OnDelete(DeleteBehavior.Cascade),
-                j => j.HasOne(ust => ust.User)
-                    .WithMany()
-                    .HasForeignKey(ust => ust.UserId)
-                    .OnDelete(DeleteBehavior.Cascade),
-                j => j.ToTable(nameof(UserSavedTrack))
-            );
-
         // UserFollowedUser is self-referencing (both FKs point to Users).
         // SQL Server does not allow CASCADE on both FKs from the same table.
         // Follow relationships must be cleaned up explicitly in the service layer before deleting a user.

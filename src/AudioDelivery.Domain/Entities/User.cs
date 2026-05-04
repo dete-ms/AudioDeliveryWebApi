@@ -1,4 +1,5 @@
 using AudioDelivery.Domain.Common;
+using AudioDelivery.Domain.JoinTables;
 
 namespace AudioDelivery.Domain.Entities;
 
@@ -57,14 +58,9 @@ public class User : BaseEntity
     public ICollection<Artist> FollowedArtists { get; set; } = new List<Artist>();
 
     /// <summary>
-    /// Gets or sets the collection of albums that have been saved by the user (many-to-many).
+    /// Gets or sets the collection of items associated with the user's library (tracks, albums, artists, playlists).
     /// </summary>
-    public ICollection<Album> SavedAlbums { get; set; } = new List<Album>();
-
-    /// <summary>
-    /// Gets or sets the collection of tracks that have been saved by the user (many-to-many).
-    /// </summary>
-    public ICollection<Track> SavedTracks { get; set; } = new List<Track>();
+    public ICollection<UserLibraryItem> LibraryItems { get; set; } = new List<UserLibraryItem>();
 
     /// <summary>
     /// Gets or sets the collection of users who follow this user (many-to-many).
