@@ -1,18 +1,12 @@
-using AudioDelivery.Application.Search;
 using AudioDelivery.Application.Search.DTOs;
+using AudioDelivery.Application.Search;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AudioDelivery.Api.Controllers;
 
 /// <summary>
-/// Search API – mirrors Spotify's /search endpoint.
-///
-/// Endpoints:
-///   GET /api/v1/search?q=...&type=...  → Search for items
-///
-/// Supported types: album, artist, track, playlist
-///
-/// See: https://developer.spotify.com/documentation/web-api/reference/search
+/// Provides the API endpoint for searching albums, artists, tracks, and playlists.
+/// Validates required query parameters and delegates search execution to <see cref="ISearchService"/>.
 /// </summary>
 [ApiController]
 [Route("api/v1/[controller]")]
