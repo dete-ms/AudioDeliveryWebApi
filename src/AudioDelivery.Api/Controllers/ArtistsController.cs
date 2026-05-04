@@ -37,6 +37,14 @@ public class ArtistsController : ControllerBase
         _trackService = trackService;
     }
 
+    [HttpPost]
+    [ProducesResponseType(typeof(ArtistDto), StatusCodes.Status201Created)]
+    public async Task<IActionResult> CreateArtist([FromBody] CreateArtistRequest request)
+    {
+        var createdArtist = await _artistService.CreateArtistAsync(request);
+        return CreatedAtAction(nameof(GetArtist), new { id = createdArtist.Id }, createdArtist);
+    }
+
     /// <summary>
     /// Get catalog info for a single artist.
     /// </summary>
@@ -93,5 +101,31 @@ public class ArtistsController : ControllerBase
     {
         var result = await _artistService.GetRelatedArtistsAsync(id);
         return Ok(new { artists = result });
+    }
+
+    [HttpPatch("{id:guid}")]
+    [ProducesResponseType(typeof(ArtistDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateArtist(Guid id, [FromBody] UpdateArtistRequest request)
+    {
+        try
+        {
+            var updatedArtist = await _artistService.UpdateArtistAsync(id, request);
+            return Ok(updatedArtist);
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound();
+        }
+    }
+
+    [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteArtist(Guid id)
+    {
+        var success = await _artistService.DeleteArtistAsync(id);
+        if (!success) return NotFound();
+        return NoContent();
     }
 }

@@ -1,46 +1,49 @@
-using AudioDelivery.Application.Artists.DTOs;
 using AudioDelivery.Application.Common.Extensions;
 using AudioDelivery.Application.Common.Interfaces;
 using AudioDelivery.Application.Common.Models;
-using Microsoft.EntityFrameworkCore;
+using AudioDelivery.Application.Artists.DTOs;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace AudioDelivery.Application.Artists;
 
-/// <summary>
-/// Provides methods for retrieving artist information and related artists from the underlying data store.
-/// </summary>
-/// <remarks>The ArtistService is responsible for accessing artist data and exposing operations to fetch
-/// individual artists, multiple artists, and related artists. All methods are asynchronous and support cancellation via
-/// a CancellationToken. This service is typically used in application layers to abstract data access and business logic
-/// related to artists.</remarks>
+/// <inheritdoc />
 public class ArtistService : IArtistService
 {
     private readonly IArtistRepository _repository;
+    private readonly IUserRepository _userRepository;
+    private readonly IUserLibraryRepository _userLibraryRepository;
+    private readonly IHrefGenerationService _hrefGenerationService;
     private readonly IMapper _mapper;
 
     public ArtistService(
         IArtistRepository artistRepository,
+        IUserRepository userRepository,
+        IUserLibraryRepository userLibraryRepository,
+        IHrefGenerationService hrefGenerationService,
         IMapper mapper)
     {
         _repository = artistRepository;
+        _userRepository = userRepository;
+        _userLibraryRepository = userLibraryRepository;
+        _hrefGenerationService = hrefGenerationService;
         _mapper = mapper;
     }
 
-    public Task<ArtistDto?> CreateArtist(CreateArtistRequest createArtistRequest)
+    /// <inheritdoc />
+    public Task<ArtistDto> CreateArtistAsync(CreateArtistRequest createArtistRequest, CancellationToken cancellationToken = default)
     {
-        return _repository.CreateArtistAsync(createArtistRequest);
+        return _repository.CreateArtistAsync(createArtistRequest, cancellationToken);
     }
 
+    /// <inheritdoc />
     public Task<ArtistDto?> GetArtistAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        return _repository.Query()
-            .Where(a => a.Id == id)
-            .ProjectTo<ArtistDto>(_mapper.ConfigurationProvider)
-            .FirstOrDefaultAsync(cancellationToken);
+        return _repository.FindFirstAsync<ArtistDto>(a => a.Id == id);
     }
 
+    /// <inheritdoc />
     public Task<PaginatedResult<ArtistDto>> GetSeveralArtistsAsync(
         IEnumerable<Guid> ids, 
         int offset = 0,
@@ -50,19 +53,71 @@ public class ArtistService : IArtistService
         return _repository.Query()
             .Where(a => ids.Contains(a.Id))
             .ProjectTo<ArtistDto>(_mapper.ConfigurationProvider)
-            .ToPaginatedResultAsync(offset, limit, this.GetHref(offset, limit), cancellationToken);
+            .ToPaginatedResultAsync(offset, limit, 
+                _hrefGenerationService.GeneratePaginatedHref(Domain.Enums.EntityType.Artist, offset, limit), cancellationToken);
     }
 
-    public Task<PaginatedResult<ArtistDto>> GetRelatedArtistsAsync(
+    /// <inheritdoc />
+    public async Task<PaginatedResult<ArtistDto>> GetRelatedArtistsAsync(
         Guid artistId, 
         int offset = 0,
         int limit = 50, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var artist = await _repository.Query()
+            .Include(a => a.Genres)
+            .FirstOrDefaultAsync(a => a.Id == artistId);
+
+        if (artist == null)
+        {
+            return new PaginatedResult<ArtistDto>
+            {
+                Href = _hrefGenerationService.GeneratePaginatedHref(Domain.Enums.EntityType.Artist, offset, limit),
+                Items = Array.Empty<ArtistDto>(),
+                Limit = limit,
+                Offset = offset,
+                Total = 0
+            };
+        }
+
+        return await _repository.Query()
+            .Where(a => a.Genres.Any(g => artist.Genres.Contains(g)))
+            .ProjectTo<ArtistDto>(_mapper.ConfigurationProvider)
+            .ToPaginatedResultAsync(offset, limit, 
+                _hrefGenerationService.GeneratePaginatedHref(Domain.Enums.EntityType.Artist, offset, limit), cancellationToken);
     }
 
-    // update
-    // delete
+    /// <inheritdoc />
+    public Task<PaginatedResult<ArtistSummaryDto>> GetSavedArtistsAsync(Guid userId, int offset = 0, int limit = 50, CancellationToken cancellationToken = default)
+    {
+        return _userLibraryRepository.Query()
+            .Where(ul => ul.UserId == userId && ul.Artist != null)
+            .Select(ul => ul.Artist)
+            .ProjectTo<ArtistSummaryDto>(_mapper.ConfigurationProvider)
+            .ToPaginatedResultAsync(offset, limit,
+                _hrefGenerationService.GeneratePaginatedHref(Domain.Enums.EntityType.Artist, offset, limit), cancellationToken);
+    }
 
-    private string GetHref(int offset, int limit) => $"/api/v1/artists/?offset={offset}&limit={limit}";
+    /// <inheritdoc />
+    public Task<PaginatedResult<ArtistSummaryDto>> GetFollowedArtistsAsync(Guid userId, int offset = 0, int limit = 50, CancellationToken cancellationToken = default)
+    {
+        return _userRepository.Query()
+            .Where(u => u.Id == userId)
+            .Include(u => u.FollowedArtists)
+            .SelectMany(u => u.FollowedArtists)
+            .ProjectTo<ArtistSummaryDto>(_mapper.ConfigurationProvider)
+            .ToPaginatedResultAsync(offset, limit,
+                _hrefGenerationService.GeneratePaginatedHref(Domain.Enums.EntityType.Artist, offset, limit), cancellationToken);
+    }
+
+    /// <inheritdoc />
+    public Task<ArtistDto?> UpdateArtistAsync(Guid id, UpdateArtistRequest updateArtistRequest, CancellationToken cancellationToken = default)
+    {
+        return _repository.UpdateArtistAsync(id, updateArtistRequest, cancellationToken);
+    }
+
+    /// <inheritdoc />
+    public Task<bool> DeleteArtistAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return _repository.DeleteArtistAsync(id, cancellationToken);
+    }
 }

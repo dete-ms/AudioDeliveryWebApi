@@ -2,7 +2,7 @@
 
 namespace AudioDelivery.Application.Artists.DTOs;
 
-public class CreateArtistRequest
+public class UpdateArtistRequest
 {
     public string Name { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
