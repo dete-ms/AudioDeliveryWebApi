@@ -1,4 +1,6 @@
-﻿using AudioDelivery.Domain.Entities;
+using AudioDelivery.Domain.Entities;
+using AudioDelivery.Domain.JoinTables;
+using AudioDelivery.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -6,14 +8,8 @@ namespace AudioDelivery.Infrastructure.Data.Configurations;
 
 /// <summary>
 /// Configures the entity mapping for the Image type in the Entity Framework model.
+/// Images use many-to-many relationships so they can be shared across multiple entities.
 /// </summary>
-/// <remarks>
-/// The DeleteBehavior is set to NoAction by design to avoid cascade delete cycles or multiple cascade paths.
-/// When deleting a related principal (e.g., Album, Artist, Playlist, User, or Category), any associated Images
-/// must be deleted explicitly (for example, by removing them via the DbContext before deleting the principal),
-/// or the relationship must be configured to cascade deletes in a controlled way. Simply eager-loading Images
-/// with .Include() / .ThenInclude() does not delete them automatically.
-/// </remarks>
 public class ImageConfiguration : IEntityTypeConfiguration<Image>
 {
     public void Configure(EntityTypeBuilder<Image> builder)
@@ -30,29 +26,74 @@ public class ImageConfiguration : IEntityTypeConfiguration<Image>
         builder.Property(i => i.Width)
             .HasDefaultValue(0);
 
-        builder.HasOne(i => i.Album)
+        builder.HasMany(i => i.Albums)
             .WithMany(a => a.Images)
-            .HasForeignKey(i => i.AlbumId)
-            .OnDelete(DeleteBehavior.NoAction);
+            .UsingEntity<AlbumImage>(
+                j => j.HasOne(ai => ai.Album)
+                    .WithMany()
+                    .HasForeignKey(ai => ai.AlbumId)
+                    .OnDelete(DeleteBehavior.Cascade),
+                j => j.HasOne(ai => ai.Image)
+                    .WithMany()
+                    .HasForeignKey(ai => ai.ImageId)
+                    .OnDelete(DeleteBehavior.Cascade),
+                j => j.ToTable(nameof(AlbumImage))
+            );
 
-        builder.HasOne(i => i.Artist)
+        builder.HasMany(i => i.Artists)
             .WithMany(a => a.Images)
-            .HasForeignKey(i => i.ArtistId)
-            .OnDelete(DeleteBehavior.NoAction);
+            .UsingEntity<ArtistImage>(
+                j => j.HasOne(ai => ai.Artist)
+                    .WithMany()
+                    .HasForeignKey(ai => ai.ArtistId)
+                    .OnDelete(DeleteBehavior.Cascade),
+                j => j.HasOne(ai => ai.Image)
+                    .WithMany()
+                    .HasForeignKey(ai => ai.ImageId)
+                    .OnDelete(DeleteBehavior.Cascade),
+                j => j.ToTable(nameof(ArtistImage))
+            );
 
-        builder.HasOne(i => i.Playlist)
+        builder.HasMany(i => i.Playlists)
             .WithMany(p => p.Images)
-            .HasForeignKey(i => i.PlaylistId)
-            .OnDelete(DeleteBehavior.NoAction);
+            .UsingEntity<PlaylistImage>(
+                j => j.HasOne(pi => pi.Playlist)
+                    .WithMany()
+                    .HasForeignKey(pi => pi.PlaylistId)
+                    .OnDelete(DeleteBehavior.Cascade),
+                j => j.HasOne(pi => pi.Image)
+                    .WithMany()
+                    .HasForeignKey(pi => pi.ImageId)
+                    .OnDelete(DeleteBehavior.Cascade),
+                j => j.ToTable(nameof(PlaylistImage))
+            );
 
-        builder.HasOne(i => i.User)
+        builder.HasMany(i => i.Users)
             .WithMany(u => u.Images)
-            .HasForeignKey(i => i.UserId)
-            .OnDelete(DeleteBehavior.NoAction);
+            .UsingEntity<UserImage>(
+                j => j.HasOne(ui => ui.User)
+                    .WithMany()
+                    .HasForeignKey(ui => ui.UserId)
+                    .OnDelete(DeleteBehavior.Cascade),
+                j => j.HasOne(ui => ui.Image)
+                    .WithMany()
+                    .HasForeignKey(ui => ui.ImageId)
+                    .OnDelete(DeleteBehavior.Cascade),
+                j => j.ToTable(nameof(UserImage))
+            );
 
-        builder.HasOne(i => i.Category)
+        builder.HasMany(i => i.Categories)
             .WithMany(c => c.Images)
-            .HasForeignKey(i => i.CategoryId)
-            .OnDelete(DeleteBehavior.NoAction);
+            .UsingEntity<CategoryImage>(
+                j => j.HasOne(ci => ci.Category)
+                    .WithMany()
+                    .HasForeignKey(ci => ci.CategoryId)
+                    .OnDelete(DeleteBehavior.Cascade),
+                j => j.HasOne(ci => ci.Image)
+                    .WithMany()
+                    .HasForeignKey(ci => ci.ImageId)
+                    .OnDelete(DeleteBehavior.Cascade),
+                j => j.ToTable(nameof(CategoryImage))
+            );
     }
 }

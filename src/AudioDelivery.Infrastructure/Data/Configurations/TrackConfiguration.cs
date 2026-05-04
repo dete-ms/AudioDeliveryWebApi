@@ -24,6 +24,9 @@ public class TrackConfiguration : IEntityTypeConfiguration<Track>
         builder.Property(t => t.DurationMs)
             .IsRequired();
 
+        builder.Property(t => t.PlayCount)
+            .HasDefaultValue(0);
+
         builder.Property(t => t.Explicit)
             .HasDefaultValue(false);
 

@@ -9,5 +9,6 @@ public class ImageProfile : Profile
     public ImageProfile()
     {
         this.CreateMap<Image, ImageDto>();
+        this.CreateMap<ImageDto, Image>();
     }
 }

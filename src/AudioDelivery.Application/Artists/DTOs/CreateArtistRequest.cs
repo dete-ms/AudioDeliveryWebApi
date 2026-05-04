@@ -1,10 +1,11 @@
-﻿using AudioDelivery.Application.Images.DTOs;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace AudioDelivery.Application.Artists.DTOs;
 
 public class CreateArtistRequest
 {
     public string Name { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
     public IList<string> Genres { get; set; } = new List<string>();
-    public IList<CreateImageRequest> Images { get; set; } = [];
+    public IFormFile? Image { get; set; }
 }

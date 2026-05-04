@@ -17,7 +17,7 @@ namespace AudioDelivery.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.13")
+                .HasAnnotation("ProductVersion", "9.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -603,882 +603,882 @@ namespace AudioDelivery.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000001"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000001"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Rock",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000002"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000002"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Alternative Rock",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000003"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000003"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Indie Rock",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000004"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000004"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Grunge",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000005"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000005"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Progressive Rock",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000006"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000006"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Psychedelic Rock",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000007"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000007"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Art Rock",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000008"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000008"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Surf Rock",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000009"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000009"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Stoner Rock",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000010"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000010"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Shoegaze",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000011"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000011"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Post-Rock",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000012"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000012"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Math Rock",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000013"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000013"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Britpop",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000014"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000014"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Metal",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000015"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000015"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Heavy Metal",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000016"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000016"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Thrash Metal",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000017"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000017"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Death Metal",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000018"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000018"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Black Metal",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000019"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000019"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Power Metal",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000020"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000020"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Progressive Metal",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000021"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000021"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Symphonic Metal",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000022"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000022"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Doom Metal",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000023"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000023"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Folk Metal",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000024"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000024"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Melodic Death Metal",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000025"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000025"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Metalcore",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000026"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000026"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Punk Rock",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000027"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000027"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Hardcore Punk",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000028"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000028"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Post-Punk",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000029"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000029"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Post-Hardcore",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000030"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000030"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Ska Punk",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000031"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000031"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Emo",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000032"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000032"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Gothic Rock",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000033"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000033"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Pop",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000034"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000034"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Synth-Pop",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000035"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000035"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "New Wave",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000036"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000036"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Dance-Pop",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000037"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000037"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Disco",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000038"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000038"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Latin Pop",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000039"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000039"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "K-Pop",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000040"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000040"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "J-Pop",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000041"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000041"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Mandopop",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000042"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000042"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Hip-Hop",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000043"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000043"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Rap",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000044"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000044"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Trap",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000045"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000045"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Drill",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000046"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000046"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Boom Bap",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000047"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000047"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "G-Funk",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000048"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000048"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Crunk",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000049"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000049"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Grime",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000050"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000050"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "R&B",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000051"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000051"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Soul",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000052"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000052"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Neo-Soul",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000053"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000053"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "New Jack Swing",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000054"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000054"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Funk",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000055"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000055"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Electronic",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000056"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000056"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "House",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000057"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000057"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Deep House",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000058"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000058"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Progressive House",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000059"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000059"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Acid House",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000060"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000060"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Techno",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000061"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000061"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Trance",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000062"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000062"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Psytrance",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000063"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000063"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Dubstep",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000064"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000064"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Drum and Bass",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000065"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000065"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Hardstyle",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000066"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000066"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Gabber",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000067"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000067"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Hardcore",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000068"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000068"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "UK Garage",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000069"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000069"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Breakbeat",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000070"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000070"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Electro",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000071"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000071"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Electro Swing",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000072"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000072"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "IDM",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000073"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000073"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "EBM",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000074"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000074"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Synthwave",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000075"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000075"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Vaporwave",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000076"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000076"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Future Bass",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000077"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000077"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Glitch Hop",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000078"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000078"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Trip Hop",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000079"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000079"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Chillout",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000080"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000080"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Lo-Fi",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000081"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000081"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Ambient",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000082"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000082"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Jazz",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000083"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000083"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Blues",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000084"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000084"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Soul Blues",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000085"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000085"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Country",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000086"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000086"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Folk",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000087"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000087"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Bluegrass",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000088"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000088"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Americana",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000089"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000089"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cajun",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000090"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000090"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Zydeco",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000091"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000091"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Classical",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000092"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000092"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Opera",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000093"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000093"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Baroque",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000094"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000094"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Romantic",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000095"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000095"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Impressionism",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000096"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000096"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Contemporary Classical",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000097"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000097"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Minimalism",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000098"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000098"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Avant-Garde",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000099"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000099"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Experimental",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000100"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000100"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Reggae",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000101"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000101"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Ska",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000102"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000102"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Dancehall",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000103"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000103"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Reggaeton",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000104"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000104"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Salsa",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000105"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000105"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Bachata",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000106"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000106"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Merengue",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000107"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000107"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cumbia",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000108"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000108"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Flamenco",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000109"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000109"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Bossa Nova",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000110"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000110"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Samba",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000111"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000111"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Tango",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000112"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000112"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Afrobeat",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000113"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000113"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Afropop",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000114"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000114"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Highlife",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000115"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000115"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Rai",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000116"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000116"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Qawwali",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000117"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000117"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Bollywood",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000118"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000118"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "World Music",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000119"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000119"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Ethno",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000120"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000120"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Gospel",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000121"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000121"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Christian Rock",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000122"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000122"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Polka",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000123"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000123"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Chanson",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000124"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000124"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Schlager",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000125"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000125"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Soundtrack",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("b1000000-0000-0000-0000-000000000126"),
+                            Id = new Guid("a1000000-0000-0000-0000-000000000126"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Industrial",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -1491,15 +1491,6 @@ namespace AudioDelivery.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AlbumId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ArtistId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CategoryId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -1507,9 +1498,6 @@ namespace AudioDelivery.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasDefaultValue(0);
-
-                    b.Property<Guid?>("PlaylistId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -1519,25 +1507,12 @@ namespace AudioDelivery.Infrastructure.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("Width")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasDefaultValue(0);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AlbumId");
-
-                    b.HasIndex("ArtistId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("PlaylistId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Images", (string)null);
                 });
@@ -1675,6 +1650,11 @@ namespace AudioDelivery.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<long>("PlayCount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasDefaultValue(0L);
+
                     b.Property<int>("Popularity")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
@@ -1749,6 +1729,21 @@ namespace AudioDelivery.Infrastructure.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
+            modelBuilder.Entity("AudioDelivery.Domain.JoinTables.AlbumImage", b =>
+                {
+                    b.Property<Guid>("AlbumId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ImageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("AlbumId", "ImageId");
+
+                    b.HasIndex("ImageId");
+
+                    b.ToTable("AlbumImage", (string)null);
+                });
+
             modelBuilder.Entity("AudioDelivery.Domain.JoinTables.ArtistAlbum", b =>
                 {
                     b.Property<Guid>("AlbumId")
@@ -1794,6 +1789,21 @@ namespace AudioDelivery.Infrastructure.Migrations
                     b.ToTable("ArtistGenre", (string)null);
                 });
 
+            modelBuilder.Entity("AudioDelivery.Domain.JoinTables.ArtistImage", b =>
+                {
+                    b.Property<Guid>("ArtistId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ImageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ArtistId", "ImageId");
+
+                    b.HasIndex("ImageId");
+
+                    b.ToTable("ArtistImage", (string)null);
+                });
+
             modelBuilder.Entity("AudioDelivery.Domain.JoinTables.ArtistTrack", b =>
                 {
                     b.Property<Guid>("ArtistId")
@@ -1807,6 +1817,21 @@ namespace AudioDelivery.Infrastructure.Migrations
                     b.HasIndex("TrackId");
 
                     b.ToTable("ArtistTrack", (string)null);
+                });
+
+            modelBuilder.Entity("AudioDelivery.Domain.JoinTables.CategoryImage", b =>
+                {
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ImageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CategoryId", "ImageId");
+
+                    b.HasIndex("ImageId");
+
+                    b.ToTable("CategoryImage", (string)null);
                 });
 
             modelBuilder.Entity("AudioDelivery.Domain.JoinTables.CategoryPlaylist", b =>
@@ -1824,6 +1849,21 @@ namespace AudioDelivery.Infrastructure.Migrations
                     b.ToTable("CategoryPlaylist", (string)null);
                 });
 
+            modelBuilder.Entity("AudioDelivery.Domain.JoinTables.PlaylistImage", b =>
+                {
+                    b.Property<Guid>("ImageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PlaylistId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ImageId", "PlaylistId");
+
+                    b.HasIndex("PlaylistId");
+
+                    b.ToTable("PlaylistImage", (string)null);
+                });
+
             modelBuilder.Entity("AudioDelivery.Domain.JoinTables.UserFollowedUser", b =>
                 {
                     b.Property<Guid>("FollowedUserId")
@@ -1839,72 +1879,75 @@ namespace AudioDelivery.Infrastructure.Migrations
                     b.ToTable("UserFollowedUser", (string)null);
                 });
 
-            modelBuilder.Entity("AudioDelivery.Domain.JoinTables.UserSavedAlbum", b =>
+            modelBuilder.Entity("AudioDelivery.Domain.JoinTables.UserImage", b =>
                 {
-                    b.Property<Guid>("AlbumId")
+                    b.Property<Guid>("ImageId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("AlbumId", "UserId");
+                    b.HasKey("ImageId", "UserId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserSavedAlbum", (string)null);
+                    b.ToTable("UserImage", (string)null);
                 });
 
-            modelBuilder.Entity("AudioDelivery.Domain.JoinTables.UserSavedTrack", b =>
+            modelBuilder.Entity("AudioDelivery.Domain.JoinTables.UserLibraryItem", b =>
                 {
-                    b.Property<Guid>("TrackId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("AlbumId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ArtistId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("PlaylistId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("TrackId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("TrackId", "UserId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("AlbumId");
 
-                    b.ToTable("UserSavedTrack", (string)null);
-                });
+                    b.HasIndex("ArtistId");
 
-            modelBuilder.Entity("AudioDelivery.Domain.Entities.Image", b =>
-                {
-                    b.HasOne("AudioDelivery.Domain.Entities.Album", "Album")
-                        .WithMany("Images")
-                        .HasForeignKey("AlbumId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                    b.HasIndex("PlaylistId");
 
-                    b.HasOne("AudioDelivery.Domain.Entities.Artist", "Artist")
-                        .WithMany("Images")
-                        .HasForeignKey("ArtistId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                    b.HasIndex("TrackId");
 
-                    b.HasOne("AudioDelivery.Domain.Entities.Category", "Category")
-                        .WithMany("Images")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                    b.HasIndex("UserId", "AlbumId")
+                        .IsUnique()
+                        .HasFilter("[AlbumId] IS NOT NULL");
 
-                    b.HasOne("AudioDelivery.Domain.Entities.Playlist", "Playlist")
-                        .WithMany("Images")
-                        .HasForeignKey("PlaylistId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                    b.HasIndex("UserId", "ArtistId")
+                        .IsUnique()
+                        .HasFilter("[ArtistId] IS NOT NULL");
 
-                    b.HasOne("AudioDelivery.Domain.Entities.User", "User")
-                        .WithMany("Images")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                    b.HasIndex("UserId", "PlaylistId")
+                        .IsUnique()
+                        .HasFilter("[PlaylistId] IS NOT NULL");
 
-                    b.Navigation("Album");
+                    b.HasIndex("UserId", "TrackId")
+                        .IsUnique()
+                        .HasFilter("[TrackId] IS NOT NULL");
 
-                    b.Navigation("Artist");
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Playlist");
-
-                    b.Navigation("User");
+                    b.ToTable("UserLibraryItems", (string)null);
                 });
 
             modelBuilder.Entity("AudioDelivery.Domain.Entities.Playlist", b =>
@@ -1953,6 +1996,25 @@ namespace AudioDelivery.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Album");
+                });
+
+            modelBuilder.Entity("AudioDelivery.Domain.JoinTables.AlbumImage", b =>
+                {
+                    b.HasOne("AudioDelivery.Domain.Entities.Album", "Album")
+                        .WithMany()
+                        .HasForeignKey("AlbumId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AudioDelivery.Domain.Entities.Image", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Album");
+
+                    b.Navigation("Image");
                 });
 
             modelBuilder.Entity("AudioDelivery.Domain.JoinTables.ArtistAlbum", b =>
@@ -2012,6 +2074,25 @@ namespace AudioDelivery.Infrastructure.Migrations
                     b.Navigation("Genre");
                 });
 
+            modelBuilder.Entity("AudioDelivery.Domain.JoinTables.ArtistImage", b =>
+                {
+                    b.HasOne("AudioDelivery.Domain.Entities.Artist", "Artist")
+                        .WithMany()
+                        .HasForeignKey("ArtistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AudioDelivery.Domain.Entities.Image", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Artist");
+
+                    b.Navigation("Image");
+                });
+
             modelBuilder.Entity("AudioDelivery.Domain.JoinTables.ArtistTrack", b =>
                 {
                     b.HasOne("AudioDelivery.Domain.Entities.Artist", "Artist")
@@ -2031,6 +2112,25 @@ namespace AudioDelivery.Infrastructure.Migrations
                     b.Navigation("Track");
                 });
 
+            modelBuilder.Entity("AudioDelivery.Domain.JoinTables.CategoryImage", b =>
+                {
+                    b.HasOne("AudioDelivery.Domain.Entities.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AudioDelivery.Domain.Entities.Image", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Image");
+                });
+
             modelBuilder.Entity("AudioDelivery.Domain.JoinTables.CategoryPlaylist", b =>
                 {
                     b.HasOne("AudioDelivery.Domain.Entities.Category", "Category")
@@ -2046,6 +2146,25 @@ namespace AudioDelivery.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+
+                    b.Navigation("Playlist");
+                });
+
+            modelBuilder.Entity("AudioDelivery.Domain.JoinTables.PlaylistImage", b =>
+                {
+                    b.HasOne("AudioDelivery.Domain.Entities.Image", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AudioDelivery.Domain.Entities.Playlist", "Playlist")
+                        .WithMany()
+                        .HasForeignKey("PlaylistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Image");
 
                     b.Navigation("Playlist");
                 });
@@ -2069,38 +2188,58 @@ namespace AudioDelivery.Infrastructure.Migrations
                     b.Navigation("Follower");
                 });
 
-            modelBuilder.Entity("AudioDelivery.Domain.JoinTables.UserSavedAlbum", b =>
+            modelBuilder.Entity("AudioDelivery.Domain.JoinTables.UserImage", b =>
                 {
-                    b.HasOne("AudioDelivery.Domain.Entities.Album", "Album")
+                    b.HasOne("AudioDelivery.Domain.Entities.Image", "Image")
                         .WithMany()
-                        .HasForeignKey("AlbumId")
+                        .HasForeignKey("ImageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AudioDelivery.Domain.Entities.User", "User")
                         .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Image");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("AudioDelivery.Domain.JoinTables.UserLibraryItem", b =>
+                {
+                    b.HasOne("AudioDelivery.Domain.Entities.Album", "Album")
+                        .WithMany()
+                        .HasForeignKey("AlbumId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("AudioDelivery.Domain.Entities.Artist", "Artist")
+                        .WithMany()
+                        .HasForeignKey("ArtistId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("AudioDelivery.Domain.Entities.Playlist", "Playlist")
+                        .WithMany()
+                        .HasForeignKey("PlaylistId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("AudioDelivery.Domain.Entities.Track", "Track")
+                        .WithMany()
+                        .HasForeignKey("TrackId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("AudioDelivery.Domain.Entities.User", "User")
+                        .WithMany("LibraryItems")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Album");
 
-                    b.Navigation("User");
-                });
+                    b.Navigation("Artist");
 
-            modelBuilder.Entity("AudioDelivery.Domain.JoinTables.UserSavedTrack", b =>
-                {
-                    b.HasOne("AudioDelivery.Domain.Entities.Track", "Track")
-                        .WithMany()
-                        .HasForeignKey("TrackId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AudioDelivery.Domain.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Playlist");
 
                     b.Navigation("Track");
 
@@ -2109,25 +2248,11 @@ namespace AudioDelivery.Infrastructure.Migrations
 
             modelBuilder.Entity("AudioDelivery.Domain.Entities.Album", b =>
                 {
-                    b.Navigation("Images");
-
                     b.Navigation("Tracks");
-                });
-
-            modelBuilder.Entity("AudioDelivery.Domain.Entities.Artist", b =>
-                {
-                    b.Navigation("Images");
-                });
-
-            modelBuilder.Entity("AudioDelivery.Domain.Entities.Category", b =>
-                {
-                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("AudioDelivery.Domain.Entities.Playlist", b =>
                 {
-                    b.Navigation("Images");
-
                     b.Navigation("PlaylistTracks");
                 });
 
@@ -2138,7 +2263,7 @@ namespace AudioDelivery.Infrastructure.Migrations
 
             modelBuilder.Entity("AudioDelivery.Domain.Entities.User", b =>
                 {
-                    b.Navigation("Images");
+                    b.Navigation("LibraryItems");
 
                     b.Navigation("Playlists");
                 });

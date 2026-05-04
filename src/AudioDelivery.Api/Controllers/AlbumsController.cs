@@ -1,5 +1,6 @@
-using AudioDelivery.Application.Albums;
 using AudioDelivery.Application.Albums.DTOs;
+using AudioDelivery.Application.Tracks.DTOs;
+using AudioDelivery.Application.Albums;
 using AudioDelivery.Application.Tracks;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,14 +8,6 @@ namespace AudioDelivery.Api.Controllers;
 
 /// <summary>
 /// Albums API – mirrors Spotify's /albums endpoints.
-///
-/// Endpoints:
-///   GET    /api/v1/albums/{id}           → Get an album
-///   GET    /api/v1/albums?ids=...        → Get several albums
-///   GET    /api/v1/albums/{id}/tracks    → Get an album's tracks
-///   GET    /api/v1/browse/new-releases   → Get new releases (routed here for organization)
-///
-/// See: https://developer.spotify.com/documentation/web-api/reference/get-an-album
 /// </summary>
 [ApiController]
 [Route("api/v1/[controller]")]
@@ -27,6 +20,12 @@ public class AlbumsController : ControllerBase
     {
         _albumService = albumService;
         _trackService = trackService;
+    }
+
+    public async Task<IActionResult> CreateAlbum([FromForm] CreateAlbumRequest request)
+    {
+        var result = await _albumService.CreateAlbumAsync(request);
+        return CreatedAtAction(nameof(GetAlbum), new { id = result.Id }, result);
     }
 
     /// <summary>
@@ -86,11 +85,40 @@ public class AlbumsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateAlbum(Guid id, [FromBody] UpdateAlbumRequest request, CancellationToken cancellationToken)
     {
-        var result = await _albumService.UpdateAlbum(id, request);
+        var result = await _albumService.UpdateAlbumAsync(id, request);
 
         if (result == null)
             return NotFound();
 
         return Ok(result);
+    }
+
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteAlbum(Guid id, CancellationToken cancellationToken)
+    {
+        var result = await _albumService.DeleteAlbumAsync(id, cancellationToken);
+
+        if (!result)
+            return NotFound();
+
+        return NoContent();
+    }
+
+    [HttpPost("{id}/tracks")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> AddTracksToAlbum(Guid id, [FromBody] List<CreateTrackRequest> request, CancellationToken cancellationToken)
+    {
+        await _albumService.AddTracksToAlbumAsync(id, request, cancellationToken);
+        return Ok();
+    }
+
+    [HttpDelete("{id}/tracks")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> RemoveTracksFromAlbum(Guid id, [FromBody] List<Guid> trackIds, CancellationToken cancellationToken)
+    {
+        await _albumService.RemoveTracksFromAlbumAsync(id, trackIds, cancellationToken);
+        return Ok();
     }
 }

@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Http;
+
 namespace AudioDelivery.Application.Playlists.DTOs;
 
 /// <summary>
@@ -24,4 +26,9 @@ public class CreatePlaylistRequest
     /// Description of the playlist.
     /// </summary>
     public string? Description { get; set; }
+
+    /// <summary>
+    /// Gets or sets the uploaded cover image file for the playlist.
+    /// </summary>
+    public IFormFile? CoverImage { get; set; }
 }

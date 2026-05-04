@@ -2,10 +2,10 @@ using AudioDelivery.Application.Common.Interfaces;
 using AudioDelivery.Infrastructure.Exceptions;
 using AudioDelivery.Infrastructure.Data;
 using AudioDelivery.Domain.Common;
-using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
-using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using AutoMapper;
+using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace AudioDelivery.Infrastructure.Repositories;
 
@@ -33,16 +33,21 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
 
     public IQueryable<T> Query() => _dbSet.AsNoTracking();
 
+    public IQueryable<T> QueryTracked() => _dbSet;
+
     public Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        // TODO: Consider whether to use FindAsync (uses cache) or
-        //       SingleOrDefaultAsync with AsNoTracking for read-only scenarios.
         return _dbSet.AsNoTracking().FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
     }
 
     public Task<TDto?> GetByIdAsync<TDto>(Guid id, CancellationToken cancellationToken = default)
     {
         return _dbSet.AsNoTracking().Where(t => t.Id == id).ProjectTo<TDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public Task<T?> GetByIdTrackedAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return _dbSet.FindAsync(new[] { id }, cancellationToken).AsTask();
     }
 
     public Task<List<T>> GetAllAsync(CancellationToken cancellationToken = default)
@@ -60,11 +65,21 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
         return _dbSet.AsNoTracking().Where(predicate).ProjectTo<TDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
     }
 
+    public Task<TDto?> FindFirstAsync<TDto>(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
+    {
+        return _dbSet.AsNoTracking().Where(predicate).ProjectTo<TDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync(cancellationToken);
+    }
+
     public async Task AddAsync(T entity, CancellationToken cancellationToken = default)
     {
         if (entity == null)
         {
             throw new ArgumentNullException(nameof(entity), $"Cannot add a null entity of type {typeof(T).Name} to the DB.");
+        }
+        
+        if (entity.Id == Guid.Empty)
+        {
+            entity.Id = Guid.NewGuid();
         }
 
         try

@@ -15,5 +15,7 @@ public class PlaylistProfile : Profile
             );
 
         this.CreateMap<Playlist, PlaylistSummaryDto>();
+
+        this.CreateMap<CreatePlaylistRequest, Playlist>();
     }
 }

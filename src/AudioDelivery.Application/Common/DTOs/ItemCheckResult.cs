@@ -1,9 +1,9 @@
-namespace AudioDelivery.Application.Library.DTOs;
+namespace AudioDelivery.Application.Common.DTOs;
 
 /// <summary>
 /// Response for the library contains check endpoint.
 /// </summary>
-public sealed class LibraryCheckResult
+public sealed class ItemCheckResult
 {
     /// <summary>
     /// Ordered array of booleans indicating whether each URI is saved in the user's library.

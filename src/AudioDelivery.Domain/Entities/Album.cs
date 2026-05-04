@@ -76,9 +76,4 @@ public class Album : BaseEntity
     /// Gets or sets the cover art images in various sizes (one-to-many).
     /// </summary>
     public ICollection<Image> Images { get; set; } = new List<Image>();
-
-    /// <summary>
-    /// Gets or sets the collection of users who have saved this item (many-to-many).
-    /// </summary>
-    public ICollection<User> SavedByUsers { get; set; } = new List<User>();
 }

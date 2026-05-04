@@ -1,10 +1,11 @@
 using AudioDelivery.Application.Common.Interfaces;
+using AudioDelivery.Application.Events.Handlers;
 using AudioDelivery.Infrastructure.Repositories;
 using AudioDelivery.Infrastructure.Storage;
 using AudioDelivery.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 namespace AudioDelivery.Infrastructure.Extensions;
 
@@ -23,11 +24,12 @@ public static class InfrastructureServiceExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        var sqlServerConnectionString = configuration.GetConnectionString("SqlServerConnectionString");
+        var sqlServerConnectionString2 = configuration.GetConnectionString(AzureBlobStorageOptions.ConnectionStringName);
 
         services.AddDbContext<AppDbContext>(options =>
         {
-            options.UseSqlServer(connectionString, sqlOptions =>
+            options.UseSqlServer(sqlServerConnectionString, sqlOptions =>
             {
                 sqlOptions.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName);
             });
@@ -37,8 +39,16 @@ public static class InfrastructureServiceExtensions
             // also, install the EntityFrameworkCore.InMemory package on this project for this to work
         });
 
+        services.AddHostedService<OrphanBlobCleanupJob>();
+
+        services.Configure<AzureBlobStorageOptions>(a => 
+            a.ConnectionString = configuration.GetConnectionString(AzureBlobStorageOptions.ConnectionStringName) ?? string.Empty);
+
+        services.AddSingleton<IStorageService, AzureBlobStorageService>();
+
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
+        services.AddScoped<IImageRepository, ImageRepository>();
         services.AddScoped<IAlbumRepository, AlbumRepository>();
         services.AddScoped<IArtistRepository, ArtistRepository>();
         services.AddScoped<ITrackRepository, TrackRepository>();
@@ -46,8 +56,9 @@ public static class InfrastructureServiceExtensions
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IGenreRepository, GenreRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<IUserLibraryRepository, UserLibraryRepository>();
 
-        services.AddSingleton<IStorageService, AzureBlobStorageService>();
+
 
         return services;
     }

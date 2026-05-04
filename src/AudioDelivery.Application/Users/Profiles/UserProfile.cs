@@ -10,5 +10,8 @@ public class UserProfile : Profile
     {
         this.CreateMap<User, PublicUserDto>();
         this.CreateMap<User, UserProfileDto>();
+
+        this.CreateMap<CreateUserRequest, User>();
+        this.CreateMap<UpdateUserRequest, User>();
     }
 }

@@ -7,6 +7,6 @@
 /// local storage.</remarks>
 public interface IStorageService
 {
-    Task<string> UploadAsync(Stream fileStream, string fileName, string contentType);
-    Task DeleteAsync(string fileUrl);
+    Task<string> UploadAsync(Stream fileStream, string fileName, string contentType, string containerName, CancellationToken cancellationToken = default);
+    Task DeleteAsync(string fileUrl, CancellationToken cancellationToken = default);
 }

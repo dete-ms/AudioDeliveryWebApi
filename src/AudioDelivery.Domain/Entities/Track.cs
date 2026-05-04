@@ -8,59 +8,64 @@ namespace AudioDelivery.Domain.Entities;
 public class Track : BaseEntity
 {
     /// <summary>
-    /// The name of the track.
+    /// Gets or sets the name of the track.
     /// </summary>
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
-    /// The disc number (usually 1 unless multi-disc album).
+    /// Gets or sets the disc number (usually 1 unless multi-disc album).
     /// </summary>
     public int DiscNumber { get; set; } = 1;
 
     /// <summary>
-    /// The track's position number on its disc.
+    /// Gets or sets the track's position number on its disc.
     /// </summary>
     public int TrackNumber { get; set; }
 
     /// <summary>
-    /// The track duration in milliseconds.
+    /// Gets or sets the track duration in milliseconds.
     /// </summary>
     public int DurationMs { get; set; }
 
     /// <summary>
-    /// Whether the track has explicit lyrics.
+    /// Gets or sets the number of times the track has been played.
+    /// </summary>
+    public long PlayCount { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether the track has explicit lyrics.
     /// </summary>
     public bool Explicit { get; set; }
 
     /// <summary>
-    /// Popularity score (0–100). Higher = more popular.
+    /// Gets or sets the popularity score (0–100). Higher = more popular.
     /// </summary>
     public int Popularity { get; set; }
 
     /// <summary>
-    /// URL to a 30-second preview MP3 clip (nullable).
+    /// Gets or sets the URL to a 30-second preview MP3 clip (nullable).
     /// </summary>
     public string? PreviewUrl { get; set; }
 
     /// <summary>
-    /// Whether the track is from a local file.
+    /// Gets or sets whether the track is from a local file.
     /// </summary>
     public bool IsLocal { get; set; }
 
     /// <summary>
-    /// The Spotify-style URI (e.g., "spotify:track:{id}").
+    /// Gets or sets the Spotify-style URI (e.g., "spotify:track:{id}").
     /// </summary>
     public string Uri { get; set; } = string.Empty;
 
     /// <summary>
-    /// External URL – e.g., the Spotify web player link.
+    /// Gets or sets the external URL – e.g., the Spotify web player link.
     /// </summary>
     public string? ExternalUrl { get; set; }
 
     // ── Foreign Keys ──
 
     /// <summary>
-    /// FK to the album this track belongs to.
+    /// Gets or sets the FK to the album this track belongs to.
     /// </summary>
     public Guid AlbumId { get; set; }
     public Album Album { get; set; } = null!;
@@ -68,17 +73,12 @@ public class Track : BaseEntity
     // ── Navigation Properties ──
 
     /// <summary>
-    /// Artists who performed this track (many-to-many).
+    /// Gets or sets the artists who performed this track (many-to-many).
     /// </summary>
     public ICollection<Artist> Artists { get; set; } = new List<Artist>();
 
     /// <summary>
-    /// Playlists containing this track (many-to-many via PlaylistTrack).
+    /// Gets or sets the playlists containing this track (many-to-many via PlaylistTrack).
     /// </summary>
     public ICollection<PlaylistTrack> PlaylistTracks { get; set; } = new List<PlaylistTrack>();
-
-    /// <summary>
-    /// Gets or sets the collection of users who have saved this item (many-to-many).
-    /// </summary>
-    public ICollection<User> SavedByUsers { get; set; } = new List<User>();
 }

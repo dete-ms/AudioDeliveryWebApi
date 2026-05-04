@@ -15,5 +15,11 @@ public class ArtistProfile : Profile
             );
 
         this.CreateMap<Artist, ArtistSummaryDto>();
+
+        this.CreateMap<CreateArtistRequest, Artist>()
+            .ForMember(dest => dest.Genres, opt => opt.Ignore());
+
+        this.CreateMap<UpdateArtistRequest, Artist>()
+            .ForMember(dest => dest.Genres, opt => opt.Ignore());
     }
 }
