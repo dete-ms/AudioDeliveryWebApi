@@ -28,7 +28,7 @@ Work through these phases in order. Each phase builds on the previous one.
 | 3 | [Infrastructure Layer](Phase03-InfrastructureLayer.md) | DbContext, entity configurations, repositories | ✅ Done |
 | 4 | [Application Layer](Phase04-ApplicationLayer.md) | DTOs, service interfaces, service stubs | ✅ Done |
 | 5 | [Database Setup](Phase05-DatabaseSetup.md) | EF Core migrations, connection strings, seeding | ✅ Done |
-| 6 | [Service Implementation](Phase06-ServiceImplementation.md) | Implement all service methods with EF Core queries | 🔲 To Do |
+| 6 | [Service Implementation](Phase06-ServiceImplementation.md) | Implement all service methods with EF Core queries | ✅ Done |
 | 7 | [Validation & Error Handling](Phase07-ValidationErrorHandling.md) | FluentValidation, ProblemDetails, middleware | 🔲 To Do |
 | 8 | [Authentication & Authorization](Phase08-AuthenticationAuthorization.md) | JWT Bearer tokens, policies | 🔲 To Do |
 | 9 | [Logging & Monitoring](Phase09-LoggingMonitoring.md) | Serilog, correlation IDs, health checks | 🔲 To Do |
