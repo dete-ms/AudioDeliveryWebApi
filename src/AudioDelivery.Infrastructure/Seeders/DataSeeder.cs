@@ -1,6 +1,8 @@
+using AudioDelivery.Application.Common.Interfaces;
 using AudioDelivery.Domain.Entities;
 using AudioDelivery.Domain.Enums;
 using AudioDelivery.Infrastructure.Data;
+using AudioDelivery.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using System.Xml.Linq;
@@ -29,22 +31,30 @@ public class DataSeeder
 {
     private static readonly Assembly _assembly = typeof(DataSeeder).Assembly;
     private readonly AppDbContext _context;
+    private readonly IImageRepository _imageRepository;
 
-    public DataSeeder(AppDbContext context)
+    public DataSeeder(AppDbContext context, IImageRepository imageRepository)
     {
         _context = context;
+        _imageRepository = imageRepository;
     }
 
-
-    public async Task SeedRealDataAsync()
+    /// <summary>
+    /// Asynchronously seeds the database with real data, including genres, categories, and default images.
+    /// </summary>
+    public async Task SeedRealDataAsync(CancellationToken cancellationToken = default)
     {
-        await SeedGenresAsync();
-        await SeedCategoriesAsync();
+        await SeedGenresAsync(cancellationToken);
+        await SeedCategoriesAsync(cancellationToken);
+        await SeedDefaultImagesAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task SeedTestDataAsync()
+    public async Task SeedTestDataAsync(CancellationToken cancellationToken = default)
     {
-        if (await _context.Artists.AnyAsync()) return;
+        await SeedDefaultImagesAsync(cancellationToken);
+
+        if (await _context.Artists.AnyAsync(cancellationToken)) return;
 
         var rockGenre = await _context.Genres.FirstAsync(g => g.Name == "rock");
         var popGenre = await _context.Genres.FirstAsync(g => g.Name == "pop");
@@ -109,9 +119,9 @@ public class DataSeeder
             ExternalUrl = "https://open.spotify.com/track/fake2",
             AlbumId = album1.Id,
         };
-        _context.Tracks.AddRange(track1, track2);
 
-        await _context.SaveChangesAsync();
+        await _context.Tracks.AddRangeAsync(new Track[] { track1, track2 }, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
     }
 
 
@@ -134,9 +144,22 @@ public class DataSeeder
             .ToList();
     }
 
-    private async Task SeedGenresAsync()
+    public static Guid GetGenreGuidFormat(int genreNumber)
     {
-        if (await _context.Genres.AnyAsync())
+        var formatedGenreNumber = (genreNumber).ToString("D12");
+        return Guid.Parse($"a1000000-0000-0000-0000-{formatedGenreNumber}");
+    }
+
+    public static Guid GetCategoryGuidFormat(int categoryNumber)
+    {
+        var formatedCategoryNumber = (categoryNumber).ToString("D12");
+        return Guid.Parse($"b1000000-0000-0000-0000-{formatedCategoryNumber}");
+    }
+
+
+    private async Task SeedGenresAsync(CancellationToken cancellationToken = default)
+    {
+        if (await _context.Genres.AnyAsync(cancellationToken))
             return;
 
         var names = LoadNamesFromXml("genres.xml", "Genre");
@@ -146,24 +169,22 @@ public class DataSeeder
 
         foreach (var name in names)
         {
-            var genreNumber = (genres.Count + 1).ToString("D12");
 
             genres.Add(new Genre
             {
-                Id = Guid.Parse($"a1000000-0000-0000-0000-{genreNumber}"),
+                Id = GetGenreGuidFormat(genres.Count + 1),
                 Name = name,
                 CreatedAt = now,
                 UpdatedAt = now
             });
         }
 
-        await _context.Genres.AddRangeAsync(genres);
-        await _context.SaveChangesAsync();
+        await _context.Genres.AddRangeAsync(genres, cancellationToken);
     }
 
-    private async Task SeedCategoriesAsync()
+    private async Task SeedCategoriesAsync(CancellationToken cancellationToken = default)
     {
-        if (await _context.Categories.AnyAsync())
+        if (await _context.Categories.AnyAsync(cancellationToken))
             return;
 
         var names = LoadNamesFromXml("categories.xml", "Category");
@@ -173,17 +194,25 @@ public class DataSeeder
 
         foreach (var name in names)
         {
-            var categoryNumber = (categories.Count + 1).ToString("D12");
             categories.Add(new Category
             {
-                Id = Guid.Parse($"b1000000-0000-0000-0000-{categoryNumber}"),
+                Id = GetCategoryGuidFormat(categories.Count + 1),
                 Name = name,
                 CreatedAt = now,
                 UpdatedAt = now
             });
         }
 
-        await _context.Categories.AddRangeAsync(categories);
-        await _context.SaveChangesAsync();
+        await _context.Categories.AddRangeAsync(categories, cancellationToken);
+    }
+
+    private async Task SeedDefaultImagesAsync(CancellationToken cancellationToken = default)
+    {
+        if (await _context.Images.AnyAsync(cancellationToken))
+            return;
+
+        var defaultStream = ImageRepository.LoadDefaultImageStream();
+        await _imageRepository.CreateSizedImagesAsync(imageStream:defaultStream, Domain.Enums.ImageType.Album, cancellationToken, true);
+        await _imageRepository.SaveChangesAsync(cancellationToken);
     }
 }
