@@ -2,7 +2,6 @@ using AudioDelivery.Domain.Entities;
 using AudioDelivery.Infrastructure.Seeders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Xml.Linq;
 
 namespace AudioDelivery.Infrastructure.Data.Configurations;
 
@@ -35,7 +34,7 @@ public class GenreConfiguration : IEntityTypeConfiguration<Genre>
         {
             yield return new Genre
             {
-                Id = Guid.Parse($"b1000000-0000-0000-0000-{index++ + 1:000000000000}"),
+                Id = Guid.Parse($"a1000000-0000-0000-0000-{index++ + 1:000000000000}"),
                 Name = name
             };
         }

@@ -1,8 +1,6 @@
 using AudioDelivery.Application.Common.Interfaces;
-using AudioDelivery.Application.Genres.DTOs;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace AudioDelivery.Application.Genres;
 
@@ -22,18 +20,10 @@ public class GenreService : IGenreService
         _mapper = mapper;
     }
 
-    public Task<List<GenreDto>> GetAllGenresAsync(CancellationToken cancellationToken = default)
+    public Task<List<string>> GetAllGenreNamesAsync(CancellationToken cancellationToken = default)
     {
         return _repository.Query()
-            .ProjectTo<GenreDto>(_mapper.ConfigurationProvider)
+            .Select(g => g.Name)
             .ToListAsync(cancellationToken);
-    }
-
-    public Task<GenreDto?> GetGenreAsync(Guid id, CancellationToken cancellationToken = default)
-    {
-        return _repository.Query()
-            .Where(g => g.Id == id)
-            .ProjectTo<GenreDto>(_mapper.ConfigurationProvider)
-            .FirstOrDefaultAsync(cancellationToken);
     }
 }
