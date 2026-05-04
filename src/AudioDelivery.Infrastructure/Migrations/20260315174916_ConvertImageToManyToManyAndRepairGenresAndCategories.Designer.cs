@@ -4,6 +4,7 @@ using AudioDelivery.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AudioDelivery.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260315174916_ConvertImageToManyToManyAndRepairGenresAndCategories")]
+    partial class ConvertImageToManyToManyAndRepairGenresAndCategories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1650,11 +1653,6 @@ namespace AudioDelivery.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<long>("PlayCount")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasDefaultValue(0L);
-
                     b.Property<int>("Popularity")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
@@ -1894,60 +1892,34 @@ namespace AudioDelivery.Infrastructure.Migrations
                     b.ToTable("UserImage", (string)null);
                 });
 
-            modelBuilder.Entity("AudioDelivery.Domain.JoinTables.UserLibraryItem", b =>
+            modelBuilder.Entity("AudioDelivery.Domain.JoinTables.UserSavedAlbum", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid>("AlbumId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("AlbumId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ArtistId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("PlaylistId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("TrackId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.HasKey("AlbumId", "UserId");
 
-                    b.HasIndex("AlbumId");
+                    b.HasIndex("UserId");
 
-                    b.HasIndex("ArtistId");
+                    b.ToTable("UserSavedAlbum", (string)null);
+                });
 
-                    b.HasIndex("PlaylistId");
+            modelBuilder.Entity("AudioDelivery.Domain.JoinTables.UserSavedTrack", b =>
+                {
+                    b.Property<Guid>("TrackId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("TrackId");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("UserId", "AlbumId")
-                        .IsUnique()
-                        .HasFilter("[AlbumId] IS NOT NULL");
+                    b.HasKey("TrackId", "UserId");
 
-                    b.HasIndex("UserId", "ArtistId")
-                        .IsUnique()
-                        .HasFilter("[ArtistId] IS NOT NULL");
+                    b.HasIndex("UserId");
 
-                    b.HasIndex("UserId", "PlaylistId")
-                        .IsUnique()
-                        .HasFilter("[PlaylistId] IS NOT NULL");
-
-                    b.HasIndex("UserId", "TrackId")
-                        .IsUnique()
-                        .HasFilter("[TrackId] IS NOT NULL");
-
-                    b.ToTable("UserLibraryItems", (string)null);
+                    b.ToTable("UserSavedTrack", (string)null);
                 });
 
             modelBuilder.Entity("AudioDelivery.Domain.Entities.Playlist", b =>
@@ -2207,39 +2179,38 @@ namespace AudioDelivery.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("AudioDelivery.Domain.JoinTables.UserLibraryItem", b =>
+            modelBuilder.Entity("AudioDelivery.Domain.JoinTables.UserSavedAlbum", b =>
                 {
                     b.HasOne("AudioDelivery.Domain.Entities.Album", "Album")
                         .WithMany()
                         .HasForeignKey("AlbumId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("AudioDelivery.Domain.Entities.Artist", "Artist")
-                        .WithMany()
-                        .HasForeignKey("ArtistId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("AudioDelivery.Domain.Entities.Playlist", "Playlist")
-                        .WithMany()
-                        .HasForeignKey("PlaylistId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("AudioDelivery.Domain.Entities.Track", "Track")
-                        .WithMany()
-                        .HasForeignKey("TrackId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("AudioDelivery.Domain.Entities.User", "User")
-                        .WithMany("LibraryItems")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Album");
 
-                    b.Navigation("Artist");
+                    b.Navigation("User");
+                });
 
-                    b.Navigation("Playlist");
+            modelBuilder.Entity("AudioDelivery.Domain.JoinTables.UserSavedTrack", b =>
+                {
+                    b.HasOne("AudioDelivery.Domain.Entities.Track", "Track")
+                        .WithMany()
+                        .HasForeignKey("TrackId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AudioDelivery.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Track");
 
@@ -2263,8 +2234,6 @@ namespace AudioDelivery.Infrastructure.Migrations
 
             modelBuilder.Entity("AudioDelivery.Domain.Entities.User", b =>
                 {
-                    b.Navigation("LibraryItems");
-
                     b.Navigation("Playlists");
                 });
 #pragma warning restore 612, 618
